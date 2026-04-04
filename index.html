@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Race Club — Sistema de Gestión</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<style>
+/* ═══════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════ */
+:root{
+  --accent:#E8002D; /* rojo por defecto, configurable */
+  --black:#0a0a0a;
+  --white:#ffffff;
+  --grey-100:#f5f5f5;
+  --grey-200:#ebebeb;
+  --grey-300:#d4d4d4;
+  --grey-400:#a3a3a3;
+  --grey-600:#525252;
+  --grey-800:#262626;
+  --green:#39FF14;   /* verde fosforescente */
+  --font-display:'Barlow Condensed',system-ui,sans-serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --r:4px;
+  --r-lg:8px;
+  --sh-sm:0 1px 4px rgba(0,0,0,.08);
+  --sh-md:0 4px 20px rgba(0,0,0,.12);
+  --sh-lg:0 12px 48px rgba(0,0,0,.18);
+  --transition:.18s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:var(--font-body);
+  background:var(--grey-100);
+  color:var(--black);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ═══════════════════════════════════════════════
+   SCREEN ROUTER
+═══════════════════════════════════════════════ */
+.screen{display:none;min-height:100vh;animation:fadeIn .25s ease}
+.screen.active{display:flex;flex-direction:column}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ═══════════════════════════════════════════════
+   WELCOME SCREEN
+═══════════════════════════════════════════════ */
+#screen-welcome{
+  background:var(--black);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:40px 24px;
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+.welcome-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 110%,rgba(232,0,45,.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.welcome-logo{
+  display:flex;align-items:center;gap:12px;margin-bottom:60px;z-index:1;
+}
+.welcome-logo img,.logo-placeholder{
+  height:44px;width:auto;object-fit:contain;
+}
+.logo-placeholder{
+  height:44px;width:44px;
+  background:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);
+  font-size:22px;font-weight:900;color:#fff;
+  border-radius:var(--r);
+  flex-shrink:0;
+}
+.welcome-logo-text{
+  font-family:var(--font-display);
+  font-size:28px;font-weight:900;
+  color:var(--white);
+  letter-spacing:-0.5px;
+  line-height:1;
+}
+.welcome-logo-sub{
+  font-size:11px;
+  color:var(--grey-400);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-top:2px;
+}
+.welcome-headline{
+  font-family:var(--font-display);
+  font-size:clamp(52px,12vw,88px);
+  font-weight:900;
+  color:var(--white);
+  text-align:center;
+  line-height:.95;
+  letter-spacing:-2px;
+  z-index:1;
+  margin-bottom:16px;
+}
+.welcome-headline em{
+  font-style:normal;
+  color:var(--accent);
+}
+.welcome-sub{
+  color:var(--grey-400);
+  font-size:15px;
+  text-align:center;
+  z-index:1;
+  margin-bottom:56px;
+  max-width:300px;
+  line-height:1.5;
+}
+.role-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  width:100%;
+  max-width:400px;
+  z-index:1;
+}
+.role-card{
+  background:transparent;
+  border:1.5px solid var(--grey-800);
+  border-radius:var(--r-lg);
+  padding:28px 20px;
+  text-align:center;
+  cursor:pointer;
+  transition:all var(--transition);
+  color:var(--white);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.role-card:hover{
+  border-color:var(--accent);
+  background:rgba(232,0,45,.08);
+  transform:translateY(-2px);
+}
+.role-card.active{
+  border-color:var(--accent);
+  background:var(--accent);
+}
+.role-icon{font-size:32px;line-height:1}
+.role-label{
+  font-family:var(--font-display);
+  font-size:18px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;
+}
+.role-desc{font-size:12px;color:var(--grey-400);line-height:1.4}
+.role-card:hover .role-desc,.role-card.active .role-desc{color:rgba(255,255,255,.7)}
+
+.welcome-login{
+  width:100%;max-width:400px;
+  z-index:1;
+  margin-top:24px;
+}
+.login-title{
+  font-family:var(--font-display);
+  font-size:22px;font-weight:800;
+  color:var(--white);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:16px;
+}
+.login-row{display:flex;gap:10px}
+.inp{
+  width:100%;
+  background:var(--grey-900,#111);
+  border:1.5px solid var(--grey-800);
+  border-radius:var(--r);
+  padding:14px 16px;
+  font-family:var(--font-body);
+  font-size:15px;
+  color:var(--white);
+  outline:none;
+  transition:border-color var(--transition);
+  -webkit-appearance:none;
+}
+.inp:focus{border-color:var(--accent)}
+.inp::placeholder{color:var(--grey-600)}
+
+/* ═══════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 22px;
+  border:none;border-radius:var(--r);
+  font-family:var(--font-display);
+  font-size:15px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;
+  cursor:pointer;
+  transition:all var(--transition);
+  white-space:nowrap;
+  text-decoration:none;
+  flex-shrink:0;
+  -webkit-appearance:none;
+}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
+.btn-black{background:var(--black);color:#fff}
+.btn-black:hover:not(:disabled){background:var(--grey-800);transform:translateY(-1px)}
+.btn-white{background:var(--white);color:var(--black);border:1.5px solid var(--grey-200)}
+.btn-white:hover:not(:disabled){background:var(--grey-100)}
+.btn-ghost{background:transparent;color:var(--black);border:1.5px solid var(--grey-300)}
+.btn-ghost:hover:not(:disabled){border-color:var(--black);background:var(--grey-100)}
+.btn-ghost-white{background:transparent;color:var(--white);border:1.5px solid var(--grey-700,#404040)}
+.btn-ghost-white:hover:not(:disabled){border-color:var(--white)}
+.btn-danger{background:#fee2e2;color:#b91c1c;border:1.5px solid #fecaca}
+.btn-danger:hover:not(:disabled){background:#fecaca}
+.btn-sm{padding:8px 14px;font-size:13px}
+.btn-lg{padding:16px 28px;font-size:17px}
+.btn-full{width:100%}
+
+/* ═══════════════════════════════════════════════
+   APP LAYOUT (logged in)
+═══════════════════════════════════════════════ */
+.app-wrap{display:flex;flex-direction:column;min-height:100vh;background:var(--grey-100)}
+
+/* TOPBAR */
+.topbar{
+  background:var(--black);
+  height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  position:sticky;top:0;z-index:200;
+  border-bottom:1px solid var(--grey-800);
+}
+.topbar-brand{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-display);
+  font-size:20px;font-weight:900;
+  color:var(--white);text-decoration:none;
+  letter-spacing:-.3px;
+}
+.topbar-brand img,.topbar-logo-placeholder{height:28px;width:auto;object-fit:contain}
+.topbar-logo-placeholder{
+  height:28px;width:28px;
+  background:var(--accent);
+  border-radius:var(--r);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:900;color:#fff;
+  flex-shrink:0;
+}
+.topbar-nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.topbar-nav::-webkit-scrollbar{display:none}
+.nav-btn{
+  padding:6px 14px;
+  border:none;border-radius:var(--r);
+  background:transparent;
+  font-family:var(--font-display);
+  font-size:13px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;
+  color:var(--grey-400);
+  cursor:pointer;
+  transition:all var(--transition);
+  white-space:nowrap;
+}
+.nav-btn:hover{color:var(--white);background:var(--grey-800)}
+.nav-btn.active{color:var(--black);background:var(--white)}
+.topbar-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.user-chip{
+  display:flex;align-items:center;gap:7px;
+  background:var(--grey-800);
+  border-radius:20px;
+  padding:5px 12px 5px 8px;
+  cursor:pointer;
+}
+.user-dot{
+  width:24px;height:24px;
+  background:var(--accent);
+  border-radius:50%;
+  font-family:var(--font-display);
+  font-size:13px;font-weight:700;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.user-name{font-size:12px;font-weight:600;color:var(--white);max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.user-role{font-size:10px;color:var(--grey-400);letter-spacing:.5px;text-transform:uppercase}
+
+/* PAGE CONTAINER */
+.page-container{flex:1;overflow-y:auto}
+.page{display:none;padding:24px 20px;max-width:1100px;margin:0 auto;width:100%}
+.page.active{display:block}
+
+/* PAGE HEADER */
+.page-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;gap:14px;flex-wrap:wrap}
+.page-title{font-family:var(--font-display);font-size:32px;font-weight:900;letter-spacing:-1px;line-height:1}
+.page-sub{font-size:13px;color:var(--grey-600);margin-top:4px;font-weight:400}
+.hdr-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start}
+
+/* ═══════════════════════════════════════════════
+   STAT CARDS
+═══════════════════════════════════════════════ */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{
+  background:var(--white);
+  border:1px solid var(--grey-200);
+  border-radius:var(--r-lg);
+  padding:20px;
+  position:relative;overflow:hidden;
+  transition:transform var(--transition),box-shadow var(--transition);
+}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--sh-md)}
+.stat-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--accent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform var(--transition);
+}
+.stat-card:hover::after{transform:scaleX(1)}
+.stat-icon{font-size:22px;margin-bottom:8px}
+.stat-val{
+  font-family:var(--font-display);
+  font-size:38px;font-weight:900;line-height:1;
+  color:var(--black);
+}
+.stat-label{font-size:12px;color:var(--grey-600);margin-top:4px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.stat-card.accent .stat-val{color:var(--accent)}
+.stat-card.green .stat-val{color:#16a34a}
+
+/* ═══════════════════════════════════════════════
+   TOOLBAR
+═══════════════════════════════════════════════ */
+.toolbar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.search-wrap{position:relative;flex:1;min-width:180px}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--grey-400);font-size:14px;pointer-events:none}
+.search-inp{
+  width:100%;
+  padding:10px 14px 10px 36px;
+  border:1.5px solid var(--grey-200);
+  border-radius:var(--r);
+  font-family:var(--font-body);font-size:14px;
+  background:var(--white);
+  outline:none;
+  transition:border-color var(--transition);
+}
+.search-inp:focus{border-color:var(--accent)}
+.select{
+  padding:10px 14px;
+  border:1.5px solid var(--grey-200);
+  border-radius:var(--r);
+  font-family:var(--font-body);font-size:14px;
+  background:var(--white);color:var(--black);
+  cursor:pointer;outline:none;
+  -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23666' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;background-size:16px;
+  padding-right:32px;
+}
+
+/* ═══════════════════════════════════════════════
+   TABLE
+═══════════════════════════════════════════════ */
+.table-wrap{background:var(--white);border:1px solid var(--grey-200);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-sm)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead{background:var(--black)}
+th{
+  padding:11px 16px;text-align:left;
+  font-family:var(--font-display);font-size:11px;font-weight:700;
+  color:var(--grey-400);text-transform:uppercase;letter-spacing:.8px;
+  border-bottom:none;white-space:nowrap;
+}
+td{padding:12px 16px;border-bottom:1px solid var(--grey-100);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--grey-100)}
+.td-bold{font-weight:600;color:var(--black)}
+.dorsal{
+  display:inline-block;
+  background:var(--black);color:var(--white);
+  font-family:var(--font-display);font-size:14px;font-weight:800;
+  padding:2px 8px;border-radius:var(--r);
+  min-width:36px;text-align:center;
+}
+
+/* ═══════════════════════════════════════════════
+   STATUS BADGE
+═══════════════════════════════════════════════ */
+.badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--font-display);
+  font-size:11px;font-weight:700;
+  padding:3px 9px;border-radius:2px;
+  text-transform:uppercase;letter-spacing:.5px;
+}
+.badge-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.badge.Registrado,.badge.Inscrito{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+.badge.Registrado .badge-dot,.badge.Inscrito .badge-dot{background:#22c55e}
+.badge.Asistió{background:var(--black);color:var(--white)}
+.badge.Asistió .badge-dot{background:var(--green)}
+.badge.Cancelado{background:#f9fafb;color:var(--grey-600);border:1px solid var(--grey-200)}
+.badge.Cancelado .badge-dot{background:var(--grey-400)}
+
+/* ═══════════════════════════════════════════════
+   CARDS GENERALES
+═══════════════════════════════════════════════ */
+.card{background:var(--white);border:1px solid var(--grey-200);border-radius:var(--r-lg);padding:24px;box-shadow:var(--sh-sm)}
+.card-title{font-family:var(--font-display);font-size:20px;font-weight:800;letter-spacing:-.3px;margin-bottom:6px}
+.card-sub{font-size:13px;color:var(--grey-600);margin-bottom:20px;line-height:1.5}
+
+/* ═══════════════════════════════════════════════
+   FORM
+═══════════════════════════════════════════════ */
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--grey-600);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.form-label .req{color:var(--accent)}
+.form-inp{
+  width:100%;
+  padding:12px 14px;
+  border:1.5px solid var(--grey-200);
+  border-radius:var(--r);
+  font-family:var(--font-body);font-size:14px;
+  color:var(--black);background:var(--white);
+  outline:none;transition:border-color var(--transition),box-shadow var(--transition);
+  -webkit-appearance:none;
+}
+.form-inp:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,0,45,.08)}
+.form-inp.err{border-color:#ef4444}
+.form-err{color:#ef4444;font-size:12px;margin-top:4px;display:none}
+.form-err.show{display:block}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-section{font-family:var(--font-display);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--grey-600);margin:20px 0 12px;padding-bottom:6px;border-bottom:1.5px solid var(--grey-200)}
+
+/* ═══════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════ */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(6px);
+  display:flex;align-items:flex-end;justify-content:center;
+  z-index:1000;padding:0;
+  opacity:0;pointer-events:none;
+  transition:opacity .2s;
+}
+.modal-overlay.show{opacity:1;pointer-events:auto}
+.modal{
+  background:var(--white);
+  width:100%;max-width:480px;
+  border-radius:var(--r-lg) var(--r-lg) 0 0;
+  max-height:92vh;overflow-y:auto;
+  transform:translateY(100%);
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.modal-overlay.show .modal{transform:translateY(0)}
+@media(min-width:600px){
+  .modal-overlay{align-items:center;padding:20px}
+  .modal{border-radius:var(--r-lg);max-height:85vh;transform:scale(.95) translateY(10px)}
+  .modal-overlay.show .modal{transform:scale(1) translateY(0)}
+}
+.modal-handle{width:36px;height:4px;background:var(--grey-300);border-radius:2px;margin:12px auto 0;display:block}
+@media(min-width:600px){.modal-handle{display:none}}
+.modal-hdr{padding:20px 20px 0;display:flex;justify-content:space-between;align-items:center}
+.modal-title{font-family:var(--font-display);font-size:20px;font-weight:800;letter-spacing:-.3px}
+.modal-close{
+  width:32px;height:32px;
+  background:var(--grey-100);border:none;border-radius:var(--r);
+  font-size:18px;cursor:pointer;color:var(--grey-600);
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition);
+}
+.modal-close:hover{background:var(--grey-200)}
+.modal-body{padding:16px 20px 24px}
+
+/* ═══════════════════════════════════════════════
+   SCANNER
+═══════════════════════════════════════════════ */
+.scanner-wrap{max-width:440px;margin:0 auto}
+.scanner-box{
+  background:var(--black);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  margin-bottom:16px;
+  position:relative;
+}
+#qr-reader{width:100%!important}
+#qr-reader video{border-radius:0!important}
+#qr-reader__dashboard_section_swaplink{display:none!important}
+#qr-reader__status_span{color:#888!important;font-family:var(--font-body)!important;font-size:12px!important}
+#qr-reader__scan_region img{display:none!important}
+
+.scan-result{margin-top:0}
+.scan-card{
+  border-radius:var(--r-lg);
+  padding:20px;
+  border:2px solid transparent;
+  background:var(--white);
+  animation:slideUp .25s ease;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.scan-card.ok{border-color:#22c55e}
+.scan-card.blocked{border-color:var(--accent)}
+.scan-card.warning{border-color:#eab308}
+.scan-card.loading{border-color:var(--grey-200)}
+.scan-card.err{border-color:#ef4444}
+.scan-hero{text-align:center;padding:8px 0 16px}
+.scan-emoji{font-size:48px;margin-bottom:8px;display:block;line-height:1}
+.scan-headline{font-family:var(--font-display);font-size:24px;font-weight:900;letter-spacing:-.3px}
+.scan-note{font-size:13px;color:var(--grey-600);margin-top:4px;line-height:1.4}
+.info-grid{background:var(--grey-100);border-radius:var(--r);padding:14px;margin:12px 0}
+.info-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--grey-200)}
+.info-row:last-child{border-bottom:none}
+.info-label{font-size:12px;color:var(--grey-600);font-weight:500}
+.info-val{font-size:13px;font-weight:700;text-align:right;max-width:60%}
+
+/* ═══════════════════════════════════════════════
+   CORREDOR PAGES
+═══════════════════════════════════════════════ */
+.runner-header{
+  background:var(--black);
+  padding:32px 20px 28px;
+  position:relative;overflow:hidden;
+}
+.runner-header::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(ellipse 100% 100% at 0% 100%,rgba(232,0,45,.2) 0%,transparent 60%);
+}
+.runner-name{
+  font-family:var(--font-display);
+  font-size:36px;font-weight:900;
+  color:var(--white);letter-spacing:-1px;line-height:1;
+  position:relative;z-index:1;
+}
+.runner-sub{font-size:13px;color:var(--grey-400);margin-top:4px;position:relative;z-index:1}
+.runner-tabs{
+  display:flex;gap:0;
+  border-bottom:2px solid var(--grey-200);
+  margin-bottom:20px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.runner-tabs::-webkit-scrollbar{display:none}
+.rtab{
+  padding:12px 18px;
+  border:none;background:transparent;
+  font-family:var(--font-display);
+  font-size:13px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.5px;
+  color:var(--grey-600);cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-2px;
+  transition:all var(--transition);white-space:nowrap;
+}
+.rtab:hover{color:var(--black)}
+.rtab.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+.run-card{
+  border:1.5px solid var(--grey-200);
+  border-radius:var(--r-lg);
+  padding:16px 18px;
+  margin-bottom:10px;
+  background:var(--white);
+  cursor:pointer;
+  transition:all var(--transition);
+  display:flex;align-items:center;gap:14px;
+}
+.run-card:hover{border-color:var(--accent);box-shadow:var(--sh-sm)}
+.run-card-icon{font-size:28px;flex-shrink:0}
+.run-card-body{flex:1;min-width:0}
+.run-card-title{font-family:var(--font-display);font-size:17px;font-weight:800;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.run-card-meta{font-size:12px;color:var(--grey-600);margin-top:2px}
+.run-card-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+
+.sunday-slots{display:flex;flex-direction:column;gap:10px}
+.slot-card{
+  border:1.5px solid var(--grey-200);
+  border-radius:var(--r-lg);
+  padding:18px;background:var(--white);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  transition:all var(--transition);
+}
+.slot-date{font-family:var(--font-display);font-size:20px;font-weight:800;letter-spacing:-.3px}
+.slot-meta{font-size:12px;color:var(--grey-600);margin-top:2px}
+.slot-count{font-size:12px;font-weight:600;color:var(--grey-600)}
+
+/* QR VIEW */
+.qr-display{
+  background:var(--black);
+  border-radius:var(--r-lg);
+  padding:28px 20px;
+  text-align:center;
+  margin:16px 0;
+}
+.qr-race{font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--grey-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.qr-name{font-family:var(--font-display);font-size:26px;font-weight:900;color:var(--white);margin-bottom:2px}
+.qr-dorsal{font-family:var(--font-display);font-size:52px;font-weight:900;color:var(--accent);line-height:1;margin:8px 0}
+#qr-holder{display:flex;justify-content:center;margin:16px 0}
+#qr-holder canvas,#qr-holder img{border-radius:var(--r);border:4px solid var(--white)}
+.qr-id-txt{font-size:10px;color:var(--grey-600);font-family:monospace;word-break:break-all;margin-top:12px;padding:8px;background:var(--grey-100);border-radius:var(--r)}
+
+/* ═══════════════════════════════════════════════
+   CONFIG PAGE
+═══════════════════════════════════════════════ */
+.config-section{margin-bottom:24px}
+.config-section-title{
+  font-family:var(--font-display);
+  font-size:13px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;
+  color:var(--grey-600);
+  margin-bottom:12px;
+  padding-bottom:8px;
+  border-bottom:1.5px solid var(--grey-200);
+}
+.color-swatches{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.swatch{
+  width:36px;height:36px;border-radius:var(--r);cursor:pointer;
+  border:2.5px solid transparent;
+  transition:all var(--transition);flex-shrink:0;
+}
+.swatch:hover,.swatch.selected{border-color:var(--black);transform:scale(1.1)}
+
+/* ═══════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════ */
+.toast-wrap{
+  position:fixed;top:66px;right:16px;z-index:9999;
+  display:flex;flex-direction:column;gap:8px;pointer-events:none;
+}
+.toast{
+  background:var(--black);color:var(--white);
+  padding:11px 16px;border-radius:var(--r);
+  font-size:13px;font-weight:500;
+  box-shadow:var(--sh-lg);
+  animation:toastIn .3s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:auto;
+  display:flex;align-items:center;gap:8px;
+  max-width:300px;border-left:3px solid var(--accent);
+}
+.toast.ok{border-left-color:#22c55e}
+.toast.err{border-left-color:var(--accent)}
+@keyframes toastIn{from{transform:translateX(110%);opacity:0}to{transform:none;opacity:1}}
+
+/* ═══════════════════════════════════════════════
+   SPINNER / LOADING
+═══════════════════════════════════════════════ */
+.spin{
+  width:20px;height:20px;
+  border:2.5px solid rgba(255,255,255,.3);
+  border-top-color:#fff;
+  border-radius:50%;
+  animation:rotate .7s linear infinite;
+  flex-shrink:0;
+}
+.spin-dark{border-color:rgba(0,0,0,.15);border-top-color:var(--accent)}
+@keyframes rotate{to{transform:rotate(360deg)}}
+.loading-block{display:flex;align-items:center;justify-content:center;padding:48px 24px;gap:12px;color:var(--grey-600);font-size:14px}
+
+/* ═══════════════════════════════════════════════
+   EMPTY STATE
+═══════════════════════════════════════════════ */
+.empty{text-align:center;padding:48px 24px;color:var(--grey-400)}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.empty-title{font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--grey-800);margin-bottom:6px}
+.empty-msg{font-size:14px;line-height:1.5}
+
+/* ═══════════════════════════════════════════════
+   SUCCESS SCREEN
+═══════════════════════════════════════════════ */
+.success-screen{
+  background:var(--black);
+  border-radius:var(--r-lg);
+  padding:32px 24px;
+  text-align:center;
+  margin:16px 0;
+}
+.success-screen .icon{font-size:52px;margin-bottom:12px}
+.success-screen h2{
+  font-family:var(--font-display);
+  font-size:28px;font-weight:900;
+  color:var(--white);letter-spacing:-.5px;
+  margin-bottom:8px;
+}
+.success-screen p{font-size:14px;color:var(--grey-400);line-height:1.5;margin-bottom:24px}
+.success-dorsal{
+  font-family:var(--font-display);
+  font-size:72px;font-weight:900;
+  color:var(--accent);line-height:1;
+  margin:12px 0;
+}
+
+/* ═══════════════════════════════════════════════
+   DIVIDER
+═══════════════════════════════════════════════ */
+hr.divider{border:none;border-top:1px solid var(--grey-200);margin:14px 0}
+.tag{
+  display:inline-block;
+  background:var(--grey-100);
+  border:1px solid var(--grey-200);
+  color:var(--grey-600);
+  font-size:11px;font-weight:600;
+  padding:2px 8px;border-radius:var(--r);
+  text-transform:uppercase;letter-spacing:.5px;
+}
+.tag.accent{background:rgba(232,0,45,.08);border-color:rgba(232,0,45,.2);color:var(--accent)}
+
+/* ═══════════════════════════════════════════════
+   ADMIN LIST
+═══════════════════════════════════════════════ */
+.admin-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 0;border-bottom:1px solid var(--grey-100);gap:12px;
+}
+.admin-row:last-child{border-bottom:none}
+.admin-id{
+  font-family:var(--font-display);font-size:16px;font-weight:800;
+  background:var(--black);color:var(--white);
+  padding:3px 10px;border-radius:var(--r);
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media(max-width:600px){
+  .topbar{height:52px;padding:0 14px}
+  .page{padding:16px 14px}
+  .form-row{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .page-hdr{flex-direction:column}
+  .table-wrap{overflow-x:auto}
+  th,td{padding:10px 12px}
+  .page-title{font-size:26px}
+}
+@media(min-width:1024px){
+  .scanner-wrap{max-width:500px}
+  .page{padding:32px 28px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ════════════════════════════════════════════════
+     SCREEN: WELCOME / ROLE SELECT
+════════════════════════════════════════════════ -->
+<div class="screen active" id="screen-welcome">
+  <div class="welcome-bg"></div>
+
+  <div class="welcome-logo">
+    <div id="welcomeLogoImg"></div>
+    <div>
+      <div class="welcome-logo-text" id="welcomeOrgName">Race Club</div>
+      <div class="welcome-logo-sub">Sistema de Gestión</div>
+    </div>
+  </div>
+
+  <div class="welcome-headline">
+    RUN<br/><em>MANAGE</em><br/>WIN
+  </div>
+  <div class="welcome-sub">Selecciona cómo deseas ingresar al sistema</div>
+
+  <div class="role-cards">
+    <button class="role-card" id="roleRunner" onclick="selectRole('runner')">
+      <span class="role-icon">🏃</span>
+      <span class="role-label">Corredor</span>
+      <span class="role-desc">Ver mi historial e inscripciones</span>
+    </button>
+    <button class="role-card" id="roleAdmin" onclick="selectRole('admin')">
+      <span class="role-icon">🔐</span>
+      <span class="role-label">Administrador</span>
+      <span class="role-desc">Gestionar participantes y carreras</span>
+    </button>
+  </div>
+
+  <!-- LOGIN PANEL - RUNNER -->
+  <div class="welcome-login" id="loginRunner" style="display:none">
+    <div class="login-title">Tu documento de identidad</div>
+    <div class="login-row">
+      <input class="inp" type="text" id="runnerDni" placeholder="Ej: 12345678" inputmode="numeric"/>
+      <button class="btn btn-accent" onclick="loginRunner()">Entrar</button>
+    </div>
+    <p style="color:var(--grey-600);font-size:12px;margin-top:10px">Usa el DNI con el que te inscribiste.</p>
+  </div>
+
+  <!-- LOGIN PANEL - ADMIN -->
+  <div class="welcome-login" id="loginAdmin" style="display:none">
+    <div class="login-title">ID de Administrador</div>
+    <div class="login-row">
+      <input class="inp" type="text" id="adminLoginId" placeholder="Ej: ADMIN001"/>
+      <button class="btn btn-accent" onclick="loginAdmin()">Entrar</button>
+    </div>
+    <p style="color:var(--grey-600);font-size:12px;margin-top:10px">Contacta a tu coordinador si no tienes acceso.</p>
+  </div>
+
+  <!-- Config shortcut (no requiere login) -->
+  <div style="margin-top:40px;z-index:1">
+    <button class="btn btn-ghost-white btn-sm" onclick="showSetupPrompt()">⚙️ Configurar API</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     SCREEN: CORREDOR
+════════════════════════════════════════════════ -->
+<div class="screen" id="screen-runner">
+  <!-- Runner header -->
+  <div class="runner-header">
+    <div style="max-width:600px;margin:0 auto;width:100%">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div class="runner-name" id="runnerName">Corredor</div>
+          <div class="runner-sub" id="runnerDniLabel">DNI —</div>
+        </div>
+        <button class="btn btn-ghost-white btn-sm" onclick="logout()" style="margin-top:4px">Salir</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:600px;margin:0 auto;width:100%;padding:0 14px">
+    <div class="runner-tabs" style="margin-top:16px">
+      <button class="rtab active" onclick="switchRunnerTab('history')">📋 Mi historial</button>
+      <button class="rtab" onclick="switchRunnerTab('social')">🌞 Social Run</button>
+      <button class="rtab" onclick="switchRunnerTab('qr')">📲 Mi QR</button>
+    </div>
+
+    <!-- TAB: HISTORIAL -->
+    <div id="rtab-history">
+      <div id="historyContent">
+        <div class="loading-block"><div class="spin spin-dark"></div> Cargando historial...</div>
+      </div>
+    </div>
+
+    <!-- TAB: SOCIAL RUN -->
+    <div id="rtab-social" style="display:none">
+      <div style="margin-bottom:16px">
+        <div style="font-family:var(--font-display);font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px">Social Running 🌞</div>
+        <div style="font-size:13px;color:var(--grey-600);line-height:1.5">Running grupal gratuito todos los domingos. Inscríbete para el próximo evento.</div>
+      </div>
+      <div id="socialSlots">
+        <div class="loading-block"><div class="spin spin-dark"></div> Cargando fechas...</div>
+      </div>
+
+      <!-- Form inscripción -->
+      <div class="card" id="socialRegForm" style="display:none;margin-top:16px">
+        <div class="card-title" id="socialRegTitle">Inscripción Social Run</div>
+        <div class="card-sub">Confirma tus datos para el evento seleccionado.</div>
+        <div class="form-group">
+          <label class="form-label">Nombre completo <span class="req">*</span></label>
+          <input class="form-inp" id="srNombre" placeholder="Tu nombre completo"/>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-inp" type="email" id="srEmail" placeholder="Para recibir el QR"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">DNI</label>
+            <input class="form-inp" id="srDni" readonly/>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-accent btn-full" id="srSubmitBtn" onclick="submitSocialRun()">Confirmar inscripción →</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('socialRegForm').style.display='none'">Cancelar</button>
+        </div>
+      </div>
+
+      <!-- Éxito inscripción -->
+      <div id="socialRegSuccess" style="display:none;margin-top:16px">
+        <div class="success-screen">
+          <div class="icon">🎉</div>
+          <h2>¡Inscrito!</h2>
+          <p id="socialSuccessMsg">Te has inscrito correctamente. Se envió el QR a tu email.</p>
+          <div id="socialSuccessQR" style="display:flex;justify-content:center;margin:12px 0"></div>
+        </div>
+        <button class="btn btn-black btn-full" style="margin-top:12px" onclick="resetSocialForm()">← Volver</button>
+      </div>
+    </div>
+
+    <!-- TAB: QR -->
+    <div id="rtab-qr" style="display:none">
+      <div id="qrTabContent">
+        <div class="empty">
+          <div class="empty-icon">📲</div>
+          <div class="empty-title">Selecciona un evento</div>
+          <div class="empty-msg">Ve a "Mi historial" y toca el ícono QR de la carrera que deseas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     SCREEN: ADMIN
+════════════════════════════════════════════════ -->
+<div class="screen" id="screen-admin">
+  <div class="app-wrap">
+    <!-- TOPBAR -->
+    <nav class="topbar">
+      <a class="topbar-brand" href="#" onclick="return false">
+        <div id="topbarLogo"></div>
+        <span id="topbarOrgName">Race Club</span>
+      </a>
+      <div class="topbar-nav" id="adminNav">
+        <button class="nav-btn active" id="nav-dashboard" onclick="showAdminPage('dashboard')">📊 Dashboard</button>
+        <button class="nav-btn" id="nav-scanner" onclick="showAdminPage('scanner')">📷 Escanear</button>
+        <button class="nav-btn" id="nav-records" onclick="showAdminPage('records')">📋 Registros</button>
+        <button class="nav-btn" id="nav-config" onclick="showAdminPage('config')" style="display:none">⚙️ Config</button>
+      </div>
+      <div class="topbar-right">
+        <div class="user-chip" onclick="logout()">
+          <div class="user-dot" id="adminInitial">A</div>
+          <div>
+            <div class="user-name" id="adminNameLabel">Admin</div>
+            <div class="user-role" id="adminRoleLabel">admin</div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="page-container">
+
+      <!-- PAGE: DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="page-hdr">
+          <div>
+            <div class="page-title">Dashboard</div>
+            <div class="page-sub" id="dashSub">Resumen general de participantes</div>
+          </div>
+          <div class="hdr-actions">
+            <select class="select" id="dashRaceFilter" onchange="onDashRaceChange()">
+              <option value="">Todas las carreras</option>
+            </select>
+            <button class="btn btn-black btn-sm" onclick="exportData()">⬇ Exportar</button>
+            <button class="btn btn-accent btn-sm" onclick="showAddParticipant()">+ Agregar</button>
+          </div>
+        </div>
+
+        <div class="stats-row" id="statsRow">
+          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="sTotal">—</div><div class="stat-label">Total</div></div>
+          <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-val green" id="sRegistrados">—</div><div class="stat-label">Registrados</div></div>
+          <div class="stat-card accent"><div class="stat-icon">🏅</div><div class="stat-val" id="sAsistieron">—</div><div class="stat-label">Asistieron</div></div>
+          <div class="stat-card"><div class="stat-icon">❌</div><div class="stat-val" id="sCancelados">—</div><div class="stat-label">Cancelados</div></div>
+        </div>
+
+        <div class="toolbar">
+          <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input class="search-inp" type="text" id="tableSearch" placeholder="Buscar nombre, DNI, email…" oninput="filterTable()"/>
+          </div>
+          <select class="select" id="statusFilter" onchange="filterTable()">
+            <option value="">Todos los estados</option>
+            <option value="Registrado">Registrado</option>
+            <option value="Asistió">Asistió</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+          <button class="btn btn-ghost btn-sm" onclick="refreshDashboard()">↺ Actualizar</button>
+        </div>
+
+        <div class="table-wrap">
+          <table><thead><tr>
+            <th>Dorsal</th><th>Nombre</th><th>DNI</th><th>Email</th><th>Estado</th><th>Carrera</th><th>Últ. Mod.</th><th>Acciones</th>
+          </tr></thead>
+          <tbody id="tableBody">
+            <tr><td colspan="8"><div class="loading-block"><div class="spin spin-dark"></div> Cargando...</div></td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- PAGE: SCANNER -->
+      <div class="page" id="page-scanner">
+        <div class="page-hdr">
+          <div><div class="page-title">Escanear QR</div><div class="page-sub">Registra asistencia escaneando el código del participante</div></div>
+        </div>
+        <div class="scanner-wrap">
+          <!-- Race selector for scanner -->
+          <div class="card" style="margin-bottom:14px;padding:16px">
+            <label class="form-label">Carrera activa para este escaneo</label>
+            <select class="form-inp" id="scanRaceSelect" style="margin-top:4px">
+              <option value="">— Selecciona una carrera —</option>
+              <option value="_social">🌞 Social Running (Domingos)</option>
+            </select>
+          </div>
+          <div class="scanner-box" id="scannerBox">
+            <div id="qr-reader"></div>
+          </div>
+          <div id="scanResultWrap"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: RECORDS (Administrar registros) -->
+      <div class="page" id="page-records">
+        <div class="page-hdr">
+          <div><div class="page-title">Administrar Registros</div><div class="page-sub">Gestión completa de participantes por carrera</div></div>
+          <div class="hdr-actions">
+            <select class="select" id="recordsRaceSelect" onchange="loadRecords()">
+              <option value="">— Selecciona carrera —</option>
+              <option value="_social">🌞 Social Running</option>
+            </select>
+            <button class="btn btn-accent btn-sm" id="addRecordBtn" onclick="showAddParticipant()" style="display:none">+ Agregar</button>
+          </div>
+        </div>
+        <div id="recordsContent">
+          <div class="empty"><div class="empty-icon">📋</div><div class="empty-title">Selecciona una carrera</div><div class="empty-msg">Elige una carrera del selector para ver sus registros.</div></div>
+        </div>
+      </div>
+
+      <!-- PAGE: CONFIG -->
+      <div class="page" id="page-config">
+        <div class="page-hdr">
+          <div><div class="page-title">Configuración</div><div class="page-sub">Solo visible para superadministradores</div></div>
+        </div>
+        <div style="max-width:640px">
+
+          <!-- API -->
+          <div class="card config-section" style="margin-bottom:16px">
+            <div class="config-section-title">🔗 Conexión API</div>
+            <div class="form-group">
+              <label class="form-label">URL del Web App (Apps Script)</label>
+              <div style="display:flex;gap:8px">
+                <input class="form-inp" id="cfgApiUrl" placeholder="https://script.google.com/macros/s/…"/>
+                <button class="btn btn-black btn-sm" onclick="saveApiUrl()">Guardar</button>
+              </div>
+              <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+                <button class="btn btn-ghost btn-sm" onclick="testConn()">🔌 Probar</button>
+                <span id="connStatus" style="font-size:12px;color:var(--grey-600)"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branding -->
+          <div class="card config-section" style="margin-bottom:16px">
+            <div class="config-section-title">🎨 Marca y Diseño</div>
+            <div class="form-group">
+              <label class="form-label">Nombre de la organización</label>
+              <input class="form-inp" id="cfgOrgName" placeholder="Race Club"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">URL del logotipo</label>
+              <input class="form-inp" id="cfgLogoUrl" placeholder="https://…/logo.png" oninput="previewLogo()"/>
+              <div style="margin-top:8px;display:flex;align-items:center;gap:10px">
+                <img id="logoPreview" src="" style="height:36px;display:none;border:1px solid var(--grey-200);border-radius:var(--r);padding:4px"/>
+                <span style="font-size:12px;color:var(--grey-600)">Vista previa del logo</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Color de acento (actual: <span id="accentPreviewLabel" style="font-weight:700">#E8002D</span>)</label>
+              <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                <input type="color" id="cfgAccentColor" value="#E8002D" style="width:48px;height:36px;border:1.5px solid var(--grey-200);border-radius:var(--r);cursor:pointer;padding:2px"/>
+                <div class="color-swatches">
+                  <div class="swatch" style="background:#E8002D" onclick="setAccent('#E8002D')" title="Rojo Nike"></div>
+                  <div class="swatch" style="background:#39FF14" onclick="setAccent('#39FF14')" title="Verde fosforescente"></div>
+                  <div class="swatch" style="background:#7C3AED" onclick="setAccent('#7C3AED')" title="Morado"></div>
+                  <div class="swatch" style="background:#0EA5E9" onclick="setAccent('#0EA5E9')" title="Azul eléctrico"></div>
+                  <div class="swatch" style="background:#F97316" onclick="setAccent('#F97316')" title="Naranja"></div>
+                  <div class="swatch" style="background:#FACC15" onclick="setAccent('#FACC15')" title="Amarillo"></div>
+                  <div class="swatch" style="background:#EC4899" onclick="setAccent('#EC4899')" title="Rosa"></div>
+                  <div class="swatch" style="background:#10B981" onclick="setAccent('#10B981')" title="Verde esmeralda"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carreras -->
+          <div class="card config-section" style="margin-bottom:16px">
+            <div class="config-section-title">🏁 Carreras</div>
+            <div style="margin-bottom:14px">
+              <label class="form-label">Crear nueva carrera específica</label>
+              <div style="display:flex;gap:8px">
+                <input class="form-inp" id="newRaceName" placeholder="Ej: Running Lima 2026"/>
+                <button class="btn btn-black btn-sm" onclick="createRace()">Crear</button>
+              </div>
+            </div>
+            <div id="raceListConfig">
+              <div class="loading-block" style="padding:20px 0"><div class="spin spin-dark"></div></div>
+            </div>
+          </div>
+
+          <!-- Admins -->
+          <div class="card config-section" style="margin-bottom:16px">
+            <div class="config-section-title">👥 Administradores</div>
+            <div id="adminListWrap">
+              <div class="loading-block" style="padding:20px 0"><div class="spin spin-dark"></div></div>
+            </div>
+            <hr class="divider"/>
+            <div class="form-section">Agregar / Editar admin</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">ID de Admin</label>
+                <input class="form-inp" id="newAdminId" placeholder="Ej: ADMIN002"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nombre</label>
+                <input class="form-inp" id="newAdminName" placeholder="Nombre completo"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Rol</label>
+                <select class="form-inp" id="newAdminRole">
+                  <option value="admin">Admin</option>
+                  <option value="superadmin">Superadmin</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email (opcional)</label>
+                <input class="form-inp" id="newAdminEmail" type="email" placeholder="admin@email.com"/>
+              </div>
+            </div>
+            <button class="btn btn-black btn-sm" onclick="saveAdmin()">Guardar admin</button>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-accent btn-lg" onclick="saveConfig()">💾 Guardar configuración</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end page-container -->
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     MODAL: AGREGAR / EDITAR PARTICIPANTE
+════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalParticipant">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-hdr">
+      <div class="modal-title" id="modalPartTitle">Nuevo Participante</div>
+      <button class="modal-close" onclick="closeModal('modalParticipant')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Carrera <span class="req">*</span></label>
+        <select class="form-inp" id="pRace"><option value="">— Selecciona —</option></select>
+        <div class="form-err" id="errPRace">Selecciona una carrera</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nombre completo <span class="req">*</span></label>
+        <input class="form-inp" id="pNombre" placeholder="Juan García López"/>
+        <div class="form-err" id="errPNombre">Nombre requerido</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">DNI <span class="req">*</span></label>
+          <input class="form-inp" id="pDni" placeholder="12345678"/>
+          <div class="form-err" id="errPDni">DNI requerido</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dorsal (auto si vacío)</label>
+          <input class="form-inp" id="pDorsal" type="number" placeholder="Auto" min="1"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email <span class="req">*</span></label>
+        <input class="form-inp" id="pEmail" type="email" placeholder="correo@ejemplo.com"/>
+        <div class="form-err" id="errPEmail">Email inválido</div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:4px">
+        <button class="btn btn-accent btn-full" id="pSubmitBtn" onclick="submitParticipant()">Registrar →</button>
+        <button class="btn btn-ghost" onclick="closeModal('modalParticipant')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: QR ADMIN -->
+<div class="modal-overlay" id="modalQR">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-hdr">
+      <div class="modal-title">Código QR</div>
+      <button class="modal-close" onclick="closeModal('modalQR')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="qr-display">
+        <div class="qr-race" id="qrRaceLabel">—</div>
+        <div class="qr-name" id="qrNameLabel">—</div>
+        <div class="qr-dorsal" id="qrDorsalLabel">#—</div>
+        <div id="qr-holder"></div>
+        <div class="qr-id-txt" id="qrIdTxt">—</div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:4px">
+        <button class="btn btn-black btn-full" onclick="downloadQR()">⬇ Descargar</button>
+        <button class="btn btn-ghost btn-full" onclick="closeModal('modalQR')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CONFIRM DELETE -->
+<div class="modal-overlay" id="modalDelete">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-hdr">
+      <div class="modal-title">Eliminar participante</div>
+      <button class="modal-close" onclick="closeModal('modalDelete')">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--grey-600);margin-bottom:20px;line-height:1.5">¿Eliminar a <strong id="deleteNameLabel"></strong>? Esta acción no se puede deshacer.</p>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-danger btn-full" onclick="confirmDelete()">Eliminar</button>
+        <button class="btn btn-ghost btn-full" onclick="closeModal('modalDelete')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SETUP API (sin login) -->
+<div class="modal-overlay" id="modalSetup">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-hdr">
+      <div class="modal-title">Configurar API</div>
+      <button class="modal-close" onclick="closeModal('modalSetup')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">URL del Web App (Apps Script)</label>
+        <input class="form-inp" id="setupApiUrl" placeholder="https://script.google.com/macros/s/…"/>
+      </div>
+      <button class="btn btn-accent btn-full" onclick="saveSetupApi()">Guardar y continuar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────
+     JAVASCRIPT
+──────────────────────────────────────────────── -->
+<script>
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+const S = {
+  apiUrl: 'https://script.google.com/macros/s/AKfycbybrF-e0z2cYfVm_QflpNpQRU34fPE4_p-RKLGbpQJkkTZQW8pPsLmS0ILxYwAMhYcq/exec',
+  accentColor:  localStorage.getItem('rc_accent') || '#E8002D',
+  orgName:      localStorage.getItem('rc_orgName') || 'Race Club',
+  logoUrl:      localStorage.getItem('rc_logoUrl') || '',
+  // Session
+  mode:         null,   // 'runner' | 'admin'
+  runnerDni:    null,
+  runnerData:   null,   // { nombre, history }
+  adminId:      null,
+  adminData:    null,   // { id, nombre, rol }
+  // Data
+  races:        [],
+  participants: [],
+  currentRace:  '',
+  // Scanner
+  html5Qr:      null,
+  scannerActive:false,
+  lastScanId:   '',
+  scanCooldown: false,
+  // Misc
+  deleteTarget: null,
+  deleteRace:   null,
+  qrInstance:   null,
+  selectedSocialDate: null
+};
+
+// Apply accent color from storage
+applyAccent(S.accentColor);
+applyBranding();
+
+// ══════════════════════════════════════════════
+//  BRANDING / ACCENT
+// ══════════════════════════════════════════════
+function applyAccent(color) {
+  S.accentColor = color;
+  document.documentElement.style.setProperty('--accent', color);
+  localStorage.setItem('rc_accent', color);
+  // Update swatch selection
+  document.querySelectorAll('.swatch').forEach(s => {
+    s.classList.toggle('selected', s.style.background === color || s.getAttribute('onclick')?.includes(color));
+  });
+}
+
+function setAccent(color) {
+  applyAccent(color);
+  const inp = document.getElementById('cfgAccentColor');
+  if (inp) inp.value = color;
+  const lbl = document.getElementById('accentPreviewLabel');
+  if (lbl) lbl.textContent = color;
+}
+
+function applyBranding() {
+  // Org name
+  document.getElementById('welcomeOrgName').textContent = S.orgName;
+  const topName = document.getElementById('topbarOrgName');
+  if (topName) topName.textContent = S.orgName;
+  // Logo
+  renderLogo('welcomeLogoImg', S.logoUrl, 44);
+  renderLogo('topbarLogo', S.logoUrl, 28);
+}
+
+function renderLogo(containerId, url, size) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  if (url) {
+    c.innerHTML = `<img src="${esc(url)}" style="height:${size}px;width:auto;object-fit:contain" onerror="this.style.display='none'"/>`;
+  } else {
+    const initial = (S.orgName || 'R')[0].toUpperCase();
+    const cls = containerId.startsWith('topbar') ? 'topbar-logo-placeholder' : 'logo-placeholder';
+    c.innerHTML = `<div class="${cls}" style="height:${size}px;width:${size}px;font-size:${Math.round(size*.55)}px">${initial}</div>`;
+  }
+}
+
+function previewLogo() {
+  const url = document.getElementById('cfgLogoUrl').value.trim();
+  const img = document.getElementById('logoPreview');
+  if (url) { img.src = url; img.style.display = 'block'; }
+  else img.style.display = 'none';
+}
+
+// ══════════════════════════════════════════════
+//  SCREENS
+// ══════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+}
+
+function selectRole(role) {
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('role' + (role === 'runner' ? 'Runner' : 'Admin')).classList.add('active');
+  document.getElementById('loginRunner').style.display = role === 'runner' ? 'block' : 'none';
+  document.getElementById('loginAdmin').style.display  = role === 'admin'  ? 'block' : 'none';
+}
+
+function showSetupPrompt() {
+  const el = document.getElementById('setupApiUrl');
+  if (el) el.value = S.apiUrl;
+  openModal('modalSetup');
+}
+
+function saveSetupApi() {
+  const v = document.getElementById('setupApiUrl').value.trim();
+  S.apiUrl = v;
+  localStorage.setItem('rc_apiUrl', v);
+  closeModal('modalSetup');
+  toast('URL guardada', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  AUTH: CORREDOR
+// ══════════════════════════════════════════════
+async function loginRunner() {
+  const dni = document.getElementById('runnerDni').value.trim();
+  if (!dni) { toast('Ingresa tu DNI', 'err'); return; }
+  if (!S.apiUrl) { toast('Configura la API primero (botón ⚙️)', 'err'); return; }
+  try {
+    const data = await api({ action: 'getRunnerHistory', dni });
+    S.mode = 'runner';
+    S.runnerDni = dni;
+    S.runnerData = data;
+    document.getElementById('runnerName').textContent = data.corredor ? data.corredor.nombre : 'Corredor';
+    document.getElementById('runnerDniLabel').textContent = `DNI ${dni}`;
+    showScreen('runner');
+    switchRunnerTab('history');
+    loadSocialSlots();
+  } catch(err) {
+    toast('Error: ' + err.message, 'err');
+  }
+}
+
+// ══════════════════════════════════════════════
+//  AUTH: ADMIN
+// ══════════════════════════════════════════════
+async function loginAdmin() {
+  const id = document.getElementById('adminLoginId').value.trim();
+  if (!id) { toast('Ingresa tu ID de administrador', 'err'); return; }
+  if (!S.apiUrl) { toast('Configura la API primero (botón ⚙️)', 'err'); return; }
+  try {
+    const data = await api({ action: 'verifyAdmin', adminId: id }, 'POST');
+    S.mode = 'admin';
+    S.adminId = id;
+    S.adminData = data.admin;
+    // UI
+    document.getElementById('adminNameLabel').textContent = data.admin.nombre;
+    document.getElementById('adminRoleLabel').textContent = data.admin.rol;
+    document.getElementById('adminInitial').textContent = data.admin.nombre[0].toUpperCase();
+    // Config tab — only superadmin
+    document.getElementById('nav-config').style.display = data.admin.rol === 'superadmin' ? 'inline-flex' : 'none';
+    showScreen('admin');
+    await loadRaces();
+    showAdminPage('dashboard');
+  } catch(err) {
+    toast('Error: ' + err.message, 'err');
+  }
+}
+
+function logout() {
+  S.mode = null; S.adminId = null; S.runnerDni = null; S.adminData = null; S.runnerData = null;
+  stopScanner();
+  showScreen('welcome');
+}
+
+// ══════════════════════════════════════════════
+//  API LAYER
+// ══════════════════════════════════════════════
+async function api(params, method = 'GET') {
+  if (!S.apiUrl) throw new Error('API no configurada. Usa el botón ⚙️ en la pantalla de inicio.');
+  let url, opts;
+  if (method === 'GET') {
+    url = S.apiUrl + '?' + new URLSearchParams(params).toString();
+    opts = { method: 'GET' };
+  } else {
+    url = S.apiUrl;
+    opts = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) };
+  }
+  const res = await fetch(url, opts);
+  const data = await res.json();
+  if (data.error && !data.alreadyRegistered && !data.cannotRegister) throw new Error(data.error);
+  return data;
+}
+
+// ══════════════════════════════════════════════
+//  ADMIN NAVIGATION
+// ══════════════════════════════════════════════
+function showAdminPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const nb = document.getElementById('nav-' + name);
+  if (nb) nb.classList.add('active');
+
+  if (name === 'dashboard') refreshDashboard();
+  if (name === 'scanner')   initScanner();
+  else stopScanner();
+  if (name === 'records')   loadRecords();
+  if (name === 'config')    loadConfigPage();
+}
+
+// ══════════════════════════════════════════════
+//  RACES
+// ══════════════════════════════════════════════
+async function loadRaces() {
+  try {
+    const data = await api({ action: 'getRaces', adminId: S.adminId });
+    S.races = data.races || [];
+    populateRaceSelects();
+  } catch(err) {
+    toast('Error cargando carreras: ' + err.message, 'err');
+  }
+}
+
+function populateRaceSelects() {
+  const selects = ['dashRaceFilter', 'pRace', 'scanRaceSelect', 'recordsRaceSelect'];
+  selects.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    // Keep first option(s)
+    const fixed = Array.from(el.options).filter(o => !o.dataset.dynamic);
+    el.innerHTML = '';
+    fixed.forEach(o => el.appendChild(o));
+    S.races.forEach(r => {
+      const o = document.createElement('option');
+      o.value = r.name; o.textContent = '🏁 ' + r.name; o.dataset.dynamic = '1';
+      el.appendChild(o);
+    });
+  });
+}
+
+// ══════════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════════
+async function refreshDashboard() {
+  const race = document.getElementById('dashRaceFilter').value;
+  try {
+    const [statsData, partData] = await Promise.all([
+      api({ action: 'getStats', adminId: S.adminId, race }),
+      race ? api({ action: 'getParticipants', adminId: S.adminId, race }) : Promise.resolve({ participants: [] })
+    ]);
+    const st = statsData.stats;
+    document.getElementById('sTotal').textContent = st.total;
+    document.getElementById('sRegistrados').textContent = st.registrados;
+    document.getElementById('sAsistieron').textContent = st.asistieron;
+    document.getElementById('sCancelados').textContent = st.cancelados;
+    document.getElementById('dashSub').textContent = race ? `Carrera: ${race} — ${st.total} participante(s)` : `Todas las carreras — ${st.total} total`;
+
+    S.participants = partData.participants || [];
+    S.currentRace = race;
+    renderTable(S.participants);
+  } catch(err) {
+    toast('Error: ' + err.message, 'err');
+  }
+}
+
+function onDashRaceChange() { refreshDashboard(); }
+
+function filterTable() {
+  const search = document.getElementById('tableSearch').value.toLowerCase();
+  const status = document.getElementById('statusFilter').value;
+  const filtered = S.participants.filter(p => {
+    const ms = !search || [p.nombre, p.dni, p.email].some(v => String(v||'').toLowerCase().includes(search));
+    const mst = !status || p.estado === status;
+    return ms && mst;
+  });
+  renderTable(filtered);
+}
+
+function renderTable(list) {
+  const tbody = document.getElementById('tableBody');
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty"><div class="empty-icon">👥</div><div class="empty-title">Sin resultados</div><div class="empty-msg">No hay participantes que coincidan.</div></div></td></tr>`;
+    return;
+  }
+  const race = document.getElementById('dashRaceFilter').value;
+  tbody.innerHTML = list.map(p => `
+    <tr>
+      <td><span class="dorsal">${p.dorsal||'—'}</span></td>
+      <td class="td-bold">${esc(p.nombre)}</td>
+      <td style="color:var(--grey-600);font-size:12px">${esc(p.dni)}</td>
+      <td style="color:var(--grey-600);font-size:12px;max-width:140px;overflow:hidden;text-overflow:ellipsis">${esc(p.email||'')}</td>
+      <td><span class="badge ${p.estado}"><span class="badge-dot"></span>${p.estado}</span></td>
+      <td style="font-size:12px;color:var(--grey-600)">${esc(p._sheet||race||'')}</td>
+      <td style="font-size:11px;color:var(--grey-400)">${p.ultimaMod ? fmtDate(p.ultimaMod) : '—'}<br/><span style="color:var(--grey-400)">${esc(p.modificadoPor||'')}</span></td>
+      <td>
+        <div style="display:flex;gap:6px;flex-wrap:nowrap">
+          <button class="btn btn-ghost btn-sm" onclick="showQRModal('${p.id}','${esc(p.nombre)}','${p.dorsal||''}','${esc(race)}')">QR</button>
+          <button class="btn btn-ghost btn-sm" onclick="quickStatus('${p.id}','${p.estado}','${esc(race)}')">Estado</button>
+          <button class="btn btn-danger btn-sm" onclick="promptDelete('${p.id}','${esc(p.nombre)}','${esc(race)}')">✕</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+async function quickStatus(id, current, race) {
+  if (!race) { toast('Selecciona una carrera primero', 'err'); return; }
+  const cycle = { 'Registrado': 'Asistió', 'Asistió': 'Cancelado', 'Cancelado': 'Registrado' };
+  const next = cycle[current] || 'Registrado';
+  try {
+    await api({ action: 'updateStatus', adminId: S.adminId, id, race, status: next }, 'POST');
+    const p = S.participants.find(x => x.id === id);
+    if (p) p.estado = next;
+    filterTable();
+    toast(`Estado → ${next}`, 'ok');
+  } catch(err) { toast(err.message, 'err'); }
+}
+
+function promptDelete(id, name, race) {
+  S.deleteTarget = id; S.deleteRace = race;
+  document.getElementById('deleteNameLabel').textContent = name;
+  openModal('modalDelete');
+}
+
+async function confirmDelete() {
+  try {
+    await api({ action: 'deleteParticipant', adminId: S.adminId, id: S.deleteTarget, race: S.deleteRace }, 'POST');
+    closeModal('modalDelete');
+    toast('Participante eliminado', 'ok');
+    refreshDashboard();
+  } catch(err) { toast(err.message, 'err'); }
+}
+
+async function exportData() {
+  const race = document.getElementById('dashRaceFilter').value;
+  if (!race) { toast('Selecciona una carrera para exportar', 'err'); return; }
+  window.open(S.apiUrl + `?action=exportCSV&adminId=${S.adminId}&race=${encodeURIComponent(race)}`, '_blank');
+}
+
+// ══════════════════════════════════════════════
+//  ADD PARTICIPANT MODAL
+// ══════════════════════════════════════════════
+function showAddParticipant() {
+  ['pRace','pNombre','pDni','pEmail','pDorsal'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  // Pre-select current race if any
+  const race = document.getElementById('dashRaceFilter')?.value || document.getElementById('recordsRaceSelect')?.value || '';
+  if (race && race !== '_social') { const el = document.getElementById('pRace'); if(el) el.value = race; }
+  document.getElementById('modalPartTitle').textContent = 'Nuevo Participante';
+  openModal('modalParticipant');
+}
+
+async function submitParticipant() {
+  const race  = document.getElementById('pRace').value;
+  const nombre= document.getElementById('pNombre').value.trim();
+  const dni   = document.getElementById('pDni').value.trim();
+  const email = document.getElementById('pEmail').value.trim();
+  const dorsal= document.getElementById('pDorsal').value.trim();
+
+  ['PRace','PNombre','PDni','PEmail'].forEach(f => {
+    document.getElementById('err'+f).classList.remove('show');
+    document.getElementById('p'+f.replace('P','')).classList?.remove('err');
+  });
+
+  let hasErr = false;
+  if (!race)  { document.getElementById('errPRace').classList.add('show');  hasErr = true; }
+  if (!nombre){ document.getElementById('errPNombre').classList.add('show'); hasErr = true; }
+  if (!dni)   { document.getElementById('errPDni').classList.add('show');   hasErr = true; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('errPEmail').classList.add('show'); hasErr = true; }
+  if (hasErr) return;
+
+  const btn = document.getElementById('pSubmitBtn');
+  btn.disabled = true; btn.innerHTML = '<div class="spin"></div> Registrando...';
+  try {
+    await api({ action: 'registerParticipant', adminId: S.adminId, race, nombre, dni, email, dorsal: dorsal || undefined }, 'POST');
+    closeModal('modalParticipant');
+    toast('✅ Participante registrado y email enviado', 'ok');
+    refreshDashboard();
+    loadRecords();
+  } catch(err) { toast(err.message, 'err'); }
+  finally { btn.disabled = false; btn.innerHTML = 'Registrar →'; }
+}
+
+// ══════════════════════════════════════════════
+//  QR MODAL (ADMIN)
+// ══════════════════════════════════════════════
+function showQRModal(id, nombre, dorsal, race) {
+  document.getElementById('qrRaceLabel').textContent = race || 'Evento';
+  document.getElementById('qrNameLabel').textContent = nombre;
+  document.getElementById('qrDorsalLabel').textContent = '#' + (dorsal || '?');
+  document.getElementById('qrIdTxt').textContent = id;
+  const holder = document.getElementById('qr-holder');
+  holder.innerHTML = '';
+  if (S.qrInstance) { try { S.qrInstance.clear(); } catch(_){} }
+  S.qrInstance = new QRCode(holder, { text: id, width: 200, height: 200, colorDark: '#0a0a0a', colorLight: '#fff', correctLevel: QRCode.CorrectLevel.H });
+  openModal('modalQR');
+}
+
+function downloadQR() {
+  const canvas = document.querySelector('#qr-holder canvas');
+  if (!canvas) return toast('QR no disponible', 'err');
+  const a = document.createElement('a');
+  a.download = `qr_${document.getElementById('qrDorsalLabel').textContent.replace('#','')}_${document.getElementById('qrNameLabel').textContent.replace(/\s/g,'_')}.png`;
+  a.href = canvas.toDataURL(); a.click();
+}
+
+// ══════════════════════════════════════════════
+//  RECORDS PAGE
+// ══════════════════════════════════════════════
+async function loadRecords() {
+  const race = document.getElementById('recordsRaceSelect').value;
+  const addBtn = document.getElementById('addRecordBtn');
+  if (!race) {
+    document.getElementById('recordsContent').innerHTML = `<div class="empty"><div class="empty-icon">📋</div><div class="empty-title">Selecciona una carrera</div></div>`;
+    if (addBtn) addBtn.style.display = 'none';
+    return;
+  }
+  if (addBtn) addBtn.style.display = 'inline-flex';
+  document.getElementById('recordsContent').innerHTML = `<div class="loading-block"><div class="spin spin-dark"></div> Cargando registros...</div>`;
+  try {
+    const isSocial = race === '_social';
+    const data = isSocial
+      ? await api({ action: 'getParticipants', adminId: S.adminId, race: 'SocialRuns' })
+      : await api({ action: 'getParticipants', adminId: S.adminId, race });
+    const list = data.participants || [];
+    if (!list.length) {
+      document.getElementById('recordsContent').innerHTML = `<div class="empty"><div class="empty-icon">👥</div><div class="empty-title">Sin registros</div><div class="empty-msg">Esta carrera no tiene participantes aún.</div></div>`;
+      return;
+    }
+    document.getElementById('recordsContent').innerHTML = `
+      <div class="table-wrap">
+        <table><thead><tr>
+          <th>Dorsal</th><th>Nombre</th><th>DNI</th><th>Email</th><th>Estado</th>
+          <th>Creado por</th><th>Modificado por</th><th>Fecha mod.</th><th>Acciones</th>
+        </tr></thead>
+        <tbody>${list.map(p => `
+          <tr>
+            <td><span class="dorsal">${p.dorsal||'—'}</span></td>
+            <td class="td-bold">${esc(p.nombre)}</td>
+            <td style="font-size:12px;color:var(--grey-600)">${esc(p.dni)}</td>
+            <td style="font-size:12px;color:var(--grey-600)">${esc(p.email||'')}</td>
+            <td>
+              <select class="select" style="font-size:12px;padding:5px 28px 5px 8px" onchange="updateRecordStatus('${p.id}','${esc(race)}',this.value)">
+                <option ${p.estado==='Registrado'?'selected':''}>Registrado</option>
+                <option ${p.estado==='Asistió'?'selected':''}>Asistió</option>
+                <option ${p.estado==='Cancelado'?'selected':''}>Cancelado</option>
+              </select>
+            </td>
+            <td style="font-size:11px;color:var(--grey-600)">${esc(p.creadoPor||'—')}</td>
+            <td style="font-size:11px;color:var(--grey-600)">${esc(p.modificadoPor||'—')}</td>
+            <td style="font-size:11px;color:var(--grey-400)">${p.ultimaMod ? fmtDate(p.ultimaMod) : '—'}</td>
+            <td>
+              <div style="display:flex;gap:5px">
+                <button class="btn btn-ghost btn-sm" onclick="showQRModal('${p.id}','${esc(p.nombre)}','${p.dorsal||''}','${esc(race)}')">QR</button>
+                <button class="btn btn-danger btn-sm" onclick="promptDelete('${p.id}','${esc(p.nombre)}','${esc(race)}')">✕</button>
+              </div>
+            </td>
+          </tr>`).join('')}
+        </tbody></table>
+      </div>`;
+  } catch(err) {
+    document.getElementById('recordsContent').innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-msg">${err.message}</div></div>`;
+  }
+}
+
+async function updateRecordStatus(id, race, status) {
+  try {
+    await api({ action: 'updateStatus', adminId: S.adminId, id, race, status }, 'POST');
+    toast(`Estado → ${status}`, 'ok');
+  } catch(err) { toast(err.message, 'err'); loadRecords(); }
+}
+
+// ══════════════════════════════════════════════
+//  SCANNER (ADMIN)
+// ══════════════════════════════════════════════
+function initScanner() {
+  if (S.scannerActive) return;
+  S.scannerActive = true;
+  S.html5Qr = new Html5Qrcode('qr-reader');
+  S.html5Qr.start(
+    { facingMode: 'environment' },
+    { fps: 10, qrbox: { width: 260, height: 260 }, aspectRatio: 1 },
+    onAdminScan,
+    () => {}
+  ).catch(() => {
+    document.getElementById('qr-reader').innerHTML = `<div class="empty" style="padding:32px"><div class="empty-icon">📷</div><div class="empty-title">Cámara no disponible</div><div class="empty-msg">Permite el acceso a la cámara. Requiere HTTPS.</div></div>`;
+    S.scannerActive = false;
+  });
+}
+
+function stopScanner() {
+  if (S.html5Qr && S.scannerActive) {
+    S.html5Qr.stop().catch(() => {});
+    S.scannerActive = false;
+  }
+}
+
+async function onAdminScan(text) {
+  if (S.scanCooldown || text === S.lastScanId) return;
+  S.lastScanId = text; S.scanCooldown = true;
+  setTimeout(() => { S.scanCooldown = false; }, 5000);
+
+  const race = document.getElementById('scanRaceSelect').value;
+  if (!race) {
+    renderScanCard('err', '⚠️', 'Selecciona una carrera', 'Elige la carrera activa antes de escanear.', null, null);
+    return;
+  }
+
+  renderScanCard('loading', null, 'Verificando…', 'Consultando base de datos', null, null);
+
+  try {
+    const data = await api({ action: 'getParticipant', id: text, adminId: S.adminId, token: S.adminId });
+    const p = data.participant;
+    const isSocial = race === '_social';
+
+    // Mostrar datos y botones de acción (no registrar automáticamente)
+    renderScanWithActions(p, text, race, isSocial);
+  } catch(err) {
+    renderScanCard('err', '❌', 'QR no válido', err.message, null, null);
+  }
+}
+
+function renderScanWithActions(p, id, race, isSocial) {
+  const estado = p.estado;
+  const alreadyAttended = estado === 'Asistió';
+  const canRegister = estado === 'Registrado' || estado === 'Inscrito';
+
+  let statusMsg = '', cardType = 'ok';
+  if (alreadyAttended) { cardType = 'blocked'; statusMsg = 'Este QR ya fue escaneado anteriormente.'; }
+  else if (!canRegister) { cardType = 'warning'; statusMsg = `Estado actual: "${estado}". Solo se puede registrar desde "Registrado".`; }
+
+  const wrap = document.getElementById('scanResultWrap');
+  wrap.innerHTML = `
+    <div class="scan-card ${cardType}">
+      <div class="scan-hero">
+        <span class="scan-emoji">${alreadyAttended ? '⛔' : canRegister ? '📋' : '⚠️'}</span>
+        <div class="scan-headline">${esc(p.nombre)}</div>
+        <div class="scan-note">${alreadyAttended ? '⚠️ QR ya fue escaneado para esta carrera' : canRegister ? 'Listo para registrar asistencia' : statusMsg}</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-row"><span class="info-label">Dorsal</span><span class="info-val" style="font-family:var(--font-display);font-size:20px;font-weight:900;color:var(--accent)">#${p.dorsal||'—'}</span></div>
+        <div class="info-row"><span class="info-label">DNI</span><span class="info-val">${esc(p.dni||'')}</span></div>
+        <div class="info-row"><span class="info-label">Email</span><span class="info-val" style="font-size:12px">${esc(p.email||'—')}</span></div>
+        <div class="info-row"><span class="info-label">Estado</span><span class="info-val"><span class="badge ${estado}"><span class="badge-dot"></span>${estado}</span></span></div>
+        <div class="info-row"><span class="info-label">Carrera</span><span class="info-val" style="font-size:12px">${esc(race==='_social'?'Social Running':race)}</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+        ${canRegister ? `<button class="btn btn-accent btn-full btn-lg" onclick="doAdminAttendance('${id}','${esc(race)}')">✅ Registrar asistencia</button>` : ''}
+        ${alreadyAttended ? `<div style="background:#fee2e2;color:#b91c1c;padding:12px;border-radius:var(--r);font-size:13px;font-weight:600;text-align:center">⛔ Ya registrado — no se puede volver a marcar</div>` : ''}
+        <button class="btn btn-ghost btn-full" onclick="resetAdminScan()">↩ Escanear otro</button>
+      </div>
+    </div>`;
+}
+
+async function doAdminAttendance(id, race) {
+  const isSocial = race === '_social';
+  try {
+    let data;
+    if (isSocial) {
+      data = await api({ action: 'markSocialAttendance', adminId: S.adminId, id }, 'POST');
+    } else {
+      data = await api({ action: 'markAttendance', adminId: S.adminId, id, race }, 'POST');
+    }
+    if (data.alreadyRegistered) {
+      const p = data.participant || data.registration;
+      renderScanCard('blocked', '⛔', 'Ya registrado', 'Este participante ya marcó asistencia.', p, race);
+      toast('⚠️ Ya estaba registrado', 'err');
+      return;
+    }
+    const p = data.participant || data.registration;
+    renderScanCard('ok', '✅', '¡Asistencia registrada!', `${p.nombre} — Dorsal #${p.dorsal||'—'}`, p, race);
+    toast('✅ Asistencia registrada', 'ok');
+  } catch(err) {
+    toast('Error: ' + err.message, 'err');
+  }
+}
+
+function renderScanCard(type, emoji, title, note, p, race) {
+  const wrap = document.getElementById('scanResultWrap');
+  const spinHtml = `<div style="display:flex;align-items:center;justify-content:center;padding:24px;gap:10px"><div class="spin spin-dark"></div><span style="font-size:14px;color:var(--grey-600)">${title}</span></div>`;
+  if (type === 'loading') { wrap.innerHTML = `<div class="scan-card loading">${spinHtml}</div>`; return; }
+  wrap.innerHTML = `
+    <div class="scan-card ${type}">
+      <div class="scan-hero">
+        <span class="scan-emoji">${emoji}</span>
+        <div class="scan-headline">${title}</div>
+        <div class="scan-note">${note}</div>
+      </div>
+      ${p ? `<div class="info-grid">
+        <div class="info-row"><span class="info-label">Nombre</span><span class="info-val">${esc(p.nombre||'')}</span></div>
+        <div class="info-row"><span class="info-label">Dorsal</span><span class="info-val" style="color:var(--accent);font-family:var(--font-display);font-size:18px;font-weight:900">#${p.dorsal||'—'}</span></div>
+      </div>` : ''}
+      <button class="btn btn-ghost btn-full" style="margin-top:12px" onclick="resetAdminScan()">↩ Escanear siguiente</button>
+    </div>`;
+}
+
+function resetAdminScan() {
+  S.lastScanId = ''; S.scanCooldown = false;
+  document.getElementById('scanResultWrap').innerHTML = '';
+}
+
+// ══════════════════════════════════════════════
+//  CONFIG PAGE
+// ══════════════════════════════════════════════
+async function loadConfigPage() {
+  // Fill current values
+  document.getElementById('cfgApiUrl').value = S.apiUrl;
+  document.getElementById('cfgOrgName').value = S.orgName;
+  document.getElementById('cfgLogoUrl').value = S.logoUrl;
+  document.getElementById('cfgAccentColor').value = S.accentColor;
+  document.getElementById('accentPreviewLabel').textContent = S.accentColor;
+  const prev = document.getElementById('logoPreview');
+  if (S.logoUrl) { prev.src = S.logoUrl; prev.style.display='block'; }
+
+  // Load races list
+  await loadRacesConfig();
+  // Load admin list
+  await loadAdminList();
+}
+
+async function loadRacesConfig() {
+  const wrap = document.getElementById('raceListConfig');
+  try {
+    const data = await api({ action: 'getRaces', adminId: S.adminId });
+    S.races = data.races || [];
+    populateRaceSelects();
+    if (!S.races.length) { wrap.innerHTML = `<p style="font-size:13px;color:var(--grey-600)">No hay carreras específicas creadas.</p>`; return; }
+    wrap.innerHTML = S.races.map(r => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--grey-100)">
+        <span style="font-weight:600">🏁 ${esc(r.name)}</span>
+        <span class="tag">Activa</span>
+      </div>`).join('');
+  } catch(err) { wrap.innerHTML = `<p style="color:var(--accent);font-size:13px">${err.message}</p>`; }
+}
+
+async function loadAdminList() {
+  const wrap = document.getElementById('adminListWrap');
+  try {
+    const data = await api({ action: 'getAdminList', adminId: S.adminId });
+    const admins = data.admins || [];
+    if (!admins.length) { wrap.innerHTML = `<p style="font-size:13px;color:var(--grey-600)">Sin administradores registrados.</p>`; return; }
+    wrap.innerHTML = admins.map(a => `
+      <div class="admin-row">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="admin-id">${esc(a.id)}</span>
+          <div>
+            <div style="font-weight:600;font-size:14px">${esc(a.nombre)}</div>
+            <div style="font-size:11px;color:var(--grey-600)">${esc(a.email||'sin email')}</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="tag ${a.rol==='superadmin'?'accent':''}">${a.rol}</span>
+          <span class="tag" style="${a.activo?'color:#16a34a':'color:var(--accent)'}">${a.activo?'Activo':'Inactivo'}</span>
+        </div>
+      </div>`).join('');
+  } catch(err) { wrap.innerHTML = `<p style="color:var(--accent);font-size:13px">${err.message}</p>`; }
+}
+
+async function createRace() {
+  const name = document.getElementById('newRaceName').value.trim();
+  if (!name) { toast('Ingresa el nombre de la carrera', 'err'); return; }
+  try {
+    await api({ action: 'createRace', adminId: S.adminId, name }, 'POST');
+    document.getElementById('newRaceName').value = '';
+    toast(`Carrera "${name}" creada`, 'ok');
+    loadRacesConfig();
+    await loadRaces();
+  } catch(err) { toast(err.message, 'err'); }
+}
+
+async function saveAdmin() {
+  const id = document.getElementById('newAdminId').value.trim();
+  const nombre = document.getElementById('newAdminName').value.trim();
+  const rol = document.getElementById('newAdminRole').value;
+  const email = document.getElementById('newAdminEmail').value.trim();
+  if (!id || !nombre) { toast('ID y nombre son requeridos', 'err'); return; }
+  try {
+    await api({ action: 'upsertAdmin', adminId: S.adminId, id, nombre, rol, email, activo: true }, 'POST');
+    ['newAdminId','newAdminName','newAdminEmail'].forEach(i => document.getElementById(i).value = '');
+    toast('Admin guardado', 'ok');
+    loadAdminList();
+  } catch(err) { toast(err.message, 'err'); }
+}
+
+async function saveConfig() {
+  const orgName = document.getElementById('cfgOrgName').value.trim();
+  const logoUrl = document.getElementById('cfgLogoUrl').value.trim();
+  const accentColor = document.getElementById('cfgAccentColor').value;
+  const raceLocation = ''; // can add field
+
+  S.orgName = orgName || S.orgName;
+  S.logoUrl = logoUrl;
+  localStorage.setItem('rc_orgName', S.orgName);
+  localStorage.setItem('rc_logoUrl', S.logoUrl);
+  applyAccent(accentColor);
+  applyBranding();
+
+  try {
+    await api({ action: 'saveConfig', adminId: S.adminId, config: { orgName, logoUrl, accentColor } }, 'POST');
+    toast('✅ Configuración guardada', 'ok');
+  } catch(err) {
+    toast('Config guardada localmente (API error: ' + err.message + ')', 'err');
+  }
+}
+
+function saveApiUrl() {
+  S.apiUrl = document.getElementById('cfgApiUrl').value.trim();
+  localStorage.setItem('rc_apiUrl', S.apiUrl);
+  toast('URL guardada', 'ok');
+}
+
+async function testConn() {
+  const el = document.getElementById('connStatus');
+  el.textContent = '⏳ Probando…';
+  try {
+    await api({ action: 'getStats', adminId: S.adminId });
+    el.textContent = '✅ Conexión exitosa';
+    el.style.color = '#16a34a';
+  } catch(err) {
+    el.textContent = '❌ ' + err.message;
+    el.style.color = 'var(--accent)';
+  }
+}
+
+// ══════════════════════════════════════════════
+//  RUNNER — HISTORIAL
+// ══════════════════════════════════════════════
+function switchRunnerTab(tab) {
+  ['history','social','qr'].forEach(t => {
+    const el = document.getElementById('rtab-' + t);
+    if (el) el.style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.rtab').forEach((b,i) => {
+    const tabs = ['history','social','qr'];
+    b.classList.toggle('active', tabs[i] === tab);
+  });
+}
+
+function renderRunnerHistory() {
+  const wrap = document.getElementById('historyContent');
+  const history = (S.runnerData && S.runnerData.history) || [];
+  if (!history.length) {
+    wrap.innerHTML = `<div class="empty"><div class="empty-icon">🏃</div><div class="empty-title">Sin historial</div><div class="empty-msg">Aún no apareces en ninguna carrera o social run.<br/>Si te inscribiste, verifica tu DNI.</div></div>`;
+    return;
+  }
+  wrap.innerHTML = history.map(h => `
+    <div class="run-card" onclick="showRunnerQR('${h.id}','${esc(h.nombre)}','${esc(h.race)}','${h.dorsal||''}')">
+      <div class="run-card-icon">${h.type==='social'?'🌞':'🏁'}</div>
+      <div class="run-card-body">
+        <div class="run-card-title">${esc(h.race)}</div>
+        <div class="run-card-meta">${h.type==='social'?`Domingo ${h.fechaEvento||''}`:''} · Reg. ${h.fechaReg ? fmtDate(h.fechaReg) : '—'}</div>
+      </div>
+      <div class="run-card-right">
+        <span class="badge ${h.estado}"><span class="badge-dot"></span>${h.estado}</span>
+        ${h.dorsal ? `<span class="dorsal">${h.dorsal}</span>` : ''}
+        <span style="font-size:11px;color:var(--grey-400)">Ver QR →</span>
+      </div>
+    </div>`).join('');
+}
+
+function showRunnerQR(id, nombre, race, dorsal) {
+  switchRunnerTab('qr');
+  const wrap = document.getElementById('qrTabContent');
+  wrap.innerHTML = `<div class="qr-display">
+    <div class="qr-race">${esc(race)}</div>
+    <div class="qr-name">${esc(nombre)}</div>
+    ${dorsal ? `<div class="qr-dorsal">#${dorsal}</div>` : ''}
+    <div id="qr-holder-runner" style="display:flex;justify-content:center;margin:16px 0"></div>
+    <div class="qr-id-txt">${id}</div>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:12px">
+    <button class="btn btn-accent btn-full" onclick="downloadRunnerQR()">⬇ Descargar QR</button>
+  </div>`;
+  new QRCode(document.getElementById('qr-holder-runner'), {
+    text: id, width: 200, height: 200,
+    colorDark: '#0a0a0a', colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+}
+
+function downloadRunnerQR() {
+  const canvas = document.querySelector('#qr-holder-runner canvas');
+  if (!canvas) return toast('QR no disponible', 'err');
+  const a = document.createElement('a'); a.download = 'mi_qr.png'; a.href = canvas.toDataURL(); a.click();
+}
+
+// ══════════════════════════════════════════════
+//  RUNNER — SOCIAL RUN
+// ══════════════════════════════════════════════
+async function loadSocialSlots() {
+  const wrap = document.getElementById('socialSlots');
+  try {
+    const data = await api({ action: 'getSocialRunSlots' });
+    const slots = data.slots || [];
+    if (!slots.length) { wrap.innerHTML = `<div class="empty"><div class="empty-icon">📅</div><div class="empty-title">No hay fechas disponibles</div></div>`; return; }
+
+    // Check if runner is already registered for any slot
+    const myDates = new Set((S.runnerData?.history||[]).filter(h=>h.type==='social').map(h=>h.fechaEvento));
+
+    wrap.innerHTML = `<div class="sunday-slots">${slots.map(s => {
+      const isMine = myDates.has(s.fecha);
+      const dateObj = new Date(s.fecha + 'T12:00:00');
+      const dateStr = dateObj.toLocaleDateString('es-PE', { weekday:'long', day:'numeric', month:'long' });
+      return `<div class="slot-card" style="${isMine?'border-color:var(--green)':''}">
+        <div>
+          <div class="slot-date">${dateStr}</div>
+          <div class="slot-meta">${s.inscritos} inscrito(s)</div>
+        </div>
+        ${isMine
+          ? `<span class="badge Asistió" style="background:var(--green);color:#000">Inscrito ✓</span>`
+          : `<button class="btn btn-accent btn-sm" onclick="openSocialReg('${s.fecha}','${esc(dateStr)}')">Inscribirme</button>`
+        }
+      </div>`;
+    }).join('')}</div>`;
+  } catch(err) { wrap.innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-msg">${err.message}</div></div>`; }
+}
+
+function openSocialReg(fecha, dateStr) {
+  S.selectedSocialDate = fecha;
+  document.getElementById('socialRegTitle').textContent = `Inscripción — ${dateStr}`;
+  document.getElementById('srDni').value = S.runnerDni || '';
+  const histName = S.runnerData?.corredor?.nombre || '';
+  document.getElementById('srNombre').value = histName;
+  document.getElementById('socialRegForm').style.display = 'block';
+  document.getElementById('socialRegSuccess').style.display = 'none';
+}
+
+async function submitSocialRun() {
+  const nombre = document.getElementById('srNombre').value.trim();
+  const dni    = document.getElementById('srDni').value.trim();
+  const email  = document.getElementById('srEmail').value.trim();
+  if (!nombre) { toast('Ingresa tu nombre', 'err'); return; }
+  if (!dni)    { toast('DNI requerido', 'err'); return; }
+
+  const btn = document.getElementById('srSubmitBtn');
+  btn.disabled = true; btn.innerHTML = '<div class="spin"></div> Inscribiendo...';
+  try {
+    const data = await api({ action: 'registerSocialRun', nombre, dni, email, fechaEvento: S.selectedSocialDate }, 'POST');
+    document.getElementById('socialRegForm').style.display = 'none';
+    document.getElementById('socialRegSuccess').style.display = 'block';
+    document.getElementById('socialSuccessMsg').textContent = `Inscrito para el ${S.selectedSocialDate}. ${email ? 'El QR fue enviado a tu email.' : ''}`;
+    // Mostrar QR
+    const qrDiv = document.getElementById('socialSuccessQR');
+    qrDiv.innerHTML = '';
+    new QRCode(qrDiv, { text: data.registration.id, width: 160, height: 160, colorDark:'#0a0a0a', colorLight:'#fff', correctLevel: QRCode.CorrectLevel.H });
+    toast('¡Inscrito correctamente!', 'ok');
+    // Refrescar historial
+    const hist = await api({ action: 'getRunnerHistory', dni: S.runnerDni });
+    S.runnerData = hist;
+  } catch(err) { toast('Error: ' + err.message, 'err'); }
+  finally { btn.disabled = false; btn.innerHTML = 'Confirmar inscripción →'; }
+}
+
+function resetSocialForm() {
+  document.getElementById('socialRegForm').style.display = 'none';
+  document.getElementById('socialRegSuccess').style.display = 'none';
+  loadSocialSlots();
+}
+
+// ══════════════════════════════════════════════
+//  MODALS
+// ══════════════════════════════════════════════
+function openModal(id) {
+  document.getElementById(id).classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) closeModal(o.id); });
+});
+
+// ══════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════
+function toast(msg, type = 'ok') {
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  document.getElementById('toastWrap').appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+// ══════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtDate(iso) {
+  if (!iso) return '—';
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('es-PE',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+  } catch(_) { return iso.slice(0,10); }
+}
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+// Init: show setup modal if no API configured
+if (!S.apiUrl) {
+  // subtle hint
+  setTimeout(() => { toast('⚙️ Configura la API con el botón de abajo', 'ok'); }, 800);
+}
+
+// Runner tab init
+const _rtabs = document.querySelectorAll('.rtab');
+if (_rtabs.length) {
+  _rtabs.forEach((b,i) => {
+    const tabs = ['history','social','qr'];
+    b.onclick = () => switchRunnerTab(tabs[i]);
+  });
+}
+
+// Color picker live
+const colorPicker = document.getElementById('cfgAccentColor');
+if (colorPicker) {
+  colorPicker.addEventListener('input', e => {
+    applyAccent(e.target.value);
+    const lbl = document.getElementById('accentPreviewLabel');
+    if(lbl) lbl.textContent = e.target.value;
+  });
+}
+</script>
+</body>
+</html>
