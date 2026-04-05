@@ -790,10 +790,7 @@ hr.divider{border:none;border-top:1px solid var(--grey-200);margin:14px 0}
     <p style="color:var(--grey-600);font-size:12px;margin-top:10px">Contacta a tu coordinador si no tienes acceso.</p>
   </div>
 
-  <!-- Config shortcut (no requiere login) -->
-  <div style="margin-top:40px;z-index:1">
-    <button class="btn btn-ghost-white btn-sm" onclick="showSetupPrompt()">⚙️ Configurar API</button>
-  </div>
+
 </div>
 
 <!-- ════════════════════════════════════════════════
@@ -806,7 +803,7 @@ hr.divider{border:none;border-top:1px solid var(--grey-200);margin:14px 0}
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
         <div>
           <div class="runner-name" id="runnerName">Corredor</div>
-          <div class="runner-sub" id="runnerDniLabel">DNI —</div>
+          <div class="runner-sub" id="runnerDniLbl">DNI —</div>
         </div>
         <button class="btn btn-ghost-white btn-sm" onclick="logout()" style="margin-top:4px">Salir</button>
       </div>
@@ -815,14 +812,14 @@ hr.divider{border:none;border-top:1px solid var(--grey-200);margin:14px 0}
 
   <div style="max-width:600px;margin:0 auto;width:100%;padding:0 14px">
     <div class="runner-tabs" style="margin-top:16px">
-      <button class="rtab active" onclick="switchRunnerTab('history')">📋 Mi historial</button>
-      <button class="rtab" onclick="switchRunnerTab('social')">🌞 Social Run</button>
-      <button class="rtab" onclick="switchRunnerTab('qr')">📲 Mi QR</button>
+      <button class="rtab active" onclick="switchTab('history')">📋 Mi historial</button>
+      <button class="rtab" onclick="switchTab('social')">🌞 Social Run</button>
+      <button class="rtab" onclick="switchTab('qr')">📲 Mi QR</button>
     </div>
 
     <!-- TAB: HISTORIAL -->
     <div id="rtab-history">
-      <div id="historyContent">
+      <div id="histContent">
         <div class="loading-block"><div class="spin spin-dark"></div> Cargando historial...</div>
       </div>
     </div>
@@ -972,7 +969,7 @@ hr.divider{border:none;border-top:1px solid var(--grey-200);margin:14px 0}
           <!-- Race selector for scanner -->
           <div class="card" style="margin-bottom:14px;padding:16px">
             <label class="form-label">Carrera activa para este escaneo</label>
-            <select class="form-inp" id="scanRaceSelect" style="margin-top:4px">
+            <select class="form-inp" id="scanRace" style="margin-top:4px">
               <option value="">— Selecciona una carrera —</option>
               <option value="_social">🌞 Social Running (Domingos)</option>
             </select>
@@ -1116,110 +1113,6 @@ hr.divider{border:none;border-top:1px solid var(--grey-200);margin:14px 0}
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════
-     MODAL: AGREGAR / EDITAR PARTICIPANTE
-════════════════════════════════════════════════ -->
-<div class="modal-overlay" id="modalParticipant">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-hdr">
-      <div class="modal-title" id="modalPartTitle">Nuevo Participante</div>
-      <button class="modal-close" onclick="closeModal('modalParticipant')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Carrera <span class="req">*</span></label>
-        <select class="form-inp" id="pRace"><option value="">— Selecciona —</option></select>
-        <div class="form-err" id="errPRace">Selecciona una carrera</div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Nombre completo <span class="req">*</span></label>
-        <input class="form-inp" id="pNombre" placeholder="Juan García López"/>
-        <div class="form-err" id="errPNombre">Nombre requerido</div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">DNI <span class="req">*</span></label>
-          <input class="form-inp" id="pDni" placeholder="12345678"/>
-          <div class="form-err" id="errPDni">DNI requerido</div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Dorsal (auto si vacío)</label>
-          <input class="form-inp" id="pDorsal" type="number" placeholder="Auto" min="1"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email <span class="req">*</span></label>
-        <input class="form-inp" id="pEmail" type="email" placeholder="correo@ejemplo.com"/>
-        <div class="form-err" id="errPEmail">Email inválido</div>
-      </div>
-      <div style="display:flex;gap:10px;margin-top:4px">
-        <button class="btn btn-accent btn-full" id="pSubmitBtn" onclick="submitParticipant()">Registrar →</button>
-        <button class="btn btn-ghost" onclick="closeModal('modalParticipant')">Cancelar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: QR ADMIN -->
-<div class="modal-overlay" id="modalQR">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-hdr">
-      <div class="modal-title">Código QR</div>
-      <button class="modal-close" onclick="closeModal('modalQR')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="qr-display">
-        <div class="qr-race" id="qrRaceLabel">—</div>
-        <div class="qr-name" id="qrNameLabel">—</div>
-        <div class="qr-dorsal" id="qrDorsalLabel">#—</div>
-        <div id="qr-holder"></div>
-        <div class="qr-id-txt" id="qrIdTxt">—</div>
-      </div>
-      <div style="display:flex;gap:10px;margin-top:4px">
-        <button class="btn btn-black btn-full" onclick="downloadQR()">⬇ Descargar</button>
-        <button class="btn btn-ghost btn-full" onclick="closeModal('modalQR')">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: CONFIRM DELETE -->
-<div class="modal-overlay" id="modalDelete">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-hdr">
-      <div class="modal-title">Eliminar participante</div>
-      <button class="modal-close" onclick="closeModal('modalDelete')">×</button>
-    </div>
-    <div class="modal-body">
-      <p style="color:var(--grey-600);margin-bottom:20px;line-height:1.5">¿Eliminar a <strong id="deleteNameLabel"></strong>? Esta acción no se puede deshacer.</p>
-      <div style="display:flex;gap:10px">
-        <button class="btn btn-danger btn-full" onclick="confirmDelete()">Eliminar</button>
-        <button class="btn btn-ghost btn-full" onclick="closeModal('modalDelete')">Cancelar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: SETUP API (sin login) -->
-<div class="modal-overlay" id="modalSetup">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-hdr">
-      <div class="modal-title">Configurar API</div>
-      <button class="modal-close" onclick="closeModal('modalSetup')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">URL del Web App (Apps Script)</label>
-        <input class="form-inp" id="setupApiUrl" placeholder="https://script.google.com/macros/s/…"/>
-      </div>
-      <button class="btn btn-accent btn-full" onclick="saveSetupApi()">Guardar y continuar</button>
-    </div>
-  </div>
-</div>
 
 <!-- ─────────────────────────────────────────────
      JAVASCRIPT
@@ -1229,7 +1122,7 @@ hr.divider{border:none;border-top:1px solid var(--grey-200);margin:14px 0}
 //  STATE
 // ══════════════════════════════════════════════
 const S = {
-  apiUrl: 'https://script.google.com/macros/s/AKfycbybrF-e0z2cYfVm_QflpNpQRU34fPE4_p-RKLGbpQJkkTZQW8pPsLmS0ILxYwAMhYcq/exec',
+  apiUrl:       localStorage.getItem('rc_apiUrl') || '',
   accentColor:  localStorage.getItem('rc_accent') || '#E8002D',
   orgName:      localStorage.getItem('rc_orgName') || 'Race Club',
   logoUrl:      localStorage.getItem('rc_logoUrl') || '',
@@ -1324,39 +1217,37 @@ function selectRole(role) {
   document.getElementById('loginAdmin').style.display  = role === 'admin'  ? 'block' : 'none';
 }
 
-function showSetupPrompt() {
-  const el = document.getElementById('setupApiUrl');
-  if (el) el.value = S.apiUrl;
-  openModal('modalSetup');
-}
 
-function saveSetupApi() {
-  const v = document.getElementById('setupApiUrl').value.trim();
-  S.apiUrl = v;
-  localStorage.setItem('rc_apiUrl', v);
-  closeModal('modalSetup');
-  toast('URL guardada', 'ok');
-}
 
 // ══════════════════════════════════════════════
 //  AUTH: CORREDOR
 // ══════════════════════════════════════════════
-async function loginRunner() {
+// Corredor entra SIN validación — avanza directo y carga en background
+function loginRunner() {
   const dni = document.getElementById('runnerDni').value.trim();
   if (!dni) { toast('Ingresa tu DNI', 'err'); return; }
-  if (!S.apiUrl) { toast('Configura la API primero (botón ⚙️)', 'err'); return; }
+  S.mode = 'runner';
+  S.runnerDni = dni;
+  S.runnerData = { history: [], corredor: null };
+  document.getElementById('runnerName').textContent = 'Bienvenido';
+  document.getElementById('runnerDniLbl').textContent = 'DNI ' + dni;
+  showScreen('runner');
+  switchTab('history');
+  loadSocialSlots();
+  // Carga historial en background sin bloquear la entrada
+  loadRunnerHistoryBG(dni);
+}
+
+async function loadRunnerHistoryBG(dni) {
+  const wrap = document.getElementById('histContent');
+  wrap.innerHTML = '<div class="lb"><div class="spin spind"></div> Buscando en el sistema...</div>';
   try {
     const data = await api({ action: 'getRunnerHistory', dni });
-    S.mode = 'runner';
-    S.runnerDni = dni;
     S.runnerData = data;
-    document.getElementById('runnerName').textContent = data.corredor ? data.corredor.nombre : 'Corredor';
-    document.getElementById('runnerDniLabel').textContent = `DNI ${dni}`;
-    showScreen('runner');
-    switchRunnerTab('history');
-    loadSocialSlots();
+    if (data.corredor) document.getElementById('runnerName').textContent = data.corredor.nombre;
+    renderHistory();
   } catch(err) {
-    toast('Error: ' + err.message, 'err');
+    wrap.innerHTML = '<div class="empty"><div class="ei">⚠️</div><div class="et">No se pudo cargar</div><div class="em">' + esc(err.message) + '</div></div>';
   }
 }
 
@@ -1366,7 +1257,6 @@ async function loginRunner() {
 async function loginAdmin() {
   const id = document.getElementById('adminLoginId').value.trim();
   if (!id) { toast('Ingresa tu ID de administrador', 'err'); return; }
-  if (!S.apiUrl) { toast('Configura la API primero (botón ⚙️)', 'err'); return; }
   try {
     const data = await api({ action: 'verifyAdmin', adminId: id }, 'POST');
     S.mode = 'admin';
@@ -1396,13 +1286,13 @@ function logout() {
 //  API LAYER
 // ══════════════════════════════════════════════
 async function api(params, method = 'GET') {
-  if (!S.apiUrl) throw new Error('API no configurada. Usa el botón ⚙️ en la pantalla de inicio.');
+  const API_URL = 'https://script.google.com/macros/s/AKfycbybrF-e0z2cYfVm_QflpNpQRU34fPE4_p-RKLGbpQJkkTZQW8pPsLmS0ILxYwAMhYcq/exec';
   let url, opts;
   if (method === 'GET') {
-    url = S.apiUrl + '?' + new URLSearchParams(params).toString();
+    url = API_URL + '?' + new URLSearchParams(params).toString();
     opts = { method: 'GET' };
   } else {
-    url = S.apiUrl;
+    url = API_URL;
     opts = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) };
   }
   const res = await fetch(url, opts);
@@ -1553,7 +1443,8 @@ async function confirmDelete() {
 async function exportData() {
   const race = document.getElementById('dashRaceFilter').value;
   if (!race) { toast('Selecciona una carrera para exportar', 'err'); return; }
-  window.open(S.apiUrl + `?action=exportCSV&adminId=${S.adminId}&race=${encodeURIComponent(race)}`, '_blank');
+  const EXPORT_URL = 'https://script.google.com/macros/s/AKfycbybrF-e0z2cYfVm_QflpNpQRU34fPE4_p-RKLGbpQJkkTZQW8pPsLmS0ILxYwAMhYcq/exec';
+  window.open(EXPORT_URL + `?action=exportCSV&adminId=${S.adminId}&race=${encodeURIComponent(race)}`, '_blank');
 }
 
 // ══════════════════════════════════════════════
@@ -1718,7 +1609,7 @@ async function onAdminScan(text) {
   S.lastScanId = text; S.scanCooldown = true;
   setTimeout(() => { S.scanCooldown = false; }, 5000);
 
-  const race = document.getElementById('scanRaceSelect').value;
+  const race = document.getElementById('scanRace').value;
   if (!race) {
     renderScanCard('err', '⚠️', 'Selecciona una carrera', 'Elige la carrera activa antes de escanear.', null, null);
     return;
@@ -1822,7 +1713,7 @@ function resetAdminScan() {
 // ══════════════════════════════════════════════
 async function loadConfigPage() {
   // Fill current values
-  document.getElementById('cfgApiUrl').value = S.apiUrl;
+  // API URL is hardcoded
   document.getElementById('cfgOrgName').value = S.orgName;
   document.getElementById('cfgLogoUrl').value = S.logoUrl;
   document.getElementById('cfgAccentColor').value = S.accentColor;
@@ -1922,9 +1813,7 @@ async function saveConfig() {
 }
 
 function saveApiUrl() {
-  S.apiUrl = document.getElementById('cfgApiUrl').value.trim();
-  localStorage.setItem('rc_apiUrl', S.apiUrl);
-  toast('URL guardada', 'ok');
+  toast('URL configurada internamente (hardcoded)', 'ok');
 }
 
 async function testConn() {
@@ -1954,8 +1843,8 @@ function switchRunnerTab(tab) {
   });
 }
 
-function renderRunnerHistory() {
-  const wrap = document.getElementById('historyContent');
+function renderHistory() {
+  const wrap = document.getElementById('histContent');
   const history = (S.runnerData && S.runnerData.history) || [];
   if (!history.length) {
     wrap.innerHTML = `<div class="empty"><div class="empty-icon">🏃</div><div class="empty-title">Sin historial</div><div class="empty-msg">Aún no apareces en ninguna carrera o social run.<br/>Si te inscribiste, verifica tu DNI.</div></div>`;
@@ -1977,7 +1866,7 @@ function renderRunnerHistory() {
 }
 
 function showRunnerQR(id, nombre, race, dorsal) {
-  switchRunnerTab('qr');
+  switchTab('qr');
   const wrap = document.getElementById('qrTabContent');
   wrap.innerHTML = `<div class="qr-display">
     <div class="qr-race">${esc(race)}</div>
@@ -2118,11 +2007,7 @@ function fmtDate(iso) {
 // ══════════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════════
-// Init: show setup modal if no API configured
-if (!S.apiUrl) {
-  // subtle hint
-  setTimeout(() => { toast('⚙️ Configura la API con el botón de abajo', 'ok'); }, 800);
-}
+// API URL is hardcoded - no config needed
 
 // Runner tab init
 const _rtabs = document.querySelectorAll('.rtab');
