@@ -1285,20 +1285,61 @@ function logout() {
 // ══════════════════════════════════════════════
 //  API LAYER
 // ══════════════════════════════════════════════
+// Google Apps Script requiere manejo especial de CORS.
+// Todos los llamados van como GET con parámetros en la URL.
+// Para operaciones de escritura (POST), se pasa el body como param 'payload' en GET.
+// Se usa 'no-cors' mode para escrituras (no necesitamos leer la respuesta inmediata).
+// Para lecturas usamos JSONP via script tag para evitar CORS completamente.
+
+const API_URL = 'https://script.google.com/macros/s/AKfycbybrF-e0z2cYfVm_QflpNpQRU34fPE4_p-RKLGbpQJkkTZQW8pPsLmS0ILxYwAMhYcq/exec';
+
+// Llamada principal: siempre GET, body serializado en 'payload' para escrituras
 async function api(params, method = 'GET') {
-  const API_URL = 'https://script.google.com/macros/s/AKfycbybrF-e0z2cYfVm_QflpNpQRU34fPE4_p-RKLGbpQJkkTZQW8pPsLmS0ILxYwAMhYcq/exec';
-  let url, opts;
-  if (method === 'GET') {
-    url = API_URL + '?' + new URLSearchParams(params).toString();
-    opts = { method: 'GET' };
-  } else {
-    url = API_URL;
-    opts = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) };
-  }
-  const res = await fetch(url, opts);
-  const data = await res.json();
-  if (data.error && !data.alreadyRegistered && !data.cannotRegister) throw new Error(data.error);
-  return data;
+  return new Promise((resolve, reject) => {
+    // Crear callback único para JSONP
+    const cbName = '_gasCb_' + Date.now() + '_' + Math.floor(Math.random() * 9999);
+    
+    // Si es POST/escritura, añadir el body como payload y marcar como mutation
+    if (method === 'POST') {
+      params = { ...params, _method: 'POST' };
+    }
+    
+    const qs = new URLSearchParams(params).toString();
+    const url = API_URL + '?' + qs + '&callback=' + cbName;
+    
+    // Timeout de 15 segundos
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error('Tiempo de espera agotado. Verifica tu conexión.'));
+    }, 15000);
+    
+    function cleanup() {
+      clearTimeout(timer);
+      delete window[cbName];
+      const s = document.getElementById(cbName);
+      if (s) s.remove();
+    }
+    
+    // Registrar callback global que GAS llamará
+    window[cbName] = function(data) {
+      cleanup();
+      if (data && data.error && !data.alreadyRegistered && !data.cannotRegister) {
+        reject(new Error(data.error));
+      } else {
+        resolve(data);
+      }
+    };
+    
+    // Inyectar script tag (JSONP)
+    const script = document.createElement('script');
+    script.id = cbName;
+    script.src = url;
+    script.onerror = () => {
+      cleanup();
+      reject(new Error('No se pudo conectar con el servidor. Verifica que el Web App esté publicado correctamente.'));
+    };
+    document.head.appendChild(script);
+  });
 }
 
 // ══════════════════════════════════════════════
@@ -1805,7 +1846,7 @@ async function saveConfig() {
   applyBranding();
 
   try {
-    await api({ action: 'saveConfig', adminId: S.adminId, config: { orgName, logoUrl, accentColor } }, 'POST');
+    await api({ action: 'saveConfig', adminId: S.adminId, orgName, logoUrl, accentColor }, 'POST');
     toast('✅ Configuración guardada', 'ok');
   } catch(err) {
     toast('Config guardada localmente (API error: ' + err.message + ')', 'err');
