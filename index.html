@@ -10,29 +10,28 @@
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <style>
 :root{
-  --a:#E8002D; --ak:#0a0a0a; --aw:#fff;
-  --g1:#f5f5f5; --g2:#ebebeb; --g3:#d4d4d4; --g4:#a3a3a3; --g6:#525252; --g8:#262626;
+  --a:#E8002D;--ak:#0a0a0a;--aw:#fff;
+  --g1:#f5f5f5;--g2:#ebebeb;--g3:#d4d4d4;--g4:#a3a3a3;--g6:#525252;--g8:#262626;
   --neon:#39FF14;
   --fd:'Barlow Condensed',system-ui,sans-serif;
   --fb:'DM Sans',system-ui,sans-serif;
-  --r:4px; --rl:8px;
-  --s1:0 1px 4px rgba(0,0,0,.08); --s2:0 4px 20px rgba(0,0,0,.12); --s3:0 12px 48px rgba(0,0,0,.18);
+  --r:4px;--rl:8px;
+  --s1:0 1px 4px rgba(0,0,0,.08);--s2:0 4px 20px rgba(0,0,0,.12);--s3:0 12px 48px rgba(0,0,0,.18);
   --t:.18s cubic-bezier(.4,0,.2,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+html{-webkit-tap-highlight-color:transparent}
 body{font-family:var(--fb);background:var(--g1);color:var(--ak);min-height:100vh;-webkit-font-smoothing:antialiased}
 
-/* ── SCREENS ── */
+/* SCREENS */
 .screen{display:none;min-height:100vh;flex-direction:column}
 .screen.on{display:flex;animation:fi .22s ease}
-@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-/* ── WELCOME ── */
+/* WELCOME */
 #sw{background:var(--ak);align-items:center;justify-content:center;padding:40px 24px;position:relative;overflow:hidden}
 .wbg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 110%,rgba(232,0,45,.15),transparent 70%);pointer-events:none}
 .wlogo{display:flex;align-items:center;gap:12px;margin-bottom:48px;z-index:1}
-.logo-ph{height:44px;width:44px;background:var(--a);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:22px;font-weight:900;color:#fff;border-radius:var(--r);flex-shrink:0}
 .wlogo img{height:44px;width:auto;object-fit:contain}
 .wot{font-family:var(--fd);font-size:28px;font-weight:900;color:#fff;letter-spacing:-.5px;line-height:1}
 .wos{font-size:11px;color:var(--g4);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
@@ -43,19 +42,10 @@ body{font-family:var(--fb);background:var(--g1);color:var(--ak);min-height:100vh
 .rcard{background:transparent;border:1.5px solid var(--g8);border-radius:var(--rl);padding:28px 20px;text-align:center;cursor:pointer;transition:all var(--t);color:#fff;display:flex;flex-direction:column;align-items:center;gap:10px}
 .rcard:hover{border-color:var(--a);background:rgba(232,0,45,.08);transform:translateY(-2px)}
 .rcard.on{border-color:var(--a);background:var(--a)}
-.ri{font-size:32px;line-height:1}
-.rl{font-family:var(--fd);font-size:18px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-.rd{font-size:12px;color:var(--g4);line-height:1.4}
-.rcard:hover .rd,.rcard.on .rd{color:rgba(255,255,255,.7)}
-.wlogin{width:100%;max-width:400px;z-index:1;margin-top:24px}
-.ltitle{font-family:var(--fd);font-size:22px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
-.lhint{color:var(--g6);font-size:12px;margin-top:8px;line-height:1.5}
-.lrow{display:flex;gap:10px}
-.inp{width:100%;background:#111;border:1.5px solid var(--g8);border-radius:var(--r);padding:14px 16px;font-family:var(--fb);font-size:15px;color:#fff;outline:none;transition:border-color var(--t);-webkit-appearance:none}
-.inp:focus{border-color:var(--a)}
-.inp::placeholder{color:var(--g6)}
+.ri{font-size:32px;line-height:1}.rl{font-family:var(--fd);font-size:18px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.rd{font-size:12px;color:var(--g4);line-height:1.4}.rcard:hover .rd,.rcard.on .rd{color:rgba(255,255,255,.7)}
 
-/* ── BUTTONS ── */
+/* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border:none;border-radius:var(--r);font-family:var(--fd);font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:all var(--t);white-space:nowrap;text-decoration:none;flex-shrink:0;-webkit-appearance:none}
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
 .ba{background:var(--a);color:#fff}.ba:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
@@ -64,235 +54,230 @@ body{font-family:var(--fb);background:var(--g1);color:var(--ak);min-height:100vh
 .bgw{background:transparent;color:#fff;border:1.5px solid #404040}.bgw:hover:not(:disabled){border-color:#fff}
 .bdg{background:#fee2e2;color:#b91c1c;border:1.5px solid #fecaca}.bdg:hover:not(:disabled){background:#fecaca}
 .bgrn{background:#16a34a;color:#fff}.bgrn:hover:not(:disabled){background:#15803d;transform:translateY(-1px)}
-.bsm{padding:8px 14px;font-size:13px}
-.blg{padding:16px 28px;font-size:17px}
-.bfw{width:100%}
+.bsm{padding:8px 14px;font-size:13px}.blg{padding:16px 28px;font-size:17px}.bfw{width:100%}
+.bstack{display:flex;flex-direction:column;gap:10px;width:100%}
 
-/* ── APP SHELL ── */
+/* APP SHELL */
 .aw{display:flex;flex-direction:column;min-height:100vh;background:var(--g1)}
-.topbar{background:var(--ak);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:200;border-bottom:1px solid var(--g8)}
-.tbrand{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-size:20px;font-weight:900;color:#fff;text-decoration:none;letter-spacing:-.3px}
-.tbrand img{height:28px;width:auto;object-fit:contain}
-.tlph{height:28px;width:28px;background:var(--a);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;flex-shrink:0}
-.tnav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}.tnav::-webkit-scrollbar{display:none}
-.nb{padding:6px 14px;border:none;border-radius:var(--r);background:transparent;font-family:var(--fd);font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--g4);cursor:pointer;transition:all var(--t);white-space:nowrap}
+.topbar{background:var(--ak);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:sticky;top:0;z-index:200;border-bottom:1px solid var(--g8);gap:8px}
+.tbrand{display:flex;align-items:center;gap:8px;font-family:var(--fd);font-size:18px;font-weight:900;color:#fff;text-decoration:none;letter-spacing:-.3px;flex-shrink:0}
+.tbrand img{height:26px;width:auto;object-fit:contain}
+.tlph{height:26px;width:26px;background:var(--a);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0}
+.tnav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:center}.tnav::-webkit-scrollbar{display:none}
+.nb{padding:5px 10px;border:none;border-radius:var(--r);background:transparent;font-family:var(--fd);font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--g4);cursor:pointer;transition:all var(--t);white-space:nowrap}
 .nb:hover{color:#fff;background:var(--g8)}.nb.on{color:var(--ak);background:#fff}
-.tright{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.uchip{display:flex;align-items:center;gap:7px;background:var(--g8);border-radius:20px;padding:5px 12px 5px 8px;cursor:pointer}
-.udot{width:24px;height:24px;background:var(--a);border-radius:50%;font-family:var(--fd);font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.uname{font-size:12px;font-weight:600;color:#fff;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.urole{font-size:10px;color:var(--g4);letter-spacing:.5px;text-transform:uppercase}
+/* User menu */
+.umenu-wrap{position:relative;flex-shrink:0}
+.udot{width:30px;height:30px;background:var(--a);border-radius:50%;font-family:var(--fd);font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;flex-shrink:0}
+.udropdown{position:absolute;right:0;top:38px;background:var(--ak);border:1px solid var(--g8);border-radius:var(--rl);min-width:180px;box-shadow:var(--s3);z-index:300;display:none;overflow:hidden}
+.udropdown.on{display:block;animation:fi .15s ease}
+.udrop-info{padding:12px 14px;border-bottom:1px solid var(--g8)}
+.udrop-name{font-weight:600;color:#fff;font-size:14px}
+.udrop-role{font-size:11px;color:var(--g4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.udrop-btn{display:flex;align-items:center;gap:8px;padding:11px 14px;color:var(--g4);font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;transition:background var(--t)}
+.udrop-btn:hover{background:var(--g8);color:#fff}
+
 .pcont{flex:1;overflow-y:auto}
-.page{display:none;padding:24px 20px;max-width:1200px;margin:0 auto;width:100%}
+.page{display:none;padding:20px 16px;max-width:1200px;margin:0 auto;width:100%}
 .page.on{display:block}
-.phdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;gap:14px;flex-wrap:wrap}
-.ptitle{font-family:var(--fd);font-size:32px;font-weight:900;letter-spacing:-1px;line-height:1}
+.phdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;gap:12px;flex-wrap:wrap}
+.ptitle{font-family:var(--fd);font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1}
 .psub{font-size:13px;color:var(--g6);margin-top:4px}
 .hact{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start}
 
-/* ── STATS ── */
-.srow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
-.sc{background:#fff;border:1px solid var(--g2);border-radius:var(--rl);padding:20px;position:relative;overflow:hidden;transition:transform var(--t),box-shadow var(--t)}
+/* STATS */
+.srow{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px}
+.sc{background:#fff;border:1px solid var(--g2);border-radius:var(--rl);padding:16px;position:relative;overflow:hidden;transition:transform var(--t),box-shadow var(--t)}
 .sc:hover{transform:translateY(-2px);box-shadow:var(--s2)}
 .sc::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--a);transform:scaleX(0);transform-origin:left;transition:transform var(--t)}
 .sc:hover::after{transform:scaleX(1)}
-.sci{font-size:22px;margin-bottom:8px}
-.scv{font-family:var(--fd);font-size:38px;font-weight:900;line-height:1;color:var(--ak)}
-.scl{font-size:12px;color:var(--g6);margin-top:4px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.sci{font-size:20px;margin-bottom:6px}.scv{font-family:var(--fd);font-size:34px;font-weight:900;line-height:1;color:var(--ak)}
+.scl{font-size:11px;color:var(--g6);margin-top:4px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
 .sc.gn .scv{color:#16a34a}.sc.ac .scv{color:var(--a)}
 
-/* ── TOOLBAR ── */
-.toolbar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
-.sw{position:relative;flex:1;min-width:180px}
-.sic{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--g4);font-size:14px;pointer-events:none}
-.sinp{width:100%;padding:10px 14px 10px 36px;border:1.5px solid var(--g2);border-radius:var(--r);font-family:var(--fb);font-size:14px;background:#fff;outline:none;transition:border-color var(--t)}
+/* TOOLBAR */
+.toolbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.sw{position:relative;flex:1;min-width:160px}
+.sic{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--g4);font-size:13px;pointer-events:none}
+.sinp{width:100%;padding:9px 12px 9px 32px;border:1.5px solid var(--g2);border-radius:var(--r);font-family:var(--fb);font-size:14px;background:#fff;outline:none;transition:border-color var(--t)}
 .sinp:focus{border-color:var(--a)}
-.sel{padding:10px 14px;border:1.5px solid var(--g2);border-radius:var(--r);font-family:var(--fb);font-size:14px;background:#fff;color:var(--ak);cursor:pointer;outline:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23666' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:16px;padding-right:32px}
+.sel{padding:9px 12px;border:1.5px solid var(--g2);border-radius:var(--r);font-family:var(--fb);font-size:13px;background:#fff;color:var(--ak);cursor:pointer;outline:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23666' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:14px;padding-right:28px}
 
-/* ── TABLE ── */
+/* TABLE */
 .tw{background:#fff;border:1px solid var(--g2);border-radius:var(--rl);overflow:hidden;box-shadow:var(--s1);overflow-x:auto}
-table{width:100%;min-width:700px;border-collapse:collapse;font-size:13px}
+table{width:100%;min-width:640px;border-collapse:collapse;font-size:13px}
 thead{background:var(--ak)}
-th{padding:11px 14px;text-align:left;font-family:var(--fd);font-size:11px;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
-td{padding:11px 14px;border-bottom:1px solid var(--g1);vertical-align:middle}
+th{padding:10px 12px;text-align:left;font-family:var(--fd);font-size:11px;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--g1);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:var(--g1)}
 .tdb{font-weight:600}
-.dch{display:inline-block;background:var(--ak);color:#fff;font-family:var(--fd);font-size:14px;font-weight:800;padding:2px 8px;border-radius:var(--r);min-width:36px;text-align:center}
+.dch{display:inline-block;background:var(--ak);color:#fff;font-family:var(--fd);font-size:14px;font-weight:800;padding:2px 7px;border-radius:var(--r);min-width:32px;text-align:center}
 
-/* ── BADGE ── */
-.badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--fd);font-size:11px;font-weight:700;padding:3px 9px;border-radius:2px;text-transform:uppercase;letter-spacing:.5px}
+/* PAGINATION */
+.pages{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-top:1px solid var(--g2);background:#fff;flex-wrap:wrap;gap:8px}
+.page-info{font-size:12px;color:var(--g6)}
+.page-btns{display:flex;gap:4px}
+.pb{padding:5px 10px;border:1.5px solid var(--g2);border-radius:var(--r);background:#fff;font-family:var(--fd);font-size:12px;font-weight:700;cursor:pointer;transition:all var(--t);color:var(--ak)}
+.pb:hover:not(:disabled){border-color:var(--ak);background:var(--g1)}
+.pb:disabled{opacity:.3;cursor:not-allowed}
+.pb.on{background:var(--ak);color:#fff;border-color:var(--ak)}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--fd);font-size:11px;font-weight:700;padding:3px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:.5px}
 .bd{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .badge.Registrado,.badge.Inscrito{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
 .badge.Registrado .bd,.badge.Inscrito .bd{background:#22c55e}
-.badge.Asistió{background:var(--ak);color:#fff}
-.badge.Asistió .bd{background:var(--neon)}
-.badge.Cancelado{background:#f9fafb;color:var(--g6);border:1px solid var(--g2)}
-.badge.Cancelado .bd{background:var(--g4)}
+.badge.Asistió{background:var(--ak);color:#fff}.badge.Asistió .bd{background:var(--neon)}
+.badge.Cancelado{background:#f9fafb;color:var(--g6);border:1px solid var(--g2)}.badge.Cancelado .bd{background:var(--g4)}
 
-/* ── CARD ── */
-.card{background:#fff;border:1px solid var(--g2);border-radius:var(--rl);padding:24px;box-shadow:var(--s1)}
+/* CARD */
+.card{background:#fff;border:1px solid var(--g2);border-radius:var(--rl);padding:20px;box-shadow:var(--s1)}
 .ctitle{font-family:var(--fd);font-size:20px;font-weight:800;letter-spacing:-.3px;margin-bottom:6px}
-.csub{font-size:13px;color:var(--g6);margin-bottom:20px;line-height:1.5}
+.csub{font-size:13px;color:var(--g6);margin-bottom:18px;line-height:1.5}
 
-/* ── FORM ── */
-.fg{margin-bottom:16px}
-.fl{display:block;font-size:12px;font-weight:600;color:var(--g6);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+/* FORM */
+.fg{margin-bottom:14px}
+.fl{display:block;font-size:12px;font-weight:600;color:var(--g6);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
 .fl .req{color:var(--a)}
-.fi{width:100%;padding:12px 14px;border:1.5px solid var(--g2);border-radius:var(--r);font-family:var(--fb);font-size:14px;color:var(--ak);background:#fff;outline:none;transition:border-color var(--t),box-shadow var(--t);-webkit-appearance:none}
+.fi{width:100%;padding:11px 13px;border:1.5px solid var(--g2);border-radius:var(--r);font-family:var(--fb);font-size:14px;color:var(--ak);background:#fff;outline:none;transition:border-color var(--t),box-shadow var(--t);-webkit-appearance:none}
 .fi:focus{border-color:var(--a);box-shadow:0 0 0 3px rgba(232,0,45,.08)}
 .fi.err{border-color:#ef4444}
 .fe{color:#ef4444;font-size:12px;margin-top:4px;display:none}.fe.on{display:block}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.fsec{font-family:var(--fd);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--g6);margin:20px 0 12px;padding-bottom:6px;border-bottom:1.5px solid var(--g2)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fsec{font-family:var(--fd);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--g6);margin:18px 0 10px;padding-bottom:6px;border-bottom:1.5px solid var(--g2)}
 
-/* ── MODAL ── */
+/* MODAL */
 .mo{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;z-index:1000;padding:0;opacity:0;pointer-events:none;transition:opacity .2s}
 .mo.on{opacity:1;pointer-events:auto}
-.modal{background:#fff;width:100%;max-width:500px;border-radius:var(--rl) var(--rl) 0 0;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.modal{background:#fff;width:100%;max-width:480px;border-radius:var(--rl) var(--rl) 0 0;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .mo.on .modal{transform:translateY(0)}
 @media(min-width:600px){.mo{align-items:center;padding:20px}.modal{border-radius:var(--rl);max-height:88vh;transform:scale(.95) translateY(10px)}.mo.on .modal{transform:scale(1) translateY(0)}}
-.mh2{width:36px;height:4px;background:var(--g3);border-radius:2px;margin:12px auto 0}
+.mh2{width:36px;height:4px;background:var(--g3);border-radius:2px;margin:10px auto 0}
 @media(min-width:600px){.mh2{display:none}}
-.mhdr{padding:20px 20px 0;display:flex;justify-content:space-between;align-items:center}
-.mt{font-family:var(--fd);font-size:20px;font-weight:800;letter-spacing:-.3px}
-.mc{width:32px;height:32px;background:var(--g1);border:none;border-radius:var(--r);font-size:18px;cursor:pointer;color:var(--g6);display:flex;align-items:center;justify-content:center}
+.mhdr{padding:18px 18px 0;display:flex;justify-content:space-between;align-items:center}
+.mt{font-family:var(--fd);font-size:18px;font-weight:800;letter-spacing:-.3px}
+.mc{width:30px;height:30px;background:var(--g1);border:none;border-radius:var(--r);font-size:16px;cursor:pointer;color:var(--g6);display:flex;align-items:center;justify-content:center}
 .mc:hover{background:var(--g2)}
-.mb{padding:16px 20px 24px}
+.mb{padding:14px 18px 20px}
 
-/* ── SCANNER ── */
-.scanwrap{max-width:460px;margin:0 auto}
-.scanbox{background:var(--ak);border-radius:var(--rl);overflow:hidden;margin-bottom:16px}
+/* SCANNER */
+.scanwrap{max-width:440px;margin:0 auto}
+.scanbox{background:var(--ak);border-radius:var(--rl);overflow:hidden;margin-bottom:14px}
 #qr-reader{width:100%!important}
 #qr-reader video{border-radius:0!important}
 #qr-reader__dashboard_section_swaplink{display:none!important}
 #qr-reader__status_span{color:#888!important;font-family:var(--fb)!important;font-size:12px!important}
 #qr-reader__scan_region img{display:none!important}
-.scard{border-radius:var(--rl);padding:20px;border:2px solid transparent;background:#fff;animation:su .22s ease}
-@keyframes su{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.scard{border-radius:var(--rl);padding:18px;border:2px solid transparent;background:#fff;animation:su .2s ease}
+@keyframes su{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .scard.ok{border-color:#22c55e}.scard.blocked{border-color:var(--a)}.scard.warn{border-color:#eab308}.scard.info{border-color:var(--g4)}
-.shero{text-align:center;padding:8px 0 14px}
-.semoji{font-size:48px;display:block;line-height:1;margin-bottom:8px}
-.shead{font-family:var(--fd);font-size:24px;font-weight:900;letter-spacing:-.3px}
+.shero{text-align:center;padding:6px 0 12px}
+.semoji{font-size:44px;display:block;line-height:1;margin-bottom:6px}
+.shead{font-family:var(--fd);font-size:22px;font-weight:900;letter-spacing:-.3px}
 .snote{font-size:13px;color:var(--g6);margin-top:4px;line-height:1.4}
-.igrid{background:var(--g1);border-radius:var(--r);padding:14px;margin:12px 0}
-.irow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--g2)}.irow:last-child{border-bottom:none}
+.igrid{background:var(--g1);border-radius:var(--r);padding:12px;margin:10px 0}
+.irow{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--g2)}.irow:last-child{border-bottom:none}
 .ilbl{font-size:12px;color:var(--g6);font-weight:500}
 .ival{font-size:13px;font-weight:700;text-align:right;max-width:60%}
-.sacts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
 
-/* ── RUNNER ── */
-.rhead{background:var(--ak);padding:32px 20px 28px;position:relative;overflow:hidden}
+/* RUNNER */
+.rhead{background:var(--ak);padding:24px 16px 22px;position:relative;overflow:hidden}
 .rhead::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 100% at 0% 100%,rgba(232,0,45,.2),transparent 60%)}
-.rname{font-family:var(--fd);font-size:36px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1;position:relative;z-index:1}
-.rsub{font-size:13px;color:var(--g4);margin-top:4px;position:relative;z-index:1}
-.rtabs{display:flex;border-bottom:2px solid var(--g2);margin-bottom:20px;overflow-x:auto;scrollbar-width:none}.rtabs::-webkit-scrollbar{display:none}
-.rtab{padding:12px 18px;border:none;background:transparent;font-family:var(--fd);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g6);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all var(--t);white-space:nowrap}
+.rname{font-family:var(--fd);font-size:30px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1;position:relative;z-index:1}
+.rsub{font-size:13px;color:var(--g4);margin-top:3px;position:relative;z-index:1}
+.rtabs{display:flex;border-bottom:2px solid var(--g2);margin-bottom:16px;overflow-x:auto;scrollbar-width:none}.rtabs::-webkit-scrollbar{display:none}
+.rtab{padding:10px 16px;border:none;background:transparent;font-family:var(--fd);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g6);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all var(--t);white-space:nowrap}
 .rtab:hover{color:var(--ak)}.rtab.on{color:var(--a);border-bottom-color:var(--a)}
-.runcard{border:1.5px solid var(--g2);border-radius:var(--rl);padding:16px 18px;margin-bottom:10px;background:#fff;cursor:pointer;transition:all var(--t);display:flex;align-items:center;gap:14px}
+.runcard{border:1.5px solid var(--g2);border-radius:var(--rl);padding:14px 16px;margin-bottom:8px;background:#fff;cursor:pointer;transition:all var(--t);display:flex;align-items:center;gap:12px}
 .runcard:hover{border-color:var(--a);box-shadow:var(--s1)}
-.rci{font-size:28px;flex-shrink:0}
+.rci{font-size:26px;flex-shrink:0}
 .rcb{flex:1;min-width:0}
-.rct{font-family:var(--fd);font-size:17px;font-weight:800;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rct{font-family:var(--fd);font-size:16px;font-weight:800;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rcm{font-size:12px;color:var(--g6);margin-top:2px}
 .rcr{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
-.slots{display:flex;flex-direction:column;gap:10px}
-.slot{border:1.5px solid var(--g2);border-radius:var(--rl);padding:18px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:border-color var(--t)}
-.slotd{font-family:var(--fd);font-size:19px;font-weight:800;letter-spacing:-.3px;text-transform:capitalize}
+.slots{display:flex;flex-direction:column;gap:8px}
+.slot{border:1.5px solid var(--g2);border-radius:var(--rl);padding:14px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px;transition:border-color var(--t)}
+.slotd{font-family:var(--fd);font-size:17px;font-weight:800;letter-spacing:-.3px;text-transform:capitalize}
 .slotm{font-size:12px;color:var(--g6);margin-top:2px}
-.qrd{background:var(--ak);border-radius:var(--rl);padding:28px 20px;text-align:center;margin:16px 0}
+.qrd{background:var(--ak);border-radius:var(--rl);padding:24px 16px;text-align:center;margin:12px 0}
 .qrrace{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-.qrname{font-family:var(--fd);font-size:26px;font-weight:900;color:#fff;margin-bottom:2px}
-.qrnum{font-family:var(--fd);font-size:52px;font-weight:900;color:var(--a);line-height:1;margin:8px 0}
-.qridt{font-size:10px;color:var(--g4);font-family:monospace;word-break:break-all;margin-top:12px;padding:8px;background:#111;border-radius:var(--r)}
-#qrhr,#qrhr2{display:flex;justify-content:center;margin:16px 0}
-#qrhr canvas,#qrhr img,#qrhr2 canvas,#qrhr2 img{border-radius:var(--r);border:4px solid #fff}
+.qrname{font-family:var(--fd);font-size:24px;font-weight:900;color:#fff;margin-bottom:2px}
+.qrnum{font-family:var(--fd);font-size:48px;font-weight:900;color:var(--a);line-height:1;margin:6px 0}
+.qridt{font-size:12px;color:var(--g4);font-family:monospace;word-break:break-all;margin-top:10px;padding:6px;background:#111;border-radius:var(--r);letter-spacing:2px}
+.qrholder{display:flex;justify-content:center;margin:12px 0}
+.qrholder canvas,.qrholder img{border-radius:var(--r);border:4px solid #fff}
 
-/* ── STATUS MODAL ── */
-.status-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
-.sopt{padding:14px;border-radius:var(--rl);border:2px solid var(--g2);background:#fff;cursor:pointer;transition:all var(--t);font-family:var(--fd);font-size:16px;font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:.5px}
-.sopt:hover{border-color:var(--a);background:rgba(232,0,45,.05)}
+/* STATUS MODAL */
+.status-opts{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.sopt{padding:13px 16px;border-radius:var(--rl);border:2px solid var(--g2);background:#fff;cursor:pointer;transition:all var(--t);font-family:var(--fd);font-size:15px;font-weight:700;text-align:left;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:10px}
+.sopt:hover{border-color:var(--a);background:rgba(232,0,45,.04)}
 .sopt.cur{border-color:var(--a);background:rgba(232,0,45,.08);color:var(--a)}
-.sopt[data-s="Asistió"]{border-color:#22c55e}.sopt[data-s="Asistió"]:hover{background:#f0fdf4}
-.sopt[data-s="Cancelado"]{border-color:var(--g3)}.sopt[data-s="Cancelado"]:hover{background:var(--g1)}
 
-/* ── CONFIG ── */
+/* CONFIG */
 .cst{font-family:var(--fd);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--g6);margin-bottom:12px;padding-bottom:8px;border-bottom:1.5px solid var(--g2)}
 .swatches{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .sw2{width:36px;height:36px;border-radius:var(--r);cursor:pointer;border:2.5px solid transparent;transition:all var(--t);flex-shrink:0}
 .sw2:hover,.sw2.on{border-color:var(--ak);transform:scale(1.1)}
 
-/* ── SUCCESS ── */
-.succ{background:var(--ak);border-radius:var(--rl);padding:32px 24px;text-align:center;margin:16px 0}
-.succ .ico{font-size:52px;margin-bottom:12px}
-.succ h2{font-family:var(--fd);font-size:28px;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:8px}
-.succ p{font-size:14px;color:var(--g4);line-height:1.5;margin-bottom:24px}
+/* LOADING */
+.spin{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite;flex-shrink:0}
+.spd{border-color:rgba(0,0,0,.1);border-top-color:var(--a)}
+@keyframes rot{to{transform:rotate(360deg)}}
+.ldr{display:flex;align-items:center;justify-content:center;padding:40px 24px;gap:10px;color:var(--g6);font-size:14px}
+.empty{text-align:center;padding:40px 24px;color:var(--g4)}
+.ei{font-size:36px;margin-bottom:10px}.et{font-family:var(--fd);font-size:17px;font-weight:800;color:var(--g8);margin-bottom:5px}.em{font-size:14px;line-height:1.5}
 
-/* ── TOAST ── */
-.twrap{position:fixed;top:66px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
-.toast{background:var(--ak);color:#fff;padding:11px 16px;border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:var(--s3);animation:ti .3s cubic-bezier(.34,1.56,.64,1);pointer-events:auto;display:flex;align-items:center;gap:8px;max-width:300px;border-left:3px solid var(--a)}
+/* TOAST */
+.twrap{position:fixed;top:60px;right:14px;z-index:9999;display:flex;flex-direction:column;gap:7px;pointer-events:none}
+.toast{background:var(--ak);color:#fff;padding:10px 14px;border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:var(--s3);animation:ti .3s cubic-bezier(.34,1.56,.64,1);pointer-events:auto;display:flex;align-items:center;gap:8px;max-width:280px;border-left:3px solid var(--a)}
 .toast.ok{border-left-color:#22c55e}.toast.err{border-left-color:var(--a)}
 @keyframes ti{from{transform:translateX(110%);opacity:0}to{transform:none;opacity:1}}
 
-/* ── MISC ── */
-.spin{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite;flex-shrink:0}
-.spd{border-color:rgba(0,0,0,.12);border-top-color:var(--a)}
-@keyframes rot{to{transform:rotate(360deg)}}
-.lb{display:flex;align-items:center;justify-content:center;padding:48px 24px;gap:12px;color:var(--g6);font-size:14px}
-.empty{text-align:center;padding:48px 24px;color:var(--g4)}
-.ei{font-size:40px;margin-bottom:12px}
-.et{font-family:var(--fd);font-size:18px;font-weight:800;color:var(--g8);margin-bottom:6px}
-.em{font-size:14px;line-height:1.5}
-.dv{border:none;border-top:1px solid var(--g2);margin:14px 0}
-.tag{display:inline-block;background:var(--g1);border:1px solid var(--g2);color:var(--g6);font-size:11px;font-weight:600;padding:2px 8px;border-radius:var(--r);text-transform:uppercase;letter-spacing:.5px}
+.inp{width:100%;background:#111;border:1.5px solid var(--g8);border-radius:var(--r);padding:13px 15px;font-family:var(--fb);font-size:15px;color:#fff;outline:none;transition:border-color var(--t);-webkit-appearance:none}
+.inp:focus{border-color:var(--a)}.inp::placeholder{color:var(--g6)}
+.dv{border:none;border-top:1px solid var(--g2);margin:12px 0}
+.tag{display:inline-block;background:var(--g1);border:1px solid var(--g2);color:var(--g6);font-size:11px;font-weight:600;padding:2px 7px;border-radius:var(--r);text-transform:uppercase;letter-spacing:.5px}
 .tag.ac{background:rgba(232,0,45,.08);border-color:rgba(232,0,45,.2);color:var(--a)}
-
-@media(max-width:600px){
-  .topbar{height:52px;padding:0 14px}
-  .page{padding:16px 14px}
-  .frow{grid-template-columns:1fr}
-  .srow{grid-template-columns:1fr 1fr}
-  .phdr{flex-direction:column}
-  .ptitle{font-size:26px}
-}
-@media(min-width:1024px){.page{padding:32px 28px}}
+@media(max-width:600px){.page{padding:14px 12px}.frow{grid-template-columns:1fr}.srow{grid-template-columns:1fr 1fr}.phdr{flex-direction:column}.ptitle{font-size:24px}}
+@media(min-width:1024px){.page{padding:28px 24px}}
 </style>
 </head>
 <body>
 <div class="twrap" id="tw"></div>
 
+<!-- ══ MODAL LOGIN ══ -->
+<div class="mo" id="moLogin">
+  <div class="modal"><div class="mh2"></div>
+    <div class="mhdr"><div class="mt" id="loginTitle">Ingresar como Corredor</div><button class="mc" onclick="cm('moLogin')">×</button></div>
+    <div class="mb">
+      <div id="loginRunnerArea">
+        <p style="color:var(--g6);font-size:14px;margin-bottom:14px;line-height:1.5">Ingresa el DNI con el que te inscribiste. Si eres nuevo puedes entrar para inscribirte en el Social Run.</p>
+        <div class="fg"><label class="fl">Documento de identidad</label><input class="fi" id="rdni" type="text" placeholder="Ej: 12345678" inputmode="numeric" onkeydown="if(event.key==='Enter')goRunner()"/></div>
+        <div class="bstack">
+          <button class="btn ba bfw" onclick="goRunner()">Entrar →</button>
+        </div>
+      </div>
+      <div id="loginAdminArea" style="display:none">
+        <p style="color:var(--g6);font-size:14px;margin-bottom:14px;line-height:1.5">Ingresa tu ID de administrador. Contacta a tu coordinador si no tienes acceso.</p>
+        <div class="fg"><label class="fl">ID de Administrador</label><input class="fi" id="adid" type="text" placeholder="Ej: ADMIN001" onkeydown="if(event.key==='Enter')goAdmin()"/></div>
+        <div class="bstack">
+          <button class="btn ba bfw" id="adminBtn" onclick="goAdmin()">Verificar y entrar →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ WELCOME ══ -->
 <div class="screen on" id="sw">
   <div class="wbg"></div>
-  <div class="wlogo">
-    <div id="wLogo"></div>
-    <div><div class="wot" id="wOrg">Race Club</div><div class="wos">Sistema de Gestión</div></div>
-  </div>
+  <div class="wlogo"><div id="wLogo"></div><div><div class="wot" id="wOrg">Race Club</div><div class="wos">Sistema de Gestión</div></div></div>
   <div class="wh">RUN<br/><em>MANAGE</em><br/>WIN</div>
   <div class="wsub">Selecciona cómo deseas ingresar</div>
   <div class="rcards">
-    <button class="rcard" id="rcR" onclick="selectRole('runner')">
-      <span class="ri">🏃</span><span class="rl">Corredor</span><span class="rd">Ver historial e inscripciones</span>
-    </button>
-    <button class="rcard" id="rcA" onclick="selectRole('admin')">
-      <span class="ri">🔐</span><span class="rl">Administrador</span><span class="rd">Gestionar participantes</span>
-    </button>
-  </div>
-  <div class="wlogin" id="lRunner" style="display:none">
-    <div class="ltitle">Documento de identidad</div>
-    <div class="lrow">
-      <input class="inp" id="rdni" type="text" placeholder="Ej: 12345678" inputmode="numeric" onkeydown="if(event.key==='Enter')goRunner()"/>
-      <button class="btn ba" onclick="goRunner()">Entrar →</button>
-    </div>
-    <p class="lhint">Ingresa tu DNI. Si eres nuevo también puedes entrar para inscribirte.</p>
-  </div>
-  <div class="wlogin" id="lAdmin" style="display:none">
-    <div class="ltitle">ID de Administrador</div>
-    <div class="lrow">
-      <input class="inp" id="adid" type="text" placeholder="Ej: ADMIN001" onkeydown="if(event.key==='Enter')goAdmin()"/>
-      <button class="btn ba" id="adminBtn" onclick="goAdmin()">Entrar →</button>
-    </div>
-    <p class="lhint">Contacta a tu coordinador si no tienes acceso.</p>
+    <button class="rcard" onclick="selectRole('runner')"><span class="ri">🏃</span><span class="rl">Corredor</span><span class="rd">Ver historial e inscripciones</span></button>
+    <button class="rcard" onclick="selectRole('admin')"><span class="ri">🔐</span><span class="rl">Administrador</span><span class="rd">Gestionar participantes</span></button>
   </div>
 </div>
 
@@ -301,53 +286,49 @@ tr:hover td{background:var(--g1)}
   <div class="rhead">
     <div style="max-width:600px;margin:0 auto;width:100%">
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div>
-          <div class="rname" id="rName">Corredor</div>
-          <div class="rsub" id="rDni">DNI —</div>
-        </div>
-        <button class="btn bgw bsm" onclick="logout()" style="margin-top:4px">Salir</button>
+        <div><div class="rname" id="rName">Corredor</div><div class="rsub" id="rDni">DNI —</div></div>
+        <button class="btn bgw bsm" id="runnerLogoutBtn" style="margin-top:4px">Salir</button>
       </div>
     </div>
   </div>
   <div style="max-width:600px;margin:0 auto;width:100%;padding:0 14px">
-    <div class="rtabs" style="margin-top:16px">
+    <div class="rtabs" style="margin-top:14px">
       <button class="rtab on" data-t="hist">📋 Mi historial</button>
       <button class="rtab" data-t="social">🌞 Social Run</button>
       <button class="rtab" data-t="qr">📲 Mi QR</button>
     </div>
-    <div id="rt-hist"><div class="lb"><div class="spin spd"></div> Cargando...</div></div>
+    <div id="rt-hist"><div class="ldr"><div class="spin spd"></div> Cargando...</div></div>
     <div id="rt-social" style="display:none">
-      <div style="margin-bottom:16px">
-        <div style="font-family:var(--fd);font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px">Social Running 🌞</div>
+      <div style="margin-bottom:14px">
+        <div style="font-family:var(--fd);font-size:20px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px">Social Running 🌞</div>
         <div style="font-size:13px;color:var(--g6);line-height:1.5">Running grupal gratuito cada domingo. Inscríbete y recibe tu QR.</div>
       </div>
-      <div id="sSlots"><div class="lb"><div class="spin spd"></div></div></div>
-      <div class="card" id="srForm" style="display:none;margin-top:16px">
+      <div id="sSlots"><div class="ldr"><div class="spin spd"></div></div></div>
+      <div class="card" id="srForm" style="display:none;margin-top:14px">
         <div class="ctitle" id="srFTitle">Inscripción Social Run</div>
-        <div class="csub">Confirma tus datos para el evento seleccionado.</div>
+        <div class="csub">Confirma tus datos para el evento.</div>
         <div class="fg"><label class="fl">Nombre completo <span class="req">*</span></label><input class="fi" id="srNom" placeholder="Tu nombre completo"/></div>
         <div class="frow">
           <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="srEmail" placeholder="Para recibir el QR"/></div>
           <div class="fg"><label class="fl">DNI</label><input class="fi" id="srDni" readonly/></div>
         </div>
-        <div style="display:flex;gap:10px">
-          <button class="btn ba bfw" id="srBtn" onclick="submitSR()">Confirmar →</button>
-          <button class="btn bg" onclick="closeSrForm()">Cancelar</button>
+        <div class="bstack">
+          <button class="btn ba bfw" id="srBtn" onclick="submitSR()">Confirmar inscripción →</button>
+          <button class="btn bg bfw" onclick="closeSrForm()">Cancelar</button>
         </div>
       </div>
-      <div id="srOk" style="display:none;margin-top:16px">
-        <div class="succ">
-          <div class="ico">🎉</div><h2>¡Inscrito!</h2>
-          <p id="srOkMsg">Te has inscrito correctamente.</p>
-          <div id="srOkQR" style="display:flex;justify-content:center;margin:12px 0"></div>
+      <div id="srOk" style="display:none;margin-top:14px">
+        <div style="background:var(--ak);border-radius:var(--rl);padding:24px;text-align:center;margin-bottom:12px">
+          <div style="font-size:44px;margin-bottom:10px">🎉</div>
+          <div style="font-family:var(--fd);font-size:26px;font-weight:900;color:#fff;margin-bottom:8px">¡Inscrito!</div>
+          <p id="srOkMsg" style="font-size:13px;color:var(--g4);line-height:1.5;margin-bottom:16px"></p>
+          <div id="srOkQR" style="display:flex;justify-content:center;margin:10px 0"></div>
         </div>
-        <button class="btn bk bfw" style="margin-top:12px" onclick="resetSR()">← Volver</button>
+        <div class="bstack"><button class="btn bk bfw" onclick="resetSR()">← Volver a fechas</button></div>
       </div>
     </div>
     <div id="rt-qr" style="display:none">
-      <div id="qrTabWrap">
-        <div class="empty"><div class="ei">📲</div><div class="et">Selecciona un evento</div><div class="em">Toca cualquier carrera de "Mi historial" para ver su QR.</div></div>
-      </div>
+      <div id="qrTabWrap"><div class="empty"><div class="ei">📲</div><div class="et">Selecciona un evento</div><div class="em">Toca cualquier carrera de "Mi historial".</div></div></div>
     </div>
   </div>
 </div>
@@ -356,23 +337,25 @@ tr:hover td{background:var(--g1)}
 <div class="screen" id="sa">
   <div class="aw">
     <nav class="topbar">
-      <a class="tbrand" href="#" onclick="return false">
-        <div id="tLogo"></div><span id="tOrg">Race Club</span>
-      </a>
+      <a class="tbrand" href="#" onclick="return false"><div id="tLogo"></div><span id="tOrg">Race Club</span></a>
       <div class="tnav">
         <button class="nb on" id="nb-dash" onclick="ap('dash')">📊 Dashboard</button>
         <button class="nb" id="nb-scan" onclick="ap('scan')">📷 Escanear</button>
         <button class="nb" id="nb-rec" onclick="ap('rec')">📋 Registros</button>
         <button class="nb" id="nb-cfg" onclick="ap('cfg')" style="display:none">⚙️ Config</button>
       </div>
-      <div class="tright">
-        <div class="uchip" onclick="logout()">
-          <div class="udot" id="aInit">A</div>
-          <div><div class="uname" id="aName">Admin</div><div class="urole" id="aRole">admin</div></div>
+      <div class="umenu-wrap">
+        <button class="udot" id="udot" onclick="toggleUserMenu()">A</button>
+        <div class="udropdown" id="udropdown">
+          <div class="udrop-info">
+            <div class="udrop-name" id="aName">Admin</div>
+            <div class="udrop-role" id="aRole">admin</div>
+          </div>
+          <button class="udrop-btn" onclick="logout()">🚪 Cerrar sesión</button>
         </div>
       </div>
     </nav>
-    <div class="pcont">
+    <div class="pcont" id="pcont">
 
       <!-- DASHBOARD -->
       <div class="page on" id="pg-dash">
@@ -383,7 +366,7 @@ tr:hover td{background:var(--g1)}
               <option value="">Todas las carreras</option>
               <option value="_social">🌞 Social Running</option>
             </select>
-            <button class="btn bk bsm" onclick="doExport()">⬇ Exportar</button>
+            <button class="btn bk bsm" onclick="doExport()">⬇ CSV</button>
             <button class="btn ba bsm" onclick="openAddModal()">+ Agregar</button>
           </div>
         </div>
@@ -394,23 +377,12 @@ tr:hover td{background:var(--g1)}
           <div class="sc"><div class="sci">❌</div><div class="scv" id="stCan">—</div><div class="scl">Cancelados</div></div>
         </div>
         <div class="toolbar">
-          <div class="sw"><span class="sic">🔍</span><input class="sinp" id="tSrch" placeholder="Buscar nombre, DNI, email…" oninput="filterT()"/></div>
-          <select class="sel" id="tStFil" onchange="filterT()">
-            <option value="">Todos los estados</option>
-            <option value="Registrado">Registrado</option>
-            <option value="Inscrito">Inscrito</option>
-            <option value="Asistió">Asistió</option>
-            <option value="Cancelado">Cancelado</option>
-          </select>
-          <button class="btn bg bsm" onclick="loadDash()">↺</button>
+          <div class="sw"><span class="sic">🔍</span><input class="sinp" id="tSrch" placeholder="Nombre, DNI, email…" oninput="debounceDash()"/></div>
+          <select class="sel" id="tStFil" onchange="loadDash()"><option value="">Todos</option><option value="Registrado">Registrado</option><option value="Inscrito">Inscrito</option><option value="Asistió">Asistió</option><option value="Cancelado">Cancelado</option></select>
+          <button class="btn bg bsm" onclick="loadDash()" title="Actualizar">↺</button>
         </div>
-        <div class="tw">
-          <table><thead><tr>
-            <th>Dorsal</th><th>Nombre</th><th>DNI</th><th>Email</th>
-            <th>Estado</th><th>Carrera</th><th>Últ. Mod.</th><th>Acciones</th>
-          </tr></thead>
-          <tbody id="tBody"><tr><td colspan="8"><div class="lb"><div class="spin spd"></div></div></td></tr></tbody>
-          </table>
+        <div id="dashTableWrap">
+          <div class="ldr"><div class="spin spd"></div> Cargando...</div>
         </div>
       </div>
 
@@ -418,9 +390,9 @@ tr:hover td{background:var(--g1)}
       <div class="page" id="pg-scan">
         <div class="phdr"><div><div class="ptitle">Escanear QR</div><div class="psub">Registra asistencia con la cámara</div></div></div>
         <div class="scanwrap">
-          <div class="card" style="margin-bottom:14px;padding:16px">
+          <div class="card" style="margin-bottom:12px;padding:14px">
             <label class="fl">Carrera activa</label>
-            <select class="fi" id="scanRace" style="margin-top:6px">
+            <select class="fi" id="scanRace" style="margin-top:5px">
               <option value="">— Selecciona una carrera —</option>
               <option value="_social">🌞 Social Running (Domingos)</option>
             </select>
@@ -433,7 +405,7 @@ tr:hover td{background:var(--g1)}
       <!-- RECORDS -->
       <div class="page" id="pg-rec">
         <div class="phdr">
-          <div><div class="ptitle">Administrar Registros</div><div class="psub">Gestión detallada con auditoría</div></div>
+          <div><div class="ptitle">Registros</div><div class="psub">Gestión con auditoría por carrera</div></div>
           <div class="hact">
             <select class="sel" id="recRace" onchange="loadRec()">
               <option value="">— Selecciona carrera —</option>
@@ -442,63 +414,63 @@ tr:hover td{background:var(--g1)}
             <button class="btn ba bsm" id="recAdd" onclick="openAddModal()" style="display:none">+ Agregar</button>
           </div>
         </div>
+        <div class="toolbar" id="recToolbar" style="display:none">
+          <div class="sw"><span class="sic">🔍</span><input class="sinp" id="recSrch" placeholder="Nombre, DNI, email…" oninput="debounceRec()"/></div>
+          <select class="sel" id="recStFil" onchange="loadRec()"><option value="">Todos</option><option value="Registrado">Registrado</option><option value="Inscrito">Inscrito</option><option value="Asistió">Asistió</option><option value="Cancelado">Cancelado</option></select>
+        </div>
         <div id="recContent"><div class="empty"><div class="ei">📋</div><div class="et">Selecciona una carrera</div></div></div>
       </div>
 
       <!-- CONFIG -->
       <div class="page" id="pg-cfg">
         <div class="phdr"><div><div class="ptitle">Configuración</div><div class="psub">Solo superadministradores</div></div></div>
-        <div style="max-width:620px">
-          <div class="card" style="margin-bottom:16px">
+        <div style="max-width:600px">
+          <div class="card" style="margin-bottom:14px">
             <div class="cst">🎨 Marca y Diseño</div>
-            <div class="fg"><label class="fl">Nombre de la organización</label><input class="fi" id="cfgOrg" placeholder="Race Club"/></div>
+            <div class="fg"><label class="fl">Nombre organización</label><input class="fi" id="cfgOrg" placeholder="Race Club"/></div>
             <div class="fg">
               <label class="fl">URL del logotipo</label>
               <input class="fi" id="cfgLogo" placeholder="https://…/logo.png" oninput="prevLogo()"/>
-              <div style="margin-top:8px;display:flex;align-items:center;gap:10px">
-                <img id="logoPrev" src="" style="height:36px;display:none;border:1px solid var(--g2);border-radius:var(--r);padding:4px"/>
-                <span style="font-size:12px;color:var(--g6)">Vista previa</span>
-              </div>
+              <div style="margin-top:8px;display:flex;align-items:center;gap:8px"><img id="logoPrev" src="" style="height:32px;display:none;border:1px solid var(--g2);border-radius:var(--r);padding:3px"/><span style="font-size:12px;color:var(--g6)">Vista previa</span></div>
             </div>
             <div class="fg">
               <label class="fl">Color de acento — <strong id="acLbl" style="color:var(--a)">#E8002D</strong></label>
-              <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px">
-                <input type="color" id="cfgColor" value="#E8002D" style="width:48px;height:36px;border:1.5px solid var(--g2);border-radius:var(--r);cursor:pointer;padding:2px"/>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px">
+                <input type="color" id="cfgColor" value="#E8002D" style="width:44px;height:34px;border:1.5px solid var(--g2);border-radius:var(--r);cursor:pointer;padding:2px"/>
                 <div class="swatches">
-                  <div class="sw2" style="background:#E8002D" onclick="setAcc('#E8002D')" title="Rojo"></div>
-                  <div class="sw2" style="background:#39FF14" onclick="setAcc('#39FF14')" title="Verde neon"></div>
-                  <div class="sw2" style="background:#7C3AED" onclick="setAcc('#7C3AED')" title="Morado"></div>
-                  <div class="sw2" style="background:#0EA5E9" onclick="setAcc('#0EA5E9')" title="Azul"></div>
-                  <div class="sw2" style="background:#F97316" onclick="setAcc('#F97316')" title="Naranja"></div>
-                  <div class="sw2" style="background:#FACC15" onclick="setAcc('#FACC15')" title="Amarillo"></div>
-                  <div class="sw2" style="background:#EC4899" onclick="setAcc('#EC4899')" title="Rosa"></div>
-                  <div class="sw2" style="background:#10B981" onclick="setAcc('#10B981')" title="Esmeralda"></div>
+                  <div class="sw2" style="background:#E8002D" onclick="setAcc('#E8002D')"></div>
+                  <div class="sw2" style="background:#39FF14" onclick="setAcc('#39FF14')"></div>
+                  <div class="sw2" style="background:#7C3AED" onclick="setAcc('#7C3AED')"></div>
+                  <div class="sw2" style="background:#0EA5E9" onclick="setAcc('#0EA5E9')"></div>
+                  <div class="sw2" style="background:#F97316" onclick="setAcc('#F97316')"></div>
+                  <div class="sw2" style="background:#FACC15" onclick="setAcc('#FACC15')"></div>
+                  <div class="sw2" style="background:#EC4899" onclick="setAcc('#EC4899')"></div>
+                  <div class="sw2" style="background:#10B981" onclick="setAcc('#10B981')"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="card" style="margin-bottom:16px">
+          <div class="card" style="margin-bottom:14px">
             <div class="cst">🏁 Carreras Específicas</div>
-            <div class="fg">
-              <label class="fl">Crear nueva carrera</label>
-              <div style="display:flex;gap:8px"><input class="fi" id="newRaceN" placeholder="Ej: Running Lima 2026"/><button class="btn bk bsm" onclick="createRace()">Crear</button></div>
-            </div>
-            <div id="racesListCfg"><div class="lb" style="padding:16px 0"><div class="spin spd"></div></div></div>
+            <div class="fg"><label class="fl">Nueva carrera</label><div style="display:flex;gap:8px"><input class="fi" id="newRaceN" placeholder="Ej: Running Lima 2026"/><button class="btn bk bsm" onclick="createRace()">Crear</button></div></div>
+            <div id="racesListCfg"><div class="ldr" style="padding:14px 0"><div class="spin spd"></div></div></div>
           </div>
-          <div class="card" style="margin-bottom:16px">
+          <div class="card" style="margin-bottom:14px">
             <div class="cst">👥 Administradores</div>
-            <div id="adminsListWrap"><div class="lb" style="padding:16px 0"><div class="spin spd"></div></div></div>
-            <hr class="dv"/>
-            <div class="fsec">Agregar / Editar</div>
-            <div class="frow">
-              <div class="fg"><label class="fl">ID de Admin</label><input class="fi" id="naId" placeholder="ADMIN002"/></div>
-              <div class="fg"><label class="fl">Nombre</label><input class="fi" id="naNom" placeholder="Nombre completo"/></div>
+            <div id="adminsListWrap"><div class="ldr" style="padding:14px 0"><div class="spin spd"></div></div></div>
+            <div id="adminAddSection">
+              <hr class="dv"/>
+              <div class="fsec">Agregar / Editar</div>
+              <div class="frow">
+                <div class="fg"><label class="fl">ID de Admin</label><input class="fi" id="naId" placeholder="ADMIN002"/></div>
+                <div class="fg"><label class="fl">Nombre</label><input class="fi" id="naNom" placeholder="Nombre completo"/></div>
+              </div>
+              <div class="frow">
+                <div class="fg"><label class="fl">Rol</label><select class="fi" id="naRol"><option value="admin">Admin</option><option value="superadmin">Superadmin</option></select></div>
+                <div class="fg"><label class="fl">Email</label><input class="fi" id="naEmail" type="email" placeholder="admin@email.com"/></div>
+              </div>
+              <button class="btn bk bsm" onclick="saveAdminEntry()">Guardar admin</button>
             </div>
-            <div class="frow">
-              <div class="fg"><label class="fl">Rol</label><select class="fi" id="naRol"><option value="admin">Admin</option><option value="superadmin">Superadmin</option></select></div>
-              <div class="fg"><label class="fl">Email</label><input class="fi" id="naEmail" type="email" placeholder="admin@email.com"/></div>
-            </div>
-            <button class="btn bk bsm" onclick="saveAdminEntry()">Guardar admin</button>
           </div>
           <button class="btn ba blg" onclick="saveCfg()">💾 Guardar configuración</button>
         </div>
@@ -508,10 +480,10 @@ tr:hover td{background:var(--g1)}
   </div>
 </div>
 
-<!-- ══ MODAL: ADD PARTICIPANT ══ -->
+<!-- MODAL: ADD PARTICIPANT -->
 <div class="mo" id="moAdd">
   <div class="modal"><div class="mh2"></div>
-    <div class="mhdr"><div class="mt" id="moAddTitle">Nuevo Participante</div><button class="mc" onclick="cm('moAdd')">×</button></div>
+    <div class="mhdr"><div class="mt">Nuevo Participante</div><button class="mc" onclick="cm('moAdd')">×</button></div>
     <div class="mb">
       <div class="fg"><label class="fl">Carrera <span class="req">*</span></label><select class="fi" id="pRace"><option value="">— Selecciona —</option><option value="_social">🌞 Social Running</option></select><div class="fe" id="epRace">Selecciona una carrera</div></div>
       <div class="fg"><label class="fl">Nombre completo <span class="req">*</span></label><input class="fi" id="pNom" placeholder="Juan García"/><div class="fe" id="epNom">Nombre requerido</div></div>
@@ -520,58 +492,59 @@ tr:hover td{background:var(--g1)}
         <div class="fg"><label class="fl">Dorsal (auto)</label><input class="fi" id="pDors" type="number" placeholder="Auto" min="1"/></div>
       </div>
       <div class="fg"><label class="fl">Email <span class="req">*</span></label><input class="fi" id="pEmail" type="email" placeholder="correo@ejemplo.com"/><div class="fe" id="epEmail">Email inválido</div></div>
-      <div style="display:flex;gap:10px;margin-top:4px">
+      <div class="bstack">
         <button class="btn ba bfw" id="pBtn" onclick="submitAdd()">Registrar →</button>
-        <button class="btn bg" onclick="cm('moAdd')">Cancelar</button>
+        <button class="btn bg bfw" onclick="cm('moAdd')">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ MODAL: QR ADMIN ══ -->
+<!-- MODAL: QR ADMIN -->
 <div class="mo" id="moQR">
   <div class="modal"><div class="mh2"></div>
     <div class="mhdr"><div class="mt">Código QR</div><button class="mc" onclick="cm('moQR')">×</button></div>
     <div class="mb">
-      <div class="qrd" style="padding:20px 16px">
+      <div class="qrd">
         <div class="qrrace" id="qrRace">—</div>
         <div class="qrname" id="qrNom">—</div>
         <div class="qrnum" id="qrNum">#—</div>
-        <div id="qrhr"></div>
+        <div class="qrholder" id="qrhr"></div>
         <div class="qridt" id="qrId">—</div>
       </div>
-      <div style="display:flex;gap:10px">
-        <button class="btn bk bfw" onclick="dlQR()">⬇ Descargar</button>
+      <div class="bstack">
+        <button class="btn bk bfw" onclick="dlQR()">⬇ Descargar QR</button>
+        <button class="btn bg bfw" id="resendBtn" onclick="resendQREmail()">✉️ Reenviar por email</button>
         <button class="btn bg bfw" onclick="cm('moQR')">Cerrar</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ MODAL: STATUS ══ -->
+<!-- MODAL: STATUS -->
 <div class="mo" id="moStatus">
   <div class="modal"><div class="mh2"></div>
     <div class="mhdr"><div class="mt">Cambiar estado</div><button class="mc" onclick="cm('moStatus')">×</button></div>
     <div class="mb">
-      <p style="color:var(--g6);font-size:14px;margin-bottom:16px">Selecciona el nuevo estado para <strong id="stName"></strong>:</p>
+      <p style="color:var(--g6);font-size:14px;margin-bottom:14px">Nuevo estado para <strong id="stName"></strong>:</p>
       <div class="status-opts">
-        <button class="sopt" data-s="Registrado" onclick="applyStatus('Registrado')">✅ Registrado</button>
-        <button class="sopt" data-s="Asistió" onclick="applyStatus('Asistió')">🏅 Asistió</button>
-        <button class="sopt" data-s="Cancelado" onclick="applyStatus('Cancelado')">❌ Cancelado</button>
-        <button class="sopt" data-s="Inscrito" onclick="applyStatus('Inscrito')">📝 Inscrito</button>
+        <button class="sopt" data-s="Registrado" onclick="applyStatus('Registrado')">✅ <span>Registrado</span></button>
+        <button class="sopt" data-s="Inscrito" onclick="applyStatus('Inscrito')">📝 <span>Inscrito</span></button>
+        <button class="sopt" data-s="Asistió" onclick="applyStatus('Asistió')">🏅 <span>Asistió</span></button>
+        <button class="sopt" data-s="Cancelado" onclick="applyStatus('Cancelado')">❌ <span>Cancelado</span></button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ MODAL: DELETE ══ -->
+<!-- MODAL: DELETE -->
 <div class="mo" id="moDel">
   <div class="modal"><div class="mh2"></div>
     <div class="mhdr"><div class="mt">Eliminar participante</div><button class="mc" onclick="cm('moDel')">×</button></div>
     <div class="mb">
-      <p style="color:var(--g6);margin-bottom:20px;line-height:1.5">¿Eliminar a <strong id="delName"></strong>? Esta acción no se puede deshacer.</p>
-      <div style="display:flex;gap:10px">
-        <button class="btn bdg bfw" onclick="confirmDel()">Eliminar</button>
+      <p style="color:var(--g6);margin-bottom:18px;line-height:1.5">¿Eliminar a <strong id="delName"></strong>? Esta acción no se puede deshacer.</p>
+      <div class="bstack">
+        <button class="btn bdg bfw" onclick="confirmDel()">Sí, eliminar</button>
         <button class="btn bg bfw" onclick="cm('moDel')">Cancelar</button>
       </div>
     </div>
@@ -579,519 +552,442 @@ tr:hover td{background:var(--g1)}
 </div>
 
 <script>
-// ══════════════════════════════════════
-// STATIC CONFIG
-// ══════════════════════════════════════
-const API = 'https://script.google.com/macros/s/AKfycbybrF-e0z2cYfVm_QflpNpQRU34fPE4_p-RKLGbpQJkkTZQW8pPsLmS0ILxYwAMhYcq/exec';
+const API='https://script.google.com/macros/s/AKfycbybrF-e0z2cYfVm_QflpNpQRU34fPE4_p-RKLGbpQJkkTZQW8pPsLmS0ILxYwAMhYcq/exec';
 
-// ══════════════════════════════════════
-// STATE
-// ══════════════════════════════════════
-const S = {
-  accent: localStorage.getItem('rc_accent') || '#E8002D',
-  orgName: localStorage.getItem('rc_org') || 'Race Club',
-  logoUrl: localStorage.getItem('rc_logo') || '',
-  mode: null, runnerDni: null, runnerData: null,
-  adminId: null, adminData: null,
-  races: [],
-  participants: [], curRace: '',
-  // scanner
-  qr: null, scanOn: false, lastScan: '', scanCD: false,
-  // misc
-  delId: null, delRace: null, stId: null, stRace: null, stCur: null,
-  qrInst: null, srDate: null
+const S={
+  accent:localStorage.getItem('rc_accent')||'#E8002D',
+  orgName:localStorage.getItem('rc_org')||'Race Club',
+  logoUrl:localStorage.getItem('rc_logo')||'',
+  mode:null,runnerDni:null,runnerData:null,
+  adminId:null,adminData:null,
+  races:[],
+  allParticipants:[],curRace:'',dashPage:1,
+  recPage:1,
+  qr:null,scanOn:false,lastScan:'',scanCD:false,
+  delId:null,delRace:null,stId:null,stRace:null,stCur:null,
+  qrInst:null,qrCurrentId:null,qrCurrentRace:null,
+  srDate:null,
+  dashDebounce:null,recDebounce:null
 };
 
-// ══════════════════════════════════════
-// INIT
-// ══════════════════════════════════════
+// ── INIT ──────────────────────────────────────────────────────
 applyAccent(S.accent);
 applyBranding();
+document.querySelectorAll('.rtab').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.t)));
+const cpick=document.getElementById('cfgColor');
+if(cpick)cpick.addEventListener('input',e=>setAcc(e.target.value));
+document.querySelectorAll('.mo').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)cm(o.id);}));
+document.addEventListener('click',e=>{if(!e.target.closest('.umenu-wrap'))closeUserMenu();});
+document.getElementById('runnerLogoutBtn').addEventListener('click',logout);
 
-// Runner tabs
-document.querySelectorAll('.rtab').forEach(b => {
-  b.addEventListener('click', () => switchTab(b.dataset.t));
-});
+// ── BRANDING ──────────────────────────────────────────────────
+function applyAccent(c){S.accent=c;document.documentElement.style.setProperty('--a',c);localStorage.setItem('rc_accent',c);}
+function setAcc(c){applyAccent(c);const el=document.getElementById('cfgColor');if(el)el.value=c;const lbl=document.getElementById('acLbl');if(lbl){lbl.textContent=c;lbl.style.color=c;}document.querySelectorAll('.sw2').forEach(s=>s.classList.toggle('on',s.getAttribute('onclick')?.includes(c)));}
+function applyBranding(){['wOrg','tOrg'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=S.orgName;});renderLogo('wLogo',S.logoUrl,44);renderLogo('tLogo',S.logoUrl,26);}
+function renderLogo(id,url,sz){const c=document.getElementById(id);if(!c)return;if(url){c.innerHTML=`<img src="${esc(url)}" style="height:${sz}px;width:auto;object-fit:contain" onerror="this.parentNode.innerHTML=fallLogo(${sz})">`;} else c.innerHTML=fallLogo(sz);}
+function fallLogo(sz){const i=(S.orgName||'R')[0].toUpperCase();return `<div style="height:${sz}px;width:${sz}px;background:var(--a);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:${Math.round(sz*.55)}px;font-weight:900;color:#fff;border-radius:4px;flex-shrink:0">${i}</div>`;}
+function prevLogo(){const url=document.getElementById('cfgLogo').value.trim();const img=document.getElementById('logoPrev');if(url){img.src=url;img.style.display='block';}else img.style.display='none';}
 
-// Color picker live
-const cpick = document.getElementById('cfgColor');
-if (cpick) cpick.addEventListener('input', e => { setAcc(e.target.value); });
+// ── SCREENS ───────────────────────────────────────────────────
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
 
-// Modal close on backdrop
-document.querySelectorAll('.mo').forEach(o => o.addEventListener('click', e => { if(e.target===o) cm(o.id); }));
+// ── USER MENU ─────────────────────────────────────────────────
+function toggleUserMenu(){document.getElementById('udropdown').classList.toggle('on');}
+function closeUserMenu(){document.getElementById('udropdown').classList.remove('on');}
 
-// ══════════════════════════════════════
-// BRANDING
-// ══════════════════════════════════════
-function applyAccent(c) {
-  S.accent = c;
-  document.documentElement.style.setProperty('--a', c);
-  localStorage.setItem('rc_accent', c);
-}
-function setAcc(c) {
-  applyAccent(c);
-  const el = document.getElementById('cfgColor'); if(el) el.value = c;
-  const lbl = document.getElementById('acLbl'); if(lbl){ lbl.textContent = c; lbl.style.color = c; }
-  document.querySelectorAll('.sw2').forEach(s => s.classList.toggle('on', s.getAttribute('onclick')?.includes(c)));
-}
-function applyBranding() {
-  const els = ['wOrg','tOrg']; els.forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=S.orgName; });
-  renderLogo('wLogo', S.logoUrl, 44);
-  renderLogo('tLogo', S.logoUrl, 28);
-}
-function renderLogo(id, url, sz) {
-  const c = document.getElementById(id); if(!c) return;
-  if (url) { c.innerHTML = `<img src="${esc(url)}" style="height:${sz}px;width:auto;object-fit:contain" onerror="this.parentNode.innerHTML=fallLogo(${sz})">`; }
-  else c.innerHTML = fallLogo(sz);
-}
-function fallLogo(sz) {
-  const init = (S.orgName||'R')[0].toUpperCase();
-  return `<div style="height:${sz}px;width:${sz}px;background:var(--a);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:${Math.round(sz*.55)}px;font-weight:900;color:#fff;border-radius:4px;flex-shrink:0">${init}</div>`;
-}
-function prevLogo() {
-  const url = document.getElementById('cfgLogo').value.trim();
-  const img = document.getElementById('logoPrev');
-  if (url) { img.src=url; img.style.display='block'; } else img.style.display='none';
+// ── LOGIN MODALS ──────────────────────────────────────────────
+function selectRole(r){
+  document.getElementById('loginTitle').textContent=r==='runner'?'Ingresar como Corredor':'Acceso Administrador';
+  document.getElementById('loginRunnerArea').style.display=r==='runner'?'block':'none';
+  document.getElementById('loginAdminArea').style.display=r==='admin'?'block':'none';
+  om('moLogin');
+  setTimeout(()=>document.getElementById(r==='runner'?'rdni':'adid').focus(),200);
 }
 
-// ══════════════════════════════════════
-// SCREENS
-// ══════════════════════════════════════
-function show(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
-  document.getElementById(id).classList.add('on');
-}
-function selectRole(r) {
-  document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('on'));
-  document.getElementById(r==='runner'?'rcR':'rcA').classList.add('on');
-  document.getElementById('lRunner').style.display = r==='runner'?'block':'none';
-  document.getElementById('lAdmin').style.display  = r==='admin' ?'block':'none';
-  setTimeout(()=>document.getElementById(r==='runner'?'rdni':'adid').focus(), 50);
-}
-
-// ══════════════════════════════════════
-// AUTH: CORREDOR — entra sin validación
-// ══════════════════════════════════════
-function goRunner() {
-  const dni = document.getElementById('rdni').value.trim();
-  if (!dni) { toast('Ingresa tu DNI', 'err'); return; }
-  S.mode = 'runner'; S.runnerDni = dni;
-  S.runnerData = { history: [], corredor: { nombre: 'Corredor', dni } };
-  document.getElementById('rName').textContent = 'Bienvenido';
-  document.getElementById('rDni').textContent = 'DNI ' + dni;
+// ── AUTH: CORREDOR ────────────────────────────────────────────
+function goRunner(){
+  const dni=document.getElementById('rdni').value.trim();
+  if(!dni){toast('Ingresa tu DNI','err');return;}
+  S.mode='runner';S.runnerDni=dni;
+  S.runnerData={history:[],corredor:{nombre:'Corredor',dni}};
+  document.getElementById('rName').textContent='Bienvenido';
+  document.getElementById('rDni').textContent='DNI '+dni;
+  cm('moLogin');
   show('sr');
   switchTab('hist');
   loadSocialSlots();
-  fetchHistory(dni); // background
+  fetchHistory(dni);
 }
-
-async function fetchHistory(dni) {
-  const wrap = document.getElementById('rt-hist');
-  wrap.innerHTML = '<div class="lb"><div class="spin spd"></div> Buscando en el sistema...</div>';
-  try {
-    const d = await api({ action:'getRunnerHistory', dni });
-    S.runnerData = d;
-    if (d.corredor) document.getElementById('rName').textContent = d.corredor.nombre;
+async function fetchHistory(dni){
+  const wrap=document.getElementById('rt-hist');
+  wrap.innerHTML='<div class="ldr"><div class="spin spd"></div> Buscando...</div>';
+  try{
+    const d=await api({action:'getRunnerHistory',dni});
+    S.runnerData=d;
+    if(d.corredor)document.getElementById('rName').textContent=d.corredor.nombre;
     renderHist();
-  } catch(e) {
-    wrap.innerHTML = `<div class="empty"><div class="ei">⚠️</div><div class="et">No se pudo cargar</div><div class="em">${esc(e.message)}</div></div>`;
-  }
+  }catch(e){wrap.innerHTML=`<div class="empty"><div class="ei">⚠️</div><div class="et">No se pudo cargar</div><div class="em">${esc(e.message)}</div></div>`;}
 }
 
-// ══════════════════════════════════════
-// AUTH: ADMIN
-// ══════════════════════════════════════
-async function goAdmin() {
-  const id = document.getElementById('adid').value.trim();
-  if (!id) { toast('Ingresa tu ID', 'err'); return; }
-  const btn = document.getElementById('adminBtn');
-  btn.disabled=true; btn.innerHTML='<div class="spin"></div>';
-  try {
-    const d = await api({ action:'verifyAdmin', adminId:id }, 'POST');
-    S.mode='admin'; S.adminId=id; S.adminData=d.admin;
-    document.getElementById('aName').textContent = d.admin.nombre;
-    document.getElementById('aRole').textContent = d.admin.rol;
-    document.getElementById('aInit').textContent = d.admin.nombre[0].toUpperCase();
-    document.getElementById('nb-cfg').style.display = d.admin.rol==='superadmin'?'inline-flex':'none';
-    // Cargar config del Sheet
-    try {
-      const cfgD = await api({ action:'getConfig' });
-      if (cfgD.config) applyRemoteConfig(cfgD.config);
-    } catch(_) {}
+// ── AUTH: ADMIN ───────────────────────────────────────────────
+async function goAdmin(){
+  const id=document.getElementById('adid').value.trim();
+  if(!id){toast('Ingresa tu ID','err');return;}
+  const btn=document.getElementById('adminBtn');
+  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Verificando...';
+  try{
+    const d=await api({action:'verifyAdmin',adminId:id},'POST');
+    S.mode='admin';S.adminId=id;S.adminData=d.admin;
+    document.getElementById('aName').textContent=d.admin.nombre;
+    document.getElementById('aRole').textContent=d.admin.rol;
+    document.getElementById('udot').textContent=d.admin.nombre[0].toUpperCase();
+    document.getElementById('nb-cfg').style.display=d.admin.rol==='superadmin'?'inline-flex':'none';
+    document.getElementById('adminAddSection').style.display=d.admin.rol==='superadmin'?'block':'none';
+    try{const cfgD=await api({action:'getConfig'});if(cfgD.config)applyRemoteConfig(cfgD.config);}catch(_){}
+    cm('moLogin');
     show('sa');
     await loadRaces();
     ap('dash');
-  } catch(e) { toast('Error: '+e.message,'err'); }
-  finally { btn.disabled=false; btn.innerHTML='Entrar →'; }
+  }catch(e){toast('Error: '+e.message,'err');}
+  finally{btn.disabled=false;btn.innerHTML='Verificar y entrar →';}
 }
-
-function applyRemoteConfig(cfg) {
-  if (cfg.orgName) { S.orgName=cfg.orgName; localStorage.setItem('rc_org',cfg.orgName); }
-  if (cfg.logoUrl) { S.logoUrl=cfg.logoUrl; localStorage.setItem('rc_logo',cfg.logoUrl); }
-  if (cfg.accentColor) applyAccent(cfg.accentColor);
+function applyRemoteConfig(cfg){
+  if(cfg.orgName){S.orgName=cfg.orgName;localStorage.setItem('rc_org',cfg.orgName);}
+  if(cfg.logoUrl){S.logoUrl=cfg.logoUrl;localStorage.setItem('rc_logo',cfg.logoUrl);}
+  if(cfg.accentColor)applyAccent(cfg.accentColor);
   applyBranding();
 }
-
-function logout() {
-  S.mode=null; S.adminId=null; S.runnerDni=null;
+function logout(){
+  closeUserMenu();
+  S.mode=null;S.adminId=null;S.runnerDni=null;S.adminData=null;S.runnerData=null;
   stopScan();
+  document.getElementById('rdni').value='';
+  document.getElementById('adid').value='';
   show('sw');
 }
 
-// ══════════════════════════════════════
-// API — JSONP
-// ══════════════════════════════════════
-function api(params, method='GET') {
-  return new Promise((resolve, reject) => {
-    const cb = '_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
-    if (method==='POST') params = { ...params, _method:'POST' };
-    const url = API + '?' + new URLSearchParams(params).toString() + '&callback=' + cb;
-    const timer = setTimeout(() => { cleanup(); reject(new Error('Tiempo de espera agotado')); }, 18000);
-    function cleanup() { clearTimeout(timer); delete window[cb]; const s=document.getElementById(cb); if(s) s.remove(); }
-    window[cb] = data => {
-      cleanup();
-      if (data && data.error && !data.alreadyRegistered && !data.cannotRegister) reject(new Error(data.error));
-      else resolve(data);
-    };
-    const sc = document.createElement('script');
-    sc.id=cb; sc.src=url;
-    sc.onerror = () => { cleanup(); reject(new Error('Error de conexión. Verifica que el Web App esté publicado como "Cualquier persona".')); };
+// ── API ───────────────────────────────────────────────────────
+function api(params,method='GET'){
+  return new Promise((resolve,reject)=>{
+    const cb='_cb_'+Date.now()+'_'+Math.floor(Math.random()*9999);
+    if(method==='POST')params={...params,_method:'POST'};
+    const url=API+'?'+new URLSearchParams(params).toString()+'&callback='+cb;
+    const timer=setTimeout(()=>{cleanup();reject(new Error('Tiempo agotado — verifica tu conexión'));},20000);
+    function cleanup(){clearTimeout(timer);delete window[cb];const s=document.getElementById(cb);if(s)s.remove();}
+    window[cb]=data=>{cleanup();if(data&&data.error&&!data.alreadyRegistered&&!data.cannotRegister)reject(new Error(data.error));else resolve(data);};
+    const sc=document.createElement('script');
+    sc.id=cb;sc.src=url;
+    sc.onerror=()=>{cleanup();reject(new Error('Sin conexión. Verifica que el Web App esté publicado como "Cualquier persona"'));};
     document.head.appendChild(sc);
   });
 }
 
-// ══════════════════════════════════════
-// ADMIN NAVIGATION
-// ══════════════════════════════════════
-function ap(name) {
+// ── ADMIN NAV ─────────────────────────────────────────────────
+function ap(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   document.getElementById('pg-'+name).classList.add('on');
-  const nb = document.getElementById('nb-'+name); if(nb) nb.classList.add('on');
-  if (name==='dash') loadDash();
-  if (name==='scan') initScan();
-  else stopScan();
-  if (name==='rec')  loadRec();
-  if (name==='cfg')  loadCfgPage();
+  const nb=document.getElementById('nb-'+name);if(nb)nb.classList.add('on');
+  closeUserMenu();
+  if(name==='dash')loadDash();
+  if(name==='scan')initScan();else stopScan();
+  if(name==='rec')loadRec();
+  if(name==='cfg')loadCfgPage();
 }
 
-// ══════════════════════════════════════
-// RACES
-// ══════════════════════════════════════
-async function loadRaces() {
-  try {
-    const d = await api({ action:'getRaces', adminId:S.adminId });
-    S.races = d.races || [];
-    fillRaceSels();
-  } catch(e) { toast('Error cargando carreras','err'); }
+// ── RACES ─────────────────────────────────────────────────────
+async function loadRaces(){
+  try{const d=await api({action:'getRaces',adminId:S.adminId});S.races=d.races||[];fillRaceSels();}
+  catch(e){toast('Error cargando carreras','err');}
 }
-function fillRaceSels() {
+function fillRaceSels(){
   ['dRace','pRace','scanRace','recRace'].forEach(id=>{
-    const el = document.getElementById(id); if(!el) return;
-    const fixed = Array.from(el.options).filter(o=>!o.dataset.dyn);
-    el.innerHTML=''; fixed.forEach(o=>el.appendChild(o));
-    S.races.forEach(r=>{ const o=new Option('🏁 '+r.name, r.name); o.dataset.dyn='1'; el.appendChild(o); });
+    const el=document.getElementById(id);if(!el)return;
+    const fixed=Array.from(el.options).filter(o=>!o.dataset.dyn);
+    el.innerHTML='';fixed.forEach(o=>el.appendChild(o));
+    S.races.forEach(r=>{const o=new Option('🏁 '+r.name,r.name);o.dataset.dyn='1';el.appendChild(o);});
   });
 }
 
-// ══════════════════════════════════════
-// DASHBOARD
-// ══════════════════════════════════════
-async function loadDash() {
-  const race = document.getElementById('dRace').value;
-  try {
-    const [sd, pd] = await Promise.all([
-      api({ action:'getStats', adminId:S.adminId, race }),
-      race ? api({ action:'getParticipants', adminId:S.adminId, race }) : Promise.resolve({ participants:[] })
+// ── DASHBOARD ─────────────────────────────────────────────────
+function debounceDash(){clearTimeout(S.dashDebounce);S.dashDebounce=setTimeout(()=>loadDash(1),350);}
+async function loadDash(page){
+  S.dashPage=page||1;
+  const race=document.getElementById('dRace').value;
+  const search=document.getElementById('tSrch').value.trim();
+  const status=document.getElementById('tStFil').value;
+  const wrap=document.getElementById('dashTableWrap');
+  wrap.innerHTML='<div class="ldr"><div class="spin spd"></div> Cargando...</div>';
+  try{
+    const [sd,pd]=await Promise.all([
+      api({action:'getStats',adminId:S.adminId,race}),
+      race
+        ?api({action:'getParticipants',adminId:S.adminId,race,search,status,page:S.dashPage,pageSize:50})
+        :api({action:'getAllParticipants',adminId:S.adminId,search,status,page:S.dashPage,pageSize:50})
     ]);
-    const st = sd.stats;
-    document.getElementById('stTotal').textContent = st.total;
-    document.getElementById('stReg').textContent   = st.registrados;
-    document.getElementById('stAsi').textContent   = st.asistieron;
-    document.getElementById('stCan').textContent   = st.cancelados;
-    document.getElementById('dSub').textContent    = race ? (race==='_social'?'Social Running':race)+' — '+st.total+' participante(s)' : 'Todas las carreras — '+st.total+' total';
-    S.participants = pd.participants || [];
-    S.curRace = race;
-    renderT(S.participants);
-  } catch(e) { toast('Error: '+e.message,'err'); }
+    const st=sd.stats;
+    document.getElementById('stTotal').textContent=st.total;
+    document.getElementById('stReg').textContent=st.registrados;
+    document.getElementById('stAsi').textContent=st.asistieron;
+    document.getElementById('stCan').textContent=st.cancelados;
+    document.getElementById('dSub').textContent=race?(race==='_social'?'Social Running':race)+' — '+pd.total+' registro(s)':'Todas las carreras — '+pd.total+' total';
+    S.allParticipants=pd.participants||[];
+    renderDashTable(pd);
+  }catch(e){wrap.innerHTML=`<div class="empty"><div class="ei">⚠️</div><div class="et">Error</div><div class="em">${esc(e.message)}</div></div>`;}
 }
 
-function filterT() {
-  const s = document.getElementById('tSrch').value.toLowerCase();
-  const st = document.getElementById('tStFil').value;
-  renderT(S.participants.filter(p =>
-    (!s  || [p.nombre,p.dni,p.email].some(v=>String(v||'').toLowerCase().includes(s))) &&
-    (!st || p.estado===st)
-  ));
-}
-
-function renderT(list) {
-  const tb = document.getElementById('tBody');
-  if (!list.length) {
-    tb.innerHTML = `<tr><td colspan="8"><div class="empty"><div class="ei">👥</div><div class="et">Sin resultados</div></div></td></tr>`;
-    return;
-  }
-  const race = document.getElementById('dRace').value;
-  tb.innerHTML = list.map(p=>`<tr>
+function renderDashTable(pd){
+  const list=pd.participants||[];
+  const race=document.getElementById('dRace').value;
+  const wrap=document.getElementById('dashTableWrap');
+  if(!list.length){wrap.innerHTML='<div class="empty"><div class="ei">👥</div><div class="et">Sin resultados</div><div class="em">Prueba cambiando los filtros.</div></div>';return;}
+  const rows=list.map(p=>`<tr>
     <td><span class="dch">${p.dorsal||'—'}</span></td>
-    <td class="tdb">${esc(p.nombre)}</td>
+    <td class="tdb" style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.nombre)}</td>
     <td style="color:var(--g6);font-size:12px">${esc(p.dni)}</td>
-    <td style="color:var(--g6);font-size:12px">${esc(p.email||'')}</td>
+    <td style="color:var(--g6);font-size:12px;max-width:150px;overflow:hidden;text-overflow:ellipsis">${esc(p.email||'')}</td>
     <td><span class="badge ${p.estado}"><span class="bd"></span>${p.estado}</span></td>
-    <td style="font-size:12px;color:var(--g6)">${esc(p._sheet&&p._sheet!==race?p._sheet:race==='_social'?'Social Running':(race||''))}</td>
-    <td style="font-size:11px;color:var(--g4)">${p.ultimaMod?fmtD(p.ultimaMod):'—'}<br/><span>${esc(p.modificadoPor||'')}</span></td>
+    <td style="font-size:11px;color:var(--g6)">${esc(p._sheet||race==='_social'?'Social Running':(race||''))}</td>
+    <td style="font-size:11px;color:var(--g4)">${fmtD(p.ultimaMod)}</td>
     <td>
-      <div style="display:flex;gap:5px;flex-wrap:nowrap">
-        <button class="btn bg bsm" onclick="openQRModal('${p.id}','${esc(p.nombre)}','${p.dorsal||''}','${esc(race)}')">QR</button>
-        <button class="btn bg bsm" onclick="openStatusModal('${p.id}','${esc(p.nombre)}','${esc(p.estado)}','${esc(race)}')">Estado</button>
-        <button class="btn bdg bsm" onclick="promptDel('${p.id}','${esc(p.nombre)}','${esc(race)}')">✕</button>
+      <div style="display:flex;gap:4px;flex-wrap:nowrap">
+        <button class="btn bg bsm" onclick='openQRModal("${p.id}","${esc(p.nombre)}","${p.dorsal||''}","${esc(p._sheet||race||'')}","${esc(p.email||'')}")'>QR</button>
+        <button class="btn bg bsm" onclick='openStatusModal("${p.id}","${esc(p.nombre)}","${esc(p.estado)}","${esc(p._sheet||race||'')}")'>Est.</button>
+        <button class="btn bdg bsm" onclick='promptDel("${p.id}","${esc(p.nombre)}","${esc(p._sheet||race||'')}")'>✕</button>
       </div>
     </td>
   </tr>`).join('');
+  const pagesHtml=pd.pages>1?`
+    <div class="pages">
+      <span class="page-info">Página ${pd.page} de ${pd.pages} · ${pd.total} registros</span>
+      <div class="page-btns">
+        <button class="pb" onclick="loadDash(1)" ${pd.page<=1?'disabled':''}>«</button>
+        <button class="pb" onclick="loadDash(${pd.page-1})" ${pd.page<=1?'disabled':''}>‹</button>
+        ${Array.from({length:Math.min(5,pd.pages)},(_,i)=>{const pg=Math.max(1,Math.min(pd.page-2,pd.pages-4))+i;return `<button class="pb ${pg===pd.page?'on':''}" onclick="loadDash(${pg})">${pg}</button>`;}).join('')}
+        <button class="pb" onclick="loadDash(${pd.page+1})" ${pd.page>=pd.pages?'disabled':''}>›</button>
+        <button class="pb" onclick="loadDash(${pd.pages})" ${pd.page>=pd.pages?'disabled':''}>»</button>
+      </div>
+    </div>`:'';
+  wrap.innerHTML=`<div class="tw"><table><thead><tr><th>#</th><th>Nombre</th><th>DNI</th><th>Email</th><th>Estado</th><th>Carrera</th><th>Últ.Mod.</th><th>Acciones</th></tr></thead><tbody>${rows}</tbody></table>${pagesHtml}</div>`;
 }
 
-// ── Status modal (no auto-cycle) ──
-function openStatusModal(id, nombre, estado, race) {
-  S.stId=id; S.stRace=race; S.stCur=estado;
-  document.getElementById('stName').textContent = nombre;
-  document.querySelectorAll('.sopt').forEach(b=>{
-    b.classList.toggle('cur', b.dataset.s===estado);
-  });
+// ── STATUS MODAL ──────────────────────────────────────────────
+function openStatusModal(id,nombre,estado,race){
+  S.stId=id;S.stRace=race;S.stCur=estado;
+  document.getElementById('stName').textContent=nombre;
+  document.querySelectorAll('.sopt').forEach(b=>b.classList.toggle('cur',b.dataset.s===estado));
   om('moStatus');
 }
-async function applyStatus(status) {
-  if (status===S.stCur) { cm('moStatus'); return; }
-  if (!S.stRace) { toast('Sin carrera seleccionada','err'); return; }
-  try {
-    await api({ action:'updateStatus', adminId:S.adminId, id:S.stId, race:S.stRace, status }, 'POST');
-    cm('moStatus');
-    toast('Estado → '+status,'ok');
-    // Update local data and re-render
-    const p = S.participants.find(x=>x.id===S.stId);
-    if (p) p.estado = status;
-    filterT();
-    // Also refresh records if on that page
-    if (document.getElementById('pg-rec').classList.contains('on')) loadRec();
-  } catch(e) { toast(e.message,'err'); }
+async function applyStatus(status){
+  if(status===S.stCur){cm('moStatus');return;}
+  try{
+    await api({action:'updateStatus',adminId:S.adminId,id:S.stId,race:S.stRace,status},'POST');
+    cm('moStatus');toast('Estado → '+status,'ok');
+    loadDash(S.dashPage);
+    if(document.getElementById('pg-rec').classList.contains('on'))loadRec(S.recPage);
+  }catch(e){toast(e.message,'err');}
 }
 
-function promptDel(id, name, race) {
-  S.delId=id; S.delRace=race;
-  document.getElementById('delName').textContent=name;
-  om('moDel');
+function promptDel(id,name,race){S.delId=id;S.delRace=race;document.getElementById('delName').textContent=name;om('moDel');}
+async function confirmDel(){
+  try{await api({action:'deleteParticipant',adminId:S.adminId,id:S.delId,race:S.delRace},'POST');cm('moDel');toast('Eliminado','ok');loadDash(1);}
+  catch(e){toast(e.message,'err');}
 }
-async function confirmDel() {
-  try {
-    await api({ action:'deleteParticipant', adminId:S.adminId, id:S.delId, race:S.delRace }, 'POST');
-    cm('moDel'); toast('Eliminado','ok');
-    loadDash();
-  } catch(e) { toast(e.message,'err'); }
-}
-async function doExport() {
-  const race = document.getElementById('dRace').value;
-  if (!race) { toast('Selecciona una carrera para exportar','err'); return; }
+async function doExport(){
+  const race=document.getElementById('dRace').value;
+  if(!race){toast('Selecciona una carrera para exportar','err');return;}
   window.open(API+`?action=exportCSV&adminId=${S.adminId}&race=${encodeURIComponent(race)}`,'_blank');
 }
 
-// ══════════════════════════════════════
-// QR MODAL (ADMIN)
-// ══════════════════════════════════════
-function openQRModal(id, nombre, dorsal, race) {
-  document.getElementById('qrRace').textContent = race==='_social'?'Social Running':(race||'Evento');
-  document.getElementById('qrNom').textContent  = nombre;
-  document.getElementById('qrNum').textContent  = '#'+(dorsal||'?');
-  document.getElementById('qrId').textContent   = id;
-  const h = document.getElementById('qrhr'); h.innerHTML='';
-  if (S.qrInst) { try { S.qrInst.clear(); } catch(_){} }
-  S.qrInst = new QRCode(h, { text:id, width:200, height:200, colorDark:'#0a0a0a', colorLight:'#fff', correctLevel:QRCode.CorrectLevel.H });
+// ── QR MODAL (ADMIN) ──────────────────────────────────────────
+function openQRModal(id,nombre,dorsal,race,email){
+  S.qrCurrentId=id;S.qrCurrentRace=race;
+  document.getElementById('qrRace').textContent=race==='_social'?'Social Running':(race||'Evento');
+  document.getElementById('qrNom').textContent=nombre;
+  document.getElementById('qrNum').textContent='#'+(dorsal||'?');
+  document.getElementById('qrId').textContent=id;
+  const h=document.getElementById('qrhr');h.innerHTML='';
+  if(S.qrInst){try{S.qrInst.clear();}catch(_){}}
+  S.qrInst=new QRCode(h,{text:id,width:200,height:200,colorDark:'#0a0a0a',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});
+  // Show/hide resend button
+  const resendBtn=document.getElementById('resendBtn');
+  resendBtn.textContent=email?'✉️ Reenviar por email':'✉️ Sin email registrado';
+  resendBtn.disabled=!email;
   om('moQR');
 }
-function dlQR() {
-  const cv = document.querySelector('#qrhr canvas');
-  if (!cv) return toast('QR no disponible','err');
+function dlQR(){
+  const cv=document.querySelector('#qrhr canvas');
+  if(!cv)return toast('QR no disponible','err');
   const a=document.createElement('a');
   a.download=`qr_${document.getElementById('qrNom').textContent.replace(/\s/g,'_')}.png`;
-  a.href=cv.toDataURL(); a.click();
+  a.href=cv.toDataURL();a.click();
+}
+async function resendQREmail(){
+  const btn=document.getElementById('resendBtn');
+  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Enviando...';
+  try{
+    await api({action:'resendQR',adminId:S.adminId,id:S.qrCurrentId,race:S.qrCurrentRace},'POST');
+    toast('✉️ Email reenviado','ok');
+  }catch(e){toast('Error: '+e.message,'err');}
+  finally{btn.disabled=false;btn.innerHTML='✉️ Reenviar por email';}
 }
 
-// ══════════════════════════════════════
-// ADD PARTICIPANT
-// ══════════════════════════════════════
-function openAddModal() {
-  ['pRace','pNom','pDni','pEmail','pDors'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=''; });
+// ── ADD PARTICIPANT ───────────────────────────────────────────
+function openAddModal(){
+  ['pRace','pNom','pDni','pEmail','pDors'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
   ['epRace','epNom','epDni','epEmail'].forEach(id=>document.getElementById(id).classList.remove('on'));
-  const race = document.getElementById('dRace')?.value || document.getElementById('recRace')?.value || '';
-  if (race) { const e=document.getElementById('pRace'); if(e) e.value=race; }
+  const race=document.getElementById('dRace')?.value||document.getElementById('recRace')?.value||'';
+  if(race){const e=document.getElementById('pRace');if(e)e.value=race;}
   om('moAdd');
 }
-async function submitAdd() {
-  const race  = document.getElementById('pRace').value;
-  const nom   = document.getElementById('pNom').value.trim();
-  const dni   = document.getElementById('pDni').value.trim();
-  const email = document.getElementById('pEmail').value.trim();
-  const dors  = document.getElementById('pDors').value.trim();
+async function submitAdd(){
+  const race=document.getElementById('pRace').value;
+  const nom=document.getElementById('pNom').value.trim();
+  const dni=document.getElementById('pDni').value.trim();
+  const email=document.getElementById('pEmail').value.trim();
+  const dors=document.getElementById('pDors').value.trim();
   ['epRace','epNom','epDni','epEmail'].forEach(id=>document.getElementById(id).classList.remove('on'));
   let err=false;
-  if (!race){document.getElementById('epRace').classList.add('on');err=true;}
-  if (!nom) {document.getElementById('epNom').classList.add('on');err=true;}
-  if (!dni) {document.getElementById('epDni').classList.add('on');err=true;}
-  if (!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById('epEmail').classList.add('on');err=true;}
-  if (err) return;
-  const btn=document.getElementById('pBtn'); btn.disabled=true; btn.innerHTML='<div class="spin"></div> Registrando...';
-  try {
-    await api({ action:'registerParticipant', adminId:S.adminId, race, nombre:nom, dni, email, dorsal:dors||undefined }, 'POST');
-    cm('moAdd'); toast('✅ Participante registrado','ok');
-    loadDash(); loadRec();
-  } catch(e) { toast(e.message,'err'); }
-  finally { btn.disabled=false; btn.innerHTML='Registrar →'; }
+  if(!race){document.getElementById('epRace').classList.add('on');err=true;}
+  if(!nom){document.getElementById('epNom').classList.add('on');err=true;}
+  if(!dni){document.getElementById('epDni').classList.add('on');err=true;}
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById('epEmail').classList.add('on');err=true;}
+  if(err)return;
+  const btn=document.getElementById('pBtn');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Registrando...';
+  try{
+    await api({action:'registerParticipant',adminId:S.adminId,race,nombre:nom,dni,email,dorsal:dors||undefined},'POST');
+    cm('moAdd');toast('✅ Registrado y email enviado','ok');
+    loadDash(1);loadRec(1);
+  }catch(e){toast(e.message,'err');}
+  finally{btn.disabled=false;btn.innerHTML='Registrar →';}
 }
 
-// ══════════════════════════════════════
-// RECORDS
-// ══════════════════════════════════════
-async function loadRec() {
-  const race = document.getElementById('recRace').value;
-  const addBtn = document.getElementById('recAdd');
-  if (!race) {
-    document.getElementById('recContent').innerHTML=`<div class="empty"><div class="ei">📋</div><div class="et">Selecciona una carrera</div></div>`;
-    if(addBtn) addBtn.style.display='none'; return;
+// ── RECORDS ───────────────────────────────────────────────────
+function debounceRec(){clearTimeout(S.recDebounce);S.recDebounce=setTimeout(()=>loadRec(1),350);}
+async function loadRec(page){
+  S.recPage=page||1;
+  const race=document.getElementById('recRace').value;
+  const addBtn=document.getElementById('recAdd');
+  const toolbar=document.getElementById('recToolbar');
+  if(!race){
+    document.getElementById('recContent').innerHTML='<div class="empty"><div class="ei">📋</div><div class="et">Selecciona una carrera</div></div>';
+    if(addBtn)addBtn.style.display='none';
+    if(toolbar)toolbar.style.display='none';
+    return;
   }
-  if(addBtn) addBtn.style.display='inline-flex';
-  document.getElementById('recContent').innerHTML='<div class="lb"><div class="spin spd"></div> Cargando...</div>';
-  try {
-    const d = await api({ action:'getParticipants', adminId:S.adminId, race });
-    const list = d.participants || [];
-    const isSocial = d.isSocial || race==='_social';
-    if (!list.length) {
-      document.getElementById('recContent').innerHTML=`<div class="empty"><div class="ei">👥</div><div class="et">Sin registros</div></div>`;
-      return;
-    }
+  if(addBtn)addBtn.style.display='inline-flex';
+  if(toolbar)toolbar.style.display='flex';
+  document.getElementById('recContent').innerHTML='<div class="ldr"><div class="spin spd"></div> Cargando...</div>';
+  const search=document.getElementById('recSrch')?.value.trim()||'';
+  const status=document.getElementById('recStFil')?.value||'';
+  try{
+    const d=await api({action:'getParticipants',adminId:S.adminId,race,search,status,page:S.recPage,pageSize:50});
+    const list=d.participants||[];
+    const isSocial=d.isSocial||race==='_social';
+    if(!list.length){document.getElementById('recContent').innerHTML='<div class="empty"><div class="ei">👥</div><div class="et">Sin registros</div></div>';return;}
+    const pagesHtml=d.pages>1?`
+      <div class="pages">
+        <span class="page-info">Página ${d.page} de ${d.pages} · ${d.total} registros</span>
+        <div class="page-btns">
+          <button class="pb" onclick="loadRec(1)" ${d.page<=1?'disabled':''}>«</button>
+          <button class="pb" onclick="loadRec(${d.page-1})" ${d.page<=1?'disabled':''}>‹</button>
+          <button class="pb" onclick="loadRec(${d.page+1})" ${d.page>=d.pages?'disabled':''}>›</button>
+          <button class="pb" onclick="loadRec(${d.pages})" ${d.page>=d.pages?'disabled':''}>»</button>
+        </div>
+      </div>`:'';
     document.getElementById('recContent').innerHTML=`
       <div class="tw"><table><thead><tr>
-        <th>Dorsal</th><th>Nombre</th><th>DNI</th><th>Email</th>
-        ${isSocial?'<th>Fecha Evento</th>':''}
-        <th>Estado</th><th>Creado por</th><th>Modificado por</th><th>Fecha mod.</th><th>Acciones</th>
+        <th>#</th><th>Nombre</th><th>DNI</th>${isSocial?'<th>Fecha</th>':''}<th>Estado</th><th>Creado</th><th>Modificado</th><th>Fecha mod.</th><th>Acciones</th>
       </tr></thead><tbody>${list.map(p=>`<tr>
         <td><span class="dch">${p.dorsal||'—'}</span></td>
-        <td class="tdb">${esc(p.nombre)}</td>
+        <td class="tdb" style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.nombre)}</td>
         <td style="font-size:12px;color:var(--g6)">${esc(p.dni)}</td>
-        <td style="font-size:12px;color:var(--g6)">${esc(p.email||'')}</td>
-        ${isSocial?`<td style="font-size:12px;color:var(--g6)">${esc(p.fechaEvento||'')}</td>`:''}
-        <td>
-          <select class="sel" style="font-size:12px;padding:5px 28px 5px 8px" onchange="recUpdateStatus('${p.id}','${esc(race)}',this)">
-            <option ${p.estado==='Registrado'||p.estado==='Inscrito'?'selected':''} value="${isSocial?'Inscrito':'Registrado'}">${isSocial?'Inscrito':'Registrado'}</option>
-            <option ${p.estado==='Asistió'?'selected':''} value="Asistió">Asistió</option>
-            <option ${p.estado==='Cancelado'?'selected':''} value="Cancelado">Cancelado</option>
-          </select>
-        </td>
+        ${isSocial?`<td style="font-size:12px;color:var(--g6)">${fmtD(p.fechaEvento||'')}</td>`:''}
+        <td><select class="sel" style="font-size:12px;padding:4px 24px 4px 7px" onchange="recUpdateStatus('${p.id}','${esc(race)}',this)">
+          <option ${(p.estado==='Registrado'||p.estado==='Inscrito')?'selected':''} value="${isSocial?'Inscrito':'Registrado'}">${isSocial?'Inscrito':'Registrado'}</option>
+          <option ${p.estado==='Asistió'?'selected':''} value="Asistió">Asistió</option>
+          <option ${p.estado==='Cancelado'?'selected':''} value="Cancelado">Cancelado</option>
+        </select></td>
         <td style="font-size:11px;color:var(--g6)">${esc(p.creadoPor||'—')}</td>
         <td style="font-size:11px;color:var(--g6)">${esc(p.modificadoPor||'—')}</td>
-        <td style="font-size:11px;color:var(--g4)">${p.ultimaMod?fmtD(p.ultimaMod):'—'}</td>
-        <td>
-          <div style="display:flex;gap:5px">
-            <button class="btn bg bsm" onclick="openQRModal('${p.id}','${esc(p.nombre)}','${p.dorsal||''}','${esc(race)}')">QR</button>
-            <button class="btn bdg bsm" onclick="promptDel('${p.id}','${esc(p.nombre)}','${esc(race)}')">✕</button>
-          </div>
-        </td>
-      </tr>`).join('')}</tbody></table></div>`;
-  } catch(e) {
-    document.getElementById('recContent').innerHTML=`<div class="empty"><div class="ei">⚠️</div><div class="et">Error</div><div class="em">${esc(e.message)}</div></div>`;
-  }
+        <td style="font-size:11px;color:var(--g4)">${fmtD(p.ultimaMod)}</td>
+        <td><div style="display:flex;gap:4px">
+          <button class="btn bg bsm" onclick='openQRModal("${p.id}","${esc(p.nombre)}","${p.dorsal||''}","${esc(race)}","${esc(p.email||'')}")'>QR</button>
+          <button class="btn bdg bsm" onclick='promptDel("${p.id}","${esc(p.nombre)}","${esc(race)}")'>✕</button>
+        </div></td>
+      </tr>`).join('')}</tbody></table>${pagesHtml}</div>`;
+  }catch(e){document.getElementById('recContent').innerHTML=`<div class="empty"><div class="ei">⚠️</div><div class="et">Error</div><div class="em">${esc(e.message)}</div></div>`;}
+}
+async function recUpdateStatus(id,race,sel){
+  const status=sel.value;
+  const prev=sel.dataset.prev||sel.options[sel.selectedIndex].value;
+  try{await api({action:'updateStatus',adminId:S.adminId,id,race,status},'POST');sel.dataset.prev=status;toast('Estado → '+status,'ok');}
+  catch(e){sel.value=prev;toast(e.message,'err');}
 }
 
-async function recUpdateStatus(id, race, sel) {
-  const status = sel.value;
-  const prev = sel.dataset.prev || sel.value;
-  try {
-    await api({ action:'updateStatus', adminId:S.adminId, id, race, status }, 'POST');
-    sel.dataset.prev = status;
-    toast('Estado → '+status,'ok');
-  } catch(e) { sel.value=prev; toast(e.message,'err'); }
-}
-
-// ══════════════════════════════════════
-// SCANNER
-// ══════════════════════════════════════
-function initScan() {
-  if (S.scanOn) return;
+// ── SCANNER ───────────────────────────────────────────────────
+function initScan(){
+  if(S.scanOn)return;
   S.scanOn=true;
-  S.qr = new Html5Qrcode('qr-reader');
-  S.qr.start({ facingMode:'environment' }, { fps:10, qrbox:{width:250,height:250}, aspectRatio:1 }, onScan, ()=>{})
+  S.qr=new Html5Qrcode('qr-reader');
+  // Higher fps and smaller qrbox for faster recognition
+  S.qr.start({facingMode:'environment'},{fps:15,qrbox:{width:230,height:230},aspectRatio:1,disableFlip:false},onScan,()=>{})
     .catch(()=>{
-      document.getElementById('qr-reader').innerHTML='<div class="empty" style="padding:32px"><div class="ei">📷</div><div class="et">Cámara no disponible</div><div class="em">Permite el acceso. Requiere HTTPS.</div></div>';
+      document.getElementById('qr-reader').innerHTML='<div class="empty" style="padding:28px"><div class="ei">📷</div><div class="et">Cámara no disponible</div><div class="em">Permite el acceso. Requiere HTTPS.</div></div>';
       S.scanOn=false;
     });
 }
-function stopScan() {
-  if (S.qr&&S.scanOn){ S.qr.stop().catch(()=>{}); S.scanOn=false; }
-}
+function stopScan(){if(S.qr&&S.scanOn){S.qr.stop().catch(()=>{});S.scanOn=false;}}
 
-async function onScan(text) {
-  if (S.scanCD||text===S.lastScan) return;
-  S.lastScan=text; S.scanCD=true;
-  setTimeout(()=>{ S.scanCD=false; }, 5000);
-  const race = document.getElementById('scanRace').value;
-  if (!race) { showScanInfo('warn','⚠️','Selecciona una carrera','Elige la carrera activa antes de escanear.',null,null); return; }
-  document.getElementById('scanRes').innerHTML='<div class="scard info"><div class="lb"><div class="spin spd"></div><span>Verificando…</span></div></div>';
-  try {
-    const d = await api({ action:'getParticipant', id:text, adminId:S.adminId });
-    showScanInfo('ok', null, null, null, d.participant||d.public, text, race, d.isSocial);
-  } catch(e) {
-    document.getElementById('scanRes').innerHTML=`<div class="scard"><div class="shero"><span class="semoji">❌</span><div class="shead">QR no válido</div><div class="snote">${esc(e.message)}</div></div><div class="sacts"><button class="btn bg bfw" onclick="resetScan()">↩ Escanear otro</button></div></div>`;
+async function onScan(text){
+  if(S.scanCD||text===S.lastScan)return;
+  S.lastScan=text;S.scanCD=true;
+  setTimeout(()=>{S.scanCD=false;},4000);
+  const race=document.getElementById('scanRace').value;
+  if(!race){showScanMsg('warn','⚠️','Selecciona una carrera','Elige la carrera activa antes de escanear.');return;}
+  document.getElementById('scanRes').innerHTML='<div class="scard info"><div class="ldr"><div class="spin spd"></div><span>Verificando…</span></div></div>';
+  try{
+    const d=await api({action:'getParticipant',id:text,adminId:S.adminId});
+    showScanInfo(d.participant||d.public,text,race,d.isSocial);
+  }catch(e){
+    document.getElementById('scanRes').innerHTML=`<div class="scard"><div class="shero"><span class="semoji">❌</span><div class="shead">QR no válido</div><div class="snote">${esc(e.message)}</div></div><div style="display:flex;flex-direction:column;gap:8px;margin-top:12px"><button class="btn bg bfw" onclick="resetScan()">↩ Escanear otro</button></div></div>`;
   }
 }
-
-function showScanInfo(type, emoji, title, note, p, id, race, isSocial) {
-  if (!p) {
-    document.getElementById('scanRes').innerHTML=`<div class="scard ${type}"><div class="shero"><span class="semoji">${emoji}</span><div class="shead">${title}</div><div class="snote">${note}</div></div><div class="sacts"><button class="btn bg bfw" onclick="resetScan()">↩ Intentar de nuevo</button></div></div>`;
-    return;
-  }
-  const estado = p.estado;
-  const yaAsistio = estado==='Asistió'||estado==='Asistio';
-  const puedeReg  = estado==='Registrado'||estado==='Inscrito';
-  const rLabel    = race==='_social'?'Social Running':race;
-
-  const alertHtml = yaAsistio ? `
-    <div style="background:#fee2e2;border:1px solid #fecaca;border-radius:var(--r);padding:12px 14px;margin:10px 0;display:flex;align-items:flex-start;gap:8px">
-      <span style="font-size:18px;flex-shrink:0">⛔</span>
-      <div><div style="font-size:13px;font-weight:700;color:#b91c1c">QR ya escaneado</div><div style="font-size:12px;color:#ef4444;margin-top:2px">Este participante ya registró su asistencia para esta carrera.</div></div>
-    </div>` : (!puedeReg ? `
-    <div style="background:#fef9c3;border:1px solid #fde68a;border-radius:var(--r);padding:12px 14px;margin:10px 0">
-      <div style="font-size:13px;font-weight:700;color:#92400e">Estado: "${estado}"</div>
-      <div style="font-size:12px;color:#a16207;margin-top:2px">Solo se puede registrar asistencia desde "Registrado" o "Inscrito".</div>
-    </div>` : '');
-
+function showScanMsg(type,emoji,title,note){
+  document.getElementById('scanRes').innerHTML=`<div class="scard ${type}"><div class="shero"><span class="semoji">${emoji}</span><div class="shead">${title}</div><div class="snote">${note}</div></div><div style="margin-top:12px"><button class="btn bg bfw" onclick="resetScan()">↩ Intentar de nuevo</button></div></div>`;
+}
+function showScanInfo(p,id,race,isSocial){
+  const estado=p.estado;
+  const yaAsistio=estado==='Asistió'||estado==='Asistio';
+  const puedeReg=estado==='Registrado'||estado==='Inscrito';
+  const rLabel=race==='_social'?'Social Running':race;
+  const alertHtml=yaAsistio?`<div style="background:#fee2e2;border:1px solid #fecaca;border-radius:var(--r);padding:10px 12px;margin:8px 0;display:flex;align-items:flex-start;gap:8px"><span style="font-size:16px;flex-shrink:0">⛔</span><div><div style="font-size:13px;font-weight:700;color:#b91c1c">QR ya escaneado</div><div style="font-size:12px;color:#ef4444;margin-top:1px">Asistencia ya registrada para esta carrera.</div></div></div>`:(!puedeReg?`<div style="background:#fef9c3;border:1px solid #fde68a;border-radius:var(--r);padding:10px 12px;margin:8px 0"><div style="font-size:13px;font-weight:700;color:#92400e">Estado: "${estado}"</div><div style="font-size:12px;color:#a16207;margin-top:1px">Solo se puede registrar desde "Registrado" o "Inscrito".</div></div>`:'');
   document.getElementById('scanRes').innerHTML=`
     <div class="scard ${yaAsistio?'blocked':puedeReg?'ok':'warn'}">
-      <div class="shero">
-        <span class="semoji">${yaAsistio?'⛔':puedeReg?'📋':'⚠️'}</span>
-        <div class="shead">${esc(p.nombre)}</div>
-        <div class="snote">${esc(rLabel)}</div>
-      </div>
+      <div class="shero"><span class="semoji">${yaAsistio?'⛔':puedeReg?'📋':'⚠️'}</span><div class="shead">${esc(p.nombre)}</div><div class="snote">${esc(rLabel)}</div></div>
       <div class="igrid">
         <div class="irow"><span class="ilbl">Dorsal</span><span class="ival" style="font-family:var(--fd);font-size:22px;font-weight:900;color:var(--a)">#${p.dorsal||'—'}</span></div>
         <div class="irow"><span class="ilbl">DNI</span><span class="ival">${esc(p.dni||'—')}</span></div>
         <div class="irow"><span class="ilbl">Email</span><span class="ival" style="font-size:12px">${esc(p.email||'—')}</span></div>
-        ${p.fechaEvento?`<div class="irow"><span class="ilbl">Fecha evento</span><span class="ival">${esc(p.fechaEvento)}</span></div>`:''}
+        ${p.fechaEvento?`<div class="irow"><span class="ilbl">Fecha</span><span class="ival">${fmtD(p.fechaEvento)}</span></div>`:''}
         <div class="irow"><span class="ilbl">Estado</span><span class="ival"><span class="badge ${estado}"><span class="bd"></span>${estado}</span></span></div>
       </div>
       ${alertHtml}
-      <div class="sacts">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
         ${puedeReg?`<button class="btn bgrn bfw blg" onclick="doAttend('${id}','${esc(race)}',${!!isSocial})">✅ Registrar asistencia</button>`:''}
         <button class="btn bg bfw" onclick="resetScan()">↩ Escanear otro</button>
       </div>
     </div>`;
 }
-
-async function doAttend(id, race, isSocial) {
-  const btn = document.querySelector('#scanRes .bgrn');
-  if(btn){ btn.disabled=true; btn.innerHTML='<div class="spin"></div> Registrando…'; }
-  try {
-    const action = isSocial ? 'markSocialAttendance' : 'markAttendance';
-    const params = isSocial ? { action, adminId:S.adminId, id } : { action, adminId:S.adminId, id, race };
-    const d = await api(params, 'POST');
-    if (d.alreadyRegistered) { toast('⚠️ Ya estaba registrado','err'); showScanInfo('ok',null,null,null,d.participant||d.registration, id, race, isSocial); return; }
-    const p = d.participant||d.registration;
+async function doAttend(id,race,isSocial){
+  const btn=document.querySelector('#scanRes .bgrn');
+  if(btn){btn.disabled=true;btn.innerHTML='<div class="spin"></div> Registrando…';}
+  try{
+    const action=isSocial?'markSocialAttendance':'markAttendance';
+    const params=isSocial?{action,adminId:S.adminId,id}:{action,adminId:S.adminId,id,race};
+    const d=await api(params,'POST');
+    if(d.alreadyRegistered){toast('⚠️ Ya estaba registrado','err');showScanInfo(d.participant||d.registration,id,race,isSocial);return;}
+    const p=d.participant||d.registration;
     document.getElementById('scanRes').innerHTML=`
       <div class="scard ok">
         <div class="shero"><span class="semoji">✅</span><div class="shead">¡Asistencia registrada!</div><div class="snote">${esc(race==='_social'?'Social Running':race)}</div></div>
@@ -1100,93 +996,93 @@ async function doAttend(id, race, isSocial) {
           <div class="irow"><span class="ilbl">Dorsal</span><span class="ival" style="font-family:var(--fd);font-size:20px;font-weight:900;color:var(--a)">#${p.dorsal||'—'}</span></div>
           <div class="irow"><span class="ilbl">DNI</span><span class="ival">${esc(p.dni||'')}</span></div>
         </div>
-        <button class="btn bk bfw" style="margin-top:12px" onclick="resetScan()">↩ Escanear siguiente</button>
+        <div style="margin-top:10px"><button class="btn bk bfw" onclick="resetScan()">↩ Escanear siguiente</button></div>
       </div>`;
     toast('✅ Asistencia registrada','ok');
-  } catch(e) { toast('Error: '+e.message,'err'); if(btn){btn.disabled=false;btn.innerHTML='✅ Registrar asistencia';} }
+  }catch(e){toast('Error: '+e.message,'err');if(btn){btn.disabled=false;btn.innerHTML='✅ Registrar asistencia';}}
 }
+function resetScan(){S.lastScan='';S.scanCD=false;document.getElementById('scanRes').innerHTML='';}
 
-function resetScan() { S.lastScan=''; S.scanCD=false; document.getElementById('scanRes').innerHTML=''; }
-
-// ══════════════════════════════════════
-// CONFIG
-// ══════════════════════════════════════
-async function loadCfgPage() {
-  document.getElementById('cfgOrg').value   = S.orgName;
-  document.getElementById('cfgLogo').value  = S.logoUrl;
-  document.getElementById('cfgColor').value = S.accent;
-  document.getElementById('acLbl').textContent = S.accent;
-  document.getElementById('acLbl').style.color = S.accent;
-  if (S.logoUrl) { const p=document.getElementById('logoPrev'); p.src=S.logoUrl; p.style.display='block'; }
-  await Promise.all([loadRacesCfg(), loadAdminsCfg()]);
+// ── CONFIG ────────────────────────────────────────────────────
+async function loadCfgPage(){
+  document.getElementById('cfgOrg').value=S.orgName;
+  document.getElementById('cfgLogo').value=S.logoUrl;
+  document.getElementById('cfgColor').value=S.accent;
+  document.getElementById('acLbl').textContent=S.accent;document.getElementById('acLbl').style.color=S.accent;
+  if(S.logoUrl){const p=document.getElementById('logoPrev');p.src=S.logoUrl;p.style.display='block';}
+  await Promise.all([loadRacesCfg(),loadAdminsCfg()]);
 }
-async function loadRacesCfg() {
+async function loadRacesCfg(){
   const wrap=document.getElementById('racesListCfg');
-  try {
-    const d=await api({ action:'getRaces', adminId:S.adminId });
-    S.races=d.races||[]; fillRaceSels();
-    wrap.innerHTML=S.races.length?S.races.map(r=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g1)"><span style="font-weight:600">🏁 ${esc(r.name)}</span><span class="tag">Activa</span></div>`).join(''):'<p style="font-size:13px;color:var(--g6)">No hay carreras específicas creadas.</p>';
-  } catch(e){ wrap.innerHTML='<p style="color:var(--a);font-size:13px">'+e.message+'</p>'; }
+  try{const d=await api({action:'getRaces',adminId:S.adminId});S.races=d.races||[];fillRaceSels();wrap.innerHTML=S.races.length?S.races.map(r=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--g1)"><span style="font-weight:600">🏁 ${esc(r.name)}</span><span class="tag">Activa</span></div>`).join(''):'<p style="font-size:13px;color:var(--g6)">No hay carreras creadas.</p>';}
+  catch(e){wrap.innerHTML='<p style="color:var(--a);font-size:13px">'+e.message+'</p>';}
 }
-async function loadAdminsCfg() {
+async function loadAdminsCfg(){
   const wrap=document.getElementById('adminsListWrap');
-  try {
-    const d=await api({ action:'getAdminList', adminId:S.adminId });
+  const isSuperAdmin=S.adminData&&S.adminData.rol===ROLE_SUPERADMIN;
+  try{
+    const d=await api({action:'getAdminList',adminId:S.adminId});
     const admins=d.admins||[];
-    wrap.innerHTML=admins.length?admins.map(a=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g1);gap:10px"><div style="display:flex;align-items:center;gap:10px"><span style="font-family:var(--fd);font-size:16px;font-weight:800;background:var(--ak);color:#fff;padding:2px 10px;border-radius:var(--r)">${esc(a.id)}</span><div><div style="font-weight:600;font-size:14px">${esc(a.nombre)}</div><div style="font-size:11px;color:var(--g6)">${esc(a.email||'sin email')}</div></div></div><div style="display:flex;gap:6px"><span class="tag ${a.rol==='superadmin'?'ac':''}">${a.rol}</span><span class="tag" style="${a.activo?'color:#16a34a':'color:var(--a)'}">${a.activo?'Activo':'Inactivo'}</span></div></div>`).join(''):'<p style="font-size:13px;color:var(--g6)">Sin administradores.</p>';
-  } catch(e){ wrap.innerHTML='<p style="color:var(--a);font-size:13px">'+e.message+'</p>'; }
+    wrap.innerHTML=admins.length?admins.map(a=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--g1);gap:8px">
+      <div style="display:flex;align-items:center;gap:8px">
+        ${d.isSuperAdmin&&a.id?`<span style="font-family:var(--fd);font-size:14px;font-weight:800;background:var(--ak);color:#fff;padding:2px 8px;border-radius:var(--r)">${esc(a.id)}</span>`:''}
+        <div><div style="font-weight:600;font-size:14px">${esc(a.nombre)}</div><div style="font-size:11px;color:var(--g6)">${esc(a.email||'sin email')}</div></div>
+      </div>
+      <div style="display:flex;gap:5px"><span class="tag ${a.rol==='superadmin'?'ac':''}">${a.rol}</span><span class="tag" style="${a.activo?'color:#16a34a':'color:var(--a)'}">${a.activo?'Activo':'Inactivo'}</span></div>
+    </div>`).join(''):'<p style="font-size:13px;color:var(--g6)">Sin administradores.</p>';
+  }catch(e){wrap.innerHTML='<p style="color:var(--a);font-size:13px">'+e.message+'</p>';}
 }
-async function createRace() {
+const ROLE_SUPERADMIN='superadmin';
+async function createRace(){
   const name=document.getElementById('newRaceN').value.trim();
   if(!name){toast('Ingresa el nombre','err');return;}
-  try { await api({action:'createRace',adminId:S.adminId,name},'POST'); document.getElementById('newRaceN').value=''; toast('"'+name+'" creada ✅','ok'); loadRacesCfg(); } catch(e){toast(e.message,'err');}
+  try{await api({action:'createRace',adminId:S.adminId,name},'POST');document.getElementById('newRaceN').value='';toast('"'+name+'" creada ✅','ok');loadRacesCfg();}
+  catch(e){toast(e.message,'err');}
 }
-async function saveAdminEntry() {
+async function saveAdminEntry(){
   const id=document.getElementById('naId').value.trim();
   const nom=document.getElementById('naNom').value.trim();
   const rol=document.getElementById('naRol').value;
   const email=document.getElementById('naEmail').value.trim();
   if(!id||!nom){toast('ID y nombre requeridos','err');return;}
-  try { await api({action:'upsertAdmin',adminId:S.adminId,id,nombre:nom,rol,email,activo:true},'POST'); ['naId','naNom','naEmail'].forEach(i=>document.getElementById(i).value=''); toast('Admin guardado','ok'); loadAdminsCfg(); } catch(e){toast(e.message,'err');}
+  try{await api({action:'upsertAdmin',adminId:S.adminId,id,nombre:nom,rol,email,activo:true},'POST');['naId','naNom','naEmail'].forEach(i=>document.getElementById(i).value='');toast('Admin guardado','ok');loadAdminsCfg();}
+  catch(e){toast(e.message,'err');}
 }
-async function saveCfg() {
+async function saveCfg(){
   const org=document.getElementById('cfgOrg').value.trim();
   const logo=document.getElementById('cfgLogo').value.trim();
   const color=document.getElementById('cfgColor').value;
-  S.orgName=org||S.orgName; S.logoUrl=logo;
-  localStorage.setItem('rc_org',S.orgName); localStorage.setItem('rc_logo',S.logoUrl);
-  applyAccent(color); applyBranding();
-  try { await api({action:'saveConfig',adminId:S.adminId,orgName:org,logoUrl:logo,accentColor:color},'POST'); toast('✅ Configuración guardada','ok'); } catch(e){toast('Guardado local. API: '+e.message,'err');}
+  S.orgName=org||S.orgName;S.logoUrl=logo;
+  localStorage.setItem('rc_org',S.orgName);localStorage.setItem('rc_logo',S.logoUrl);
+  applyAccent(color);applyBranding();
+  try{await api({action:'saveConfig',adminId:S.adminId,orgName:org,logoUrl:logo,accentColor:color},'POST');toast('✅ Configuración guardada','ok');}
+  catch(e){toast('Local guardado. API: '+e.message,'err');}
 }
 
-// ══════════════════════════════════════
-// RUNNER: HISTORIAL
-// ══════════════════════════════════════
-function switchTab(t) {
-  ['hist','social','qr'].forEach(n=>{
-    const el=document.getElementById('rt-'+n); if(el) el.style.display=n===t?'block':'none';
-  });
+// ── RUNNER: HISTORIAL ─────────────────────────────────────────
+function switchTab(t){
+  ['hist','social','qr'].forEach(n=>{const el=document.getElementById('rt-'+n);if(el)el.style.display=n===t?'block':'none';});
   document.querySelectorAll('.rtab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
 }
-function renderHist() {
+function renderHist(){
   const wrap=document.getElementById('rt-hist');
   const hist=(S.runnerData&&S.runnerData.history)||[];
-  if (!hist.length) { wrap.innerHTML='<div class="empty"><div class="ei">🏃</div><div class="et">Sin historial</div><div class="em">Aún no apareces en ninguna carrera. Si te inscribiste recientemente puede tardar unos minutos.</div></div>'; return; }
+  if(!hist.length){wrap.innerHTML='<div class="empty"><div class="ei">🏃</div><div class="et">Sin historial</div><div class="em">Aún no apareces en ninguna carrera. Puedes inscribirte en un Social Run.</div></div>';return;}
   wrap.innerHTML=hist.map(h=>`
     <div class="runcard" onclick="showRunnerQR('${h.id}','${esc(h.nombre)}','${esc(h.race)}','${h.dorsal||''}','${esc(h.fechaEvento||'')}')">
       <div class="rci">${h.type==='social'?'🌞':'🏁'}</div>
       <div class="rcb">
         <div class="rct">${esc(h.race)}</div>
-        <div class="rcm">${h.type==='social'&&h.fechaEvento?'Domingo '+h.fechaEvento+' · ':''} Reg. ${h.fechaReg?fmtD(h.fechaReg):'—'}</div>
+        <div class="rcm">${h.type==='social'&&h.fechaEvento?'Domingo '+fmtD(h.fechaEvento)+' · ':''} Reg. ${fmtD(h.fechaReg)}</div>
       </div>
       <div class="rcr">
         <span class="badge ${h.estado}"><span class="bd"></span>${h.estado}</span>
         ${h.dorsal?`<span class="dch">${h.dorsal}</span>`:''}
-        <span style="font-size:11px;color:var(--g4)">Ver QR →</span>
+        <span style="font-size:11px;color:var(--g4)">QR →</span>
       </div>
     </div>`).join('');
 }
-function showRunnerQR(id, nombre, race, dorsal, fechaEvento) {
+function showRunnerQR(id,nombre,race,dorsal,fechaEvento){
   switchTab('qr');
   const wrap=document.getElementById('qrTabWrap');
   wrap.innerHTML=`
@@ -1194,98 +1090,109 @@ function showRunnerQR(id, nombre, race, dorsal, fechaEvento) {
       <div class="qrrace">${esc(race)}</div>
       <div class="qrname">${esc(nombre)}</div>
       ${dorsal?`<div class="qrnum">#${dorsal}</div>`:''}
-      ${fechaEvento?`<div style="font-size:13px;color:var(--g4);margin-bottom:8px">${esc(fechaEvento)}</div>`:''}
-      <div id="qrhr2"></div>
+      ${fechaEvento?`<div style="font-size:13px;color:var(--g4);margin-bottom:8px">${fmtD(fechaEvento)}</div>`:''}
+      <div class="qrholder" id="qrhr2"></div>
       <div class="qridt">${id}</div>
     </div>
-    <div style="display:flex;gap:10px;margin-top:12px">
+    <div class="bstack" style="margin-top:12px">
       <button class="btn ba bfw" onclick="dlRunnerQR()">⬇ Descargar QR</button>
+      <button class="btn bg bfw" onclick="switchTab('hist')">← Volver al historial</button>
     </div>`;
   new QRCode(document.getElementById('qrhr2'),{text:id,width:200,height:200,colorDark:'#0a0a0a',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});
 }
-function dlRunnerQR() {
+function dlRunnerQR(){
   const cv=document.querySelector('#qrhr2 canvas');
   if(!cv){toast('QR no disponible','err');return;}
-  const a=document.createElement('a'); a.download='mi_qr.png'; a.href=cv.toDataURL(); a.click();
+  const a=document.createElement('a');a.download='mi_qr.png';a.href=cv.toDataURL();a.click();
 }
 
-// ══════════════════════════════════════
-// RUNNER: SOCIAL RUN
-// ══════════════════════════════════════
-async function loadSocialSlots() {
+// ── RUNNER: SOCIAL RUN ────────────────────────────────────────
+async function loadSocialSlots(){
   const wrap=document.getElementById('sSlots');
-  try {
-    const d=await api({action:'getSocialRunSlots'});
+  try{
+    const d=await api({action:'getSocialRunSlots',dni:S.runnerDni});
     const slots=d.slots||[];
-    const myDates=new Set(((S.runnerData&&S.runnerData.history)||[]).filter(h=>h.type==='social').map(h=>h.fechaEvento));
     if(!slots.length){wrap.innerHTML='<div class="empty"><div class="ei">📅</div><div class="et">Sin fechas disponibles</div></div>';return;}
     wrap.innerHTML='<div class="slots">'+slots.map(s=>{
-      const isMine=myDates.has(s.fecha);
       const dt=new Date(s.fecha+'T12:00:00');
       const ds=dt.toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long'});
-      return `<div class="slot" style="${isMine?'border-color:var(--neon)':''}">
+      return `<div class="slot" style="${s.isMine?'border-color:var(--neon)':''}">
         <div><div class="slotd">${ds}</div><div class="slotm">${s.inscritos} inscrito(s)</div></div>
-        ${isMine?`<span class="badge Asistió" style="background:var(--neon);color:#000">Inscrito ✓</span>`:`<button class="btn ba bsm" onclick="openSR('${s.fecha}','${esc(ds)}')">Inscribirme</button>`}
+        ${s.isMine?`<span class="badge Asistió" style="background:var(--neon);color:#000;white-space:nowrap">Inscrito ✓</span>`:`<button class="btn ba bsm" onclick="openSR('${s.fecha}','${esc(ds)}')">Inscribirme</button>`}
       </div>`;
     }).join('')+'</div>';
-  } catch(e){wrap.innerHTML=`<div class="empty"><div class="ei">⚠️</div><div class="et">Error</div><div class="em">${esc(e.message)}</div></div>`;}
+  }catch(e){wrap.innerHTML=`<div class="empty"><div class="ei">⚠️</div><div class="et">Error</div><div class="em">${esc(e.message)}</div></div>`;}
 }
-function openSR(fecha,ds) {
+function openSR(fecha,ds){
   S.srDate=fecha;
   document.getElementById('srFTitle').textContent='Inscripción — '+ds;
   document.getElementById('srDni').value=S.runnerDni||'';
-  document.getElementById('srNom').value=(S.runnerData&&S.runnerData.corredor&&S.runnerData.corredor.nombre&&S.runnerData.corredor.nombre!=='Corredor')?S.runnerData.corredor.nombre:'';
+  const n=S.runnerData&&S.runnerData.corredor&&S.runnerData.corredor.nombre&&S.runnerData.corredor.nombre!=='Corredor'?S.runnerData.corredor.nombre:'';
+  document.getElementById('srNom').value=n;
   document.getElementById('srForm').style.display='block';
   document.getElementById('srOk').style.display='none';
 }
 function closeSrForm(){document.getElementById('srForm').style.display='none';}
-async function submitSR() {
+async function submitSR(){
   const nom=document.getElementById('srNom').value.trim();
   const dni=document.getElementById('srDni').value.trim();
   const email=document.getElementById('srEmail').value.trim();
   if(!nom){toast('Ingresa tu nombre','err');return;}
   if(!dni){toast('DNI requerido','err');return;}
-  const btn=document.getElementById('srBtn'); btn.disabled=true; btn.innerHTML='<div class="spin"></div> Inscribiendo...';
-  try {
+  const btn=document.getElementById('srBtn');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Inscribiendo...';
+  try{
     const d=await api({action:'registerSocialRun',nombre:nom,dni,email,fechaEvento:S.srDate},'POST');
     document.getElementById('srForm').style.display='none';
     document.getElementById('srOk').style.display='block';
     document.getElementById('srOkMsg').textContent='Inscrito para el '+S.srDate+'.'+(email?' QR enviado a tu email.':'');
-    const qd=document.getElementById('srOkQR'); qd.innerHTML='';
+    const qd=document.getElementById('srOkQR');qd.innerHTML='';
     new QRCode(qd,{text:d.registration.id,width:160,height:160,colorDark:'#0a0a0a',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});
     toast('¡Inscrito!','ok');
+    // Refresh history and slots
     const h2=await api({action:'getRunnerHistory',dni:S.runnerDni});
     S.runnerData=h2;
+    if(h2.corredor)document.getElementById('rName').textContent=h2.corredor.nombre;
+    renderHist();
+    // Refresh slots to show updated counts and isMine flag
     loadSocialSlots();
-  } catch(e){toast('Error: '+e.message,'err');}
-  finally{btn.disabled=false;btn.innerHTML='Confirmar →';}
+  }catch(e){toast('Error: '+e.message,'err');}
+  finally{btn.disabled=false;btn.innerHTML='Confirmar inscripción →';}
 }
 function resetSR(){document.getElementById('srForm').style.display='none';document.getElementById('srOk').style.display='none';loadSocialSlots();}
 
-// ══════════════════════════════════════
-// MODALS
-// ══════════════════════════════════════
+// ── MODALS ────────────────────────────────────────────────────
 function om(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';}
 function cm(id){document.getElementById(id).classList.remove('on');document.body.style.overflow='';}
 
-// ══════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════
+// ── TOAST ─────────────────────────────────────────────────────
 function toast(msg,type='ok'){
-  const el=document.createElement('div');
-  el.className='toast '+type; el.textContent=msg;
+  const el=document.createElement('div');el.className='toast '+type;el.textContent=msg;
   document.getElementById('tw').appendChild(el);
   setTimeout(()=>el.remove(),3500);
 }
 
-// ══════════════════════════════════════
-// HELPERS
-// ══════════════════════════════════════
+// ── HELPERS ───────────────────────────────────────────────────
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmtD(iso){
-  if(!iso)return'—';
-  try{const d=new Date(iso);return d.toLocaleDateString('es-PE',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'});}
-  catch(_){return String(iso).slice(0,10);}
+  if(!iso||iso==='—')return'—';
+  // Handle date-only strings like 2026-04-13
+  const s=String(iso);
+  if(/^\d{4}-\d{2}-\d{2}$/.test(s)){
+    const [y,m,d]=s.split('-');
+    return `${d}/${m}/${y.slice(2)}`;
+  }
+  try{
+    const d=new Date(iso);
+    if(isNaN(d))return s.slice(0,10);
+    const day=String(d.getDate()).padStart(2,'0');
+    const mon=String(d.getMonth()+1).padStart(2,'0');
+    const yr=String(d.getFullYear()).slice(2);
+    const h=d.getHours();
+    const min=String(d.getMinutes()).padStart(2,'0');
+    const ampm=h>=12?'p. m.':'a. m.';
+    const h12=h%12||12;
+    return `${day}/${mon}/${yr}, ${h12}:${min} ${ampm}`;
+  }catch(_){return s.slice(0,10);}
 }
 </script>
 </body>
