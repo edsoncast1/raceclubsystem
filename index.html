@@ -29,21 +29,60 @@ body{font-family:var(--fb);background:var(--g1);color:var(--ak);min-height:100vh
 @keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
 /* WELCOME */
-#sw{background:var(--ak);align-items:center;justify-content:center;padding:40px 24px;position:relative;overflow:hidden}
+#sw{background:var(--ak);align-items:center;justify-content:center;padding:40px 24px 48px;position:relative;overflow:hidden}
 .wbg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 110%,rgba(232,0,45,.15),transparent 70%);pointer-events:none}
-.wlogo{display:flex;align-items:center;gap:12px;margin-bottom:48px;z-index:1}
+.wbg2{position:absolute;inset:0;background:radial-gradient(ellipse 40% 30% at 80% 20%,rgba(57,255,20,.04),transparent 60%);pointer-events:none}
+.wlogo{display:flex;align-items:center;gap:12px;margin-bottom:44px;z-index:1}
 .wlogo img{height:44px;width:auto;object-fit:contain}
 .wot{font-family:var(--fd);font-size:28px;font-weight:900;color:#fff;letter-spacing:-.5px;line-height:1}
 .wos{font-size:11px;color:var(--g4);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
 .wh{font-family:var(--fd);font-size:clamp(52px,12vw,88px);font-weight:900;color:#fff;text-align:center;line-height:.95;letter-spacing:-2px;z-index:1;margin-bottom:12px}
 .wh em{font-style:normal;color:var(--a)}
-.wsub{color:var(--g4);font-size:15px;text-align:center;z-index:1;margin-bottom:44px;max-width:300px;line-height:1.5}
+.wsub{color:var(--g4);font-size:15px;text-align:center;z-index:1;margin-bottom:36px;max-width:300px;line-height:1.5}
+
+/* SOCIAL RUN CTA — hero button */
+.social-cta{z-index:1;width:100%;max-width:400px;margin-bottom:20px}
+.social-cta-btn{
+  width:100%;background:transparent;border:none;cursor:pointer;padding:0;
+  display:block;position:relative;
+}
+.social-cta-inner{
+  background:linear-gradient(135deg,#181818 0%,#111 100%);
+  border:2px solid rgba(57,255,20,.35);
+  border-radius:12px;
+  padding:22px 24px 20px;
+  display:flex;align-items:center;gap:16px;
+  position:relative;overflow:hidden;
+  transition:border-color .2s,transform .15s;
+  box-shadow:0 0 32px rgba(57,255,20,.08),0 4px 20px rgba(0,0,0,.4);
+}
+.social-cta-btn:hover .social-cta-inner{border-color:rgba(57,255,20,.7);transform:translateY(-2px);box-shadow:0 0 48px rgba(57,255,20,.18),0 8px 32px rgba(0,0,0,.5);}
+.social-cta-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(57,255,20,.4),transparent);}
+.social-cta-pulse{
+  width:52px;height:52px;border-radius:50%;background:rgba(57,255,20,.12);
+  display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;
+  border:1.5px solid rgba(57,255,20,.3);
+  animation:pulse-glow 2.4s ease-in-out infinite;
+}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(57,255,20,.3)}50%{box-shadow:0 0 0 10px rgba(57,255,20,0)}}
+.social-cta-text{flex:1;text-align:left}
+.social-cta-label{font-family:var(--fd);font-size:22px;font-weight:900;color:#fff;letter-spacing:-.3px;line-height:1;margin-bottom:4px}
+.social-cta-sub{font-size:12px;color:rgba(57,255,20,.7);font-weight:500;letter-spacing:.5px;text-transform:uppercase}
+.social-cta-arrow{font-size:20px;color:rgba(57,255,20,.5);flex-shrink:0;transition:color .2s,transform .2s}
+.social-cta-btn:hover .social-cta-arrow{color:var(--neon);transform:translateX(3px)}
+.social-cta-tag{position:absolute;top:10px;right:10px;background:var(--neon);color:#000;font-family:var(--fd);font-size:10px;font-weight:900;padding:2px 7px;border-radius:2px;letter-spacing:1px;text-transform:uppercase}
+
+/* DIVIDER */
+.wdiv{z-index:1;display:flex;align-items:center;gap:12px;width:100%;max-width:400px;margin-bottom:16px}
+.wdiv-line{flex:1;height:1px;background:var(--g8)}
+.wdiv-txt{font-size:11px;color:var(--g6);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+
 .rcards{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:400px;z-index:1}
-.rcard{background:transparent;border:1.5px solid var(--g8);border-radius:var(--rl);padding:28px 20px;text-align:center;cursor:pointer;transition:all var(--t);color:#fff;display:flex;flex-direction:column;align-items:center;gap:10px}
+.rcard{background:transparent;border:1.5px solid var(--g8);border-radius:var(--rl);padding:22px 16px;text-align:center;cursor:pointer;transition:all var(--t);color:#fff;display:flex;flex-direction:column;align-items:center;gap:10px}
 .rcard:hover{border-color:var(--a);background:rgba(232,0,45,.08);transform:translateY(-2px)}
 .rcard.on{border-color:var(--a);background:var(--a)}
-.ri{font-size:32px;line-height:1}.rl{font-family:var(--fd);font-size:18px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-.rd{font-size:12px;color:var(--g4);line-height:1.4}.rcard:hover .rd,.rcard.on .rd{color:rgba(255,255,255,.7)}
+.ri{font-size:28px;line-height:1}.rl{font-family:var(--fd);font-size:16px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.rd{font-size:11px;color:var(--g4);line-height:1.4}.rcard:hover .rd,.rcard.on .rd{color:rgba(255,255,255,.7)}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border:none;border-radius:var(--r);font-family:var(--fd);font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:all var(--t);white-space:nowrap;text-decoration:none;flex-shrink:0;-webkit-appearance:none}
@@ -54,6 +93,7 @@ body{font-family:var(--fb);background:var(--g1);color:var(--ak);min-height:100vh
 .bgw{background:transparent;color:#fff;border:1.5px solid #404040}.bgw:hover:not(:disabled){border-color:#fff}
 .bdg{background:#fee2e2;color:#b91c1c;border:1.5px solid #fecaca}.bdg:hover:not(:disabled){background:#fecaca}
 .bgrn{background:#16a34a;color:#fff}.bgrn:hover:not(:disabled){background:#15803d;transform:translateY(-1px)}
+.bneon{background:var(--neon);color:#000;font-weight:900}.bneon:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
 .bsm{padding:8px 14px;font-size:13px}.blg{padding:16px 28px;font-size:17px}.bfw{width:100%}
 .bstack{display:flex;flex-direction:column;gap:10px;width:100%}
 
@@ -66,7 +106,6 @@ body{font-family:var(--fb);background:var(--g1);color:var(--ak);min-height:100vh
 .tnav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:center}.tnav::-webkit-scrollbar{display:none}
 .nb{padding:5px 10px;border:none;border-radius:var(--r);background:transparent;font-family:var(--fd);font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--g4);cursor:pointer;transition:all var(--t);white-space:nowrap}
 .nb:hover{color:#fff;background:var(--g8)}.nb.on{color:var(--ak);background:#fff}
-/* User menu */
 .umenu-wrap{position:relative;flex-shrink:0}
 .udot{width:30px;height:30px;background:var(--a);border-radius:50%;font-family:var(--fd);font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;flex-shrink:0}
 .udropdown{position:absolute;right:0;top:38px;background:var(--ak);border:1px solid var(--g8);border-radius:var(--rl);min-width:180px;box-shadow:var(--s3);z-index:300;display:none;overflow:hidden}
@@ -76,7 +115,6 @@ body{font-family:var(--fb);background:var(--g1);color:var(--ak);min-height:100vh
 .udrop-role{font-size:11px;color:var(--g4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
 .udrop-btn{display:flex;align-items:center;gap:8px;padding:11px 14px;color:var(--g4);font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;transition:background var(--t)}
 .udrop-btn:hover{background:var(--g8);color:#fff}
-
 .pcont{flex:1;overflow-y:auto}
 .page{display:none;padding:20px 16px;max-width:1200px;margin:0 auto;width:100%}
 .page.on{display:block}
@@ -128,7 +166,7 @@ tr:hover td{background:var(--g1)}
 .bd{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .badge.Registrado,.badge.Inscrito{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
 .badge.Registrado .bd,.badge.Inscrito .bd{background:#22c55e}
-.badge.Asistió{background:var(--ak);color:#fff}.badge.Asistió .bd{background:var(--neon)}
+.badge.Asistió,.badge.Participó{background:var(--ak);color:#fff}.badge.Asistió .bd,.badge.Participó .bd{background:var(--neon)}
 .badge.Cancelado{background:#f9fafb;color:var(--g6);border:1px solid var(--g2)}.badge.Cancelado .bd{background:var(--g4)}
 
 /* CARD */
@@ -214,6 +252,53 @@ tr:hover td{background:var(--g1)}
 .sopt:hover{border-color:var(--a);background:rgba(232,0,45,.04)}
 .sopt.cur{border-color:var(--a);background:rgba(232,0,45,.08);color:var(--a)}
 
+/* GLOW SELECTOR */
+.glow-cards{display:flex;flex-direction:column;gap:10px;margin:12px 0}
+.glow-card{
+  border:2px solid var(--g2);border-radius:var(--rl);padding:16px 18px;
+  cursor:pointer;transition:all var(--t);background:#fff;
+  display:flex;align-items:center;gap:14px;
+}
+.glow-card:hover{border-color:var(--g4);transform:translateY(-1px)}
+.glow-card.on{border-color:var(--neon);background:rgba(57,255,20,.05);box-shadow:0 0 0 1px rgba(57,255,20,.2)}
+.glow-num{
+  width:44px;height:44px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fd);font-size:26px;font-weight:900;color:#000;
+}
+.glow-1 .glow-num{background:rgba(57,255,20,.25);color:#1a5c00}
+.glow-2 .glow-num{background:rgba(57,255,20,.5);color:#0f3a00}
+.glow-3 .glow-num{background:var(--neon);color:#000}
+.glow-card.on .glow-num{box-shadow:0 0 12px rgba(57,255,20,.4)}
+.glow-info{flex:1}
+.glow-title{font-family:var(--fd);font-size:17px;font-weight:800;letter-spacing:-.2px}
+.glow-sub{font-size:12px;color:var(--g6);margin-top:2px}
+.glow-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--g3);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all var(--t)}
+.glow-card.on .glow-check{border-color:var(--neon);background:var(--neon)}
+.glow-card.on .glow-check::after{content:'✓';font-size:11px;font-weight:900;color:#000}
+
+/* SOCIAL SELF-SERVICE screen */
+#ss{background:var(--ak);padding:0}
+.ssh{background:linear-gradient(135deg,#0d0d0d,#1a1a1a);padding:28px 20px 24px;position:relative;overflow:hidden;border-bottom:1px solid #222}
+.ssh::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 0% 100%,rgba(57,255,20,.08),transparent 60%)}
+.ssname{font-family:var(--fd);font-size:32px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1;position:relative;z-index:1}
+.sssub{font-size:13px;color:rgba(57,255,20,.6);margin-top:4px;position:relative;z-index:1;font-weight:500;letter-spacing:.5px;text-transform:uppercase}
+.ss-body{background:#fff;min-height:calc(100vh - 120px);border-radius:16px 16px 0 0;padding:24px 20px 40px;margin-top:-4px;position:relative}
+.ss-step{display:none}.ss-step.on{display:block;animation:fi .2s ease}
+
+/* DNI input area */
+.dni-wrap{margin:4px 0 20px}
+.dni-big{width:100%;padding:18px 16px;border:2px solid var(--g2);border-radius:10px;font-family:var(--fd);font-size:28px;font-weight:900;letter-spacing:4px;text-align:center;outline:none;transition:border-color var(--t),box-shadow var(--t);-webkit-appearance:none;color:var(--ak)}
+.dni-big:focus{border-color:var(--a);box-shadow:0 0 0 4px rgba(232,0,45,.1)}
+
+/* PDPA check */
+.pdpa-wrap{display:flex;align-items:flex-start;gap:10px;padding:12px;background:var(--g1);border-radius:var(--r);margin:12px 0;cursor:pointer}
+.pdpa-check{width:20px;height:20px;border:2px solid var(--g3);border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all var(--t);background:#fff}
+.pdpa-check.on{background:var(--a);border-color:var(--a)}
+.pdpa-check.on::after{content:'✓';font-size:12px;font-weight:900;color:#fff}
+.pdpa-text{font-size:12px;color:var(--g6);line-height:1.5}
+.pdpa-text a{color:var(--a);text-decoration:none}
+
 /* CONFIG */
 .cst{font-family:var(--fd);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--g6);margin-bottom:12px;padding-bottom:8px;border-bottom:1.5px solid var(--g2)}
 .swatches{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
@@ -239,7 +324,7 @@ tr:hover td{background:var(--g1)}
 .dv{border:none;border-top:1px solid var(--g2);margin:12px 0}
 .tag{display:inline-block;background:var(--g1);border:1px solid var(--g2);color:var(--g6);font-size:11px;font-weight:600;padding:2px 7px;border-radius:var(--r);text-transform:uppercase;letter-spacing:.5px}
 .tag.ac{background:rgba(232,0,45,.08);border-color:rgba(232,0,45,.2);color:var(--a)}
-@media(max-width:600px){.page{padding:14px 12px}.frow{grid-template-columns:1fr}.srow{grid-template-columns:1fr 1fr}.phdr{flex-direction:column}.ptitle{font-size:24px}}
+@media(max-width:600px){.page{padding:14px 12px}.frow{grid-template-columns:1fr}.srow{grid-template-columns:1fr 1fr}.phdr{flex-direction:column}.ptitle{font-size:24px}.glow-cards{gap:8px}}
 @media(min-width:1024px){.page{padding:28px 24px}}
 </style>
 </head>
@@ -272,12 +357,133 @@ tr:hover td{background:var(--g1)}
 <!-- ══ WELCOME ══ -->
 <div class="screen on" id="sw">
   <div class="wbg"></div>
+  <div class="wbg2"></div>
   <div class="wlogo"><div id="wLogo"></div><div><div class="wot" id="wOrg">Race Club</div><div class="wos">Sistema de Gestión</div></div></div>
   <div class="wh">RUN<br/><em>MANAGE</em><br/>WIN</div>
-  <div class="wsub">Selecciona cómo deseas ingresar</div>
+  <div class="wsub">¿Qué vas a hacer hoy?</div>
+
+  <!-- SOCIAL RUN CTA — hero prominente -->
+  <div class="social-cta">
+    <button class="social-cta-btn" onclick="goSocialSelf()">
+      <div class="social-cta-inner">
+        <span class="social-cta-tag">Hoy</span>
+        <div class="social-cta-pulse">🌞</div>
+        <div class="social-cta-text">
+          <div class="social-cta-label">Social Run</div>
+          <div class="social-cta-sub">Regístrate para correr · Domingo</div>
+        </div>
+        <div class="social-cta-arrow">→</div>
+      </div>
+    </button>
+  </div>
+
+  <div class="wdiv"><div class="wdiv-line"></div><div class="wdiv-txt">Otras opciones</div><div class="wdiv-line"></div></div>
+
   <div class="rcards">
     <button class="rcard" onclick="selectRole('runner')"><span class="ri">🏃</span><span class="rl">Corredor</span><span class="rd">Ver historial e inscripciones</span></button>
-    <button class="rcard" onclick="selectRole('admin')"><span class="ri">🔐</span><span class="rl">Administrador</span><span class="rd">Gestionar participantes</span></button>
+    <button class="rcard" onclick="selectRole('admin')"><span class="ri">🔐</span><span class="rl">Admin</span><span class="rd">Gestionar participantes</span></button>
+  </div>
+</div>
+
+<!-- ══ SOCIAL SELF-SERVICE ══ -->
+<div class="screen" id="ss">
+  <div class="ssh">
+    <button onclick="show('sw')" style="background:none;border:none;color:rgba(57,255,20,.6);font-size:13px;cursor:pointer;padding:0;margin-bottom:14px;position:relative;z-index:1;font-family:var(--fb);font-weight:500">← Volver</button>
+    <div class="ssname" id="ssTitle">Social Run 🌞</div>
+    <div class="sssub" id="ssSub">Auto-registro</div>
+  </div>
+  <div class="ss-body">
+
+    <!-- STEP 1: DNI -->
+    <div class="ss-step on" id="ss-step1">
+      <div style="font-family:var(--fd);font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px">¿Cuál es tu DNI?</div>
+      <div style="font-size:14px;color:var(--g6);margin-bottom:20px;line-height:1.5">Búscamos tu registro. Si no apareces, te pediremos unos datos rápidos.</div>
+      <div class="dni-wrap">
+        <input class="dni-big" id="ssDni" type="text" inputmode="numeric" placeholder="12345678" maxlength="12" onkeydown="if(event.key==='Enter')ssCheckDni()"/>
+      </div>
+      <div class="bstack">
+        <button class="btn ba bfw blg" id="ssDniBtn" onclick="ssCheckDni()">Buscar →</button>
+        <button class="btn bg bfw" onclick="show('sw')">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Registro nuevo -->
+    <div class="ss-step" id="ss-step2">
+      <div style="font-family:var(--fd);font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px">¡Bienvenido/a!</div>
+      <div style="font-size:14px;color:var(--g6);margin-bottom:20px;line-height:1.5">No te encontramos en el sistema. Llena estos datos para registrarte.</div>
+      <div class="fg"><label class="fl">Nombre completo <span class="req">*</span></label><input class="fi" id="ssNom" placeholder="Tu nombre completo"/></div>
+      <div class="frow">
+        <div class="fg"><label class="fl">DNI <span class="req">*</span></label><input class="fi" id="ssDni2" readonly/></div>
+        <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="ssEmail" placeholder="Para recibir tu QR"/></div>
+      </div>
+      <div class="fg"><label class="fl">Contacto de emergencia <span class="req">*</span></label><input class="fi" id="ssEmergencia" placeholder="Nombre y teléfono — ej: María López 987654321"/></div>
+      <div class="pdpa-wrap" id="pdpaWrap" onclick="togglePdpa()">
+        <div class="pdpa-check" id="pdpaCheck"></div>
+        <div class="pdpa-text">Acepto el <a href="#" onclick="return false">tratamiento de mis datos personales</a> por parte de Race Club, conforme a la ley de protección de datos. Mis datos serán usados únicamente para gestionar mi participación en los eventos.</div>
+      </div>
+      <div class="bstack" style="margin-top:16px">
+        <button class="btn ba bfw" id="ssRegBtn" onclick="ssRegister()">Registrarme y continuar →</button>
+        <button class="btn bg bfw" onclick="ssGoStep(1)">← Volver</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Elige nivel Glow -->
+    <div class="ss-step" id="ss-step3">
+      <div style="font-family:var(--fd);font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px">¿Cuál es tu nivel Glow?</div>
+      <div style="font-size:14px;color:var(--g6);margin-bottom:4px;line-height:1.5">Hola <strong id="ssGreetName"></strong> 👋 Elige tu ritmo para el Social Run de hoy.</div>
+      <div id="ssFechaEvento" style="font-size:13px;color:var(--g4);margin-bottom:18px"></div>
+      <div class="glow-cards">
+        <div class="glow-card glow-1" onclick="selectGlow(1)" id="glow-1">
+          <div class="glow-num">1</div>
+          <div class="glow-info">
+            <div class="glow-title">Glow 1 — Principiante</div>
+            <div class="glow-sub">Pace suave · 7–8 min/km · Disfrutar el recorrido</div>
+          </div>
+          <div class="glow-check"></div>
+        </div>
+        <div class="glow-card glow-2" onclick="selectGlow(2)" id="glow-2">
+          <div class="glow-num">2</div>
+          <div class="glow-info">
+            <div class="glow-title">Glow 2 — Intermedio</div>
+            <div class="glow-sub">Pace moderado · 5–7 min/km · Buen ritmo constante</div>
+          </div>
+          <div class="glow-check"></div>
+        </div>
+        <div class="glow-card glow-3" onclick="selectGlow(3)" id="glow-3">
+          <div class="glow-num">3</div>
+          <div class="glow-info">
+            <div class="glow-title">Glow 3 — Avanzado</div>
+            <div class="glow-sub">Pace rápido · &lt;5 min/km · A fondo</div>
+          </div>
+          <div class="glow-check"></div>
+        </div>
+      </div>
+      <div class="bstack" style="margin-top:18px">
+        <button class="btn bneon bfw blg" id="ssConfirmBtn" onclick="ssConfirm()" disabled>Confirmar participación →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Confirmación -->
+    <div class="ss-step" id="ss-step4">
+      <div style="text-align:center;padding:10px 0 20px">
+        <div style="font-size:56px;margin-bottom:12px;animation:bounce .5s ease">🎉</div>
+        <div style="font-family:var(--fd);font-size:30px;font-weight:900;letter-spacing:-1px;margin-bottom:8px">¡Listo, a correr!</div>
+        <div id="ssConfirmMsg" style="font-size:14px;color:var(--g6);line-height:1.6;margin-bottom:24px"></div>
+      </div>
+      <div style="background:var(--ak);border-radius:var(--rl);padding:20px;text-align:center;margin-bottom:16px">
+        <div style="font-family:var(--fd);font-size:11px;color:var(--g4);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Social Running</div>
+        <div id="ssConfirmName" style="font-family:var(--fd);font-size:24px;font-weight:900;color:#fff;margin-bottom:4px"></div>
+        <div id="ssConfirmDorsal" style="font-family:var(--fd);font-size:52px;font-weight:900;color:var(--a);line-height:1;margin:8px 0"></div>
+        <div id="ssConfirmGlow" style="display:inline-block;background:var(--neon);color:#000;font-family:var(--fd);font-size:13px;font-weight:900;padding:4px 12px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;margin-top:4px"></div>
+        <div style="display:flex;justify-content:center;margin:16px 0 4px" id="ssQrHolder"></div>
+        <div id="ssQrId" style="font-size:11px;color:var(--g4);font-family:monospace;word-break:break-all;padding:5px;background:#111;border-radius:var(--r);letter-spacing:2px;margin-top:4px"></div>
+      </div>
+      <div class="bstack">
+        <button class="btn ba bfw" onclick="dlSsQR()">⬇ Descargar QR</button>
+        <button class="btn bk bfw" onclick="show('sw')">← Volver al inicio</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -378,7 +584,7 @@ tr:hover td{background:var(--g1)}
         </div>
         <div class="toolbar">
           <div class="sw"><span class="sic">🔍</span><input class="sinp" id="tSrch" placeholder="Nombre, DNI, email…" oninput="debounceDash()"/></div>
-          <select class="sel" id="tStFil" onchange="loadDash()"><option value="">Todos</option><option value="Registrado">Registrado</option><option value="Inscrito">Inscrito</option><option value="Asistió">Asistió</option><option value="Cancelado">Cancelado</option></select>
+          <select class="sel" id="tStFil" onchange="loadDash()"><option value="">Todos</option><option value="Registrado">Registrado</option><option value="Inscrito">Inscrito</option><option value="Asistió">Asistió</option><option value="Participó">Participó</option><option value="Cancelado">Cancelado</option></select>
           <button class="btn bg bsm" onclick="loadDash()" title="Actualizar">↺</button>
         </div>
         <div id="dashTableWrap">
@@ -416,7 +622,7 @@ tr:hover td{background:var(--g1)}
         </div>
         <div class="toolbar" id="recToolbar" style="display:none">
           <div class="sw"><span class="sic">🔍</span><input class="sinp" id="recSrch" placeholder="Nombre, DNI, email…" oninput="debounceRec()"/></div>
-          <select class="sel" id="recStFil" onchange="loadRec()"><option value="">Todos</option><option value="Registrado">Registrado</option><option value="Inscrito">Inscrito</option><option value="Asistió">Asistió</option><option value="Cancelado">Cancelado</option></select>
+          <select class="sel" id="recStFil" onchange="loadRec()"><option value="">Todos</option><option value="Registrado">Registrado</option><option value="Inscrito">Inscrito</option><option value="Asistió">Asistió</option><option value="Participó">Participó</option><option value="Cancelado">Cancelado</option></select>
         </div>
         <div id="recContent"><div class="empty"><div class="ei">📋</div><div class="et">Selecciona una carrera</div></div></div>
       </div>
@@ -531,6 +737,7 @@ tr:hover td{background:var(--g1)}
         <button class="sopt" data-s="Registrado" onclick="applyStatus('Registrado')">✅ <span>Registrado</span></button>
         <button class="sopt" data-s="Inscrito" onclick="applyStatus('Inscrito')">📝 <span>Inscrito</span></button>
         <button class="sopt" data-s="Asistió" onclick="applyStatus('Asistió')">🏅 <span>Asistió</span></button>
+        <button class="sopt" data-s="Participó" onclick="applyStatus('Participó')">🌞 <span>Participó</span></button>
         <button class="sopt" data-s="Cancelado" onclick="applyStatus('Cancelado')">❌ <span>Cancelado</span></button>
       </div>
     </div>
@@ -551,6 +758,10 @@ tr:hover td{background:var(--g1)}
   </div>
 </div>
 
+<style>
+@keyframes bounce{0%{transform:scale(0.5);opacity:0}60%{transform:scale(1.15)}80%{transform:scale(0.95)}100%{transform:scale(1);opacity:1}}
+</style>
+
 <script>
 const API='https://script.google.com/macros/s/AKfycbybrF-e0z2cYfVm_QflpNpQRU34fPE4_p-RKLGbpQJkkTZQW8pPsLmS0ILxYwAMhYcq/exec';
 
@@ -567,7 +778,9 @@ const S={
   delId:null,delRace:null,stId:null,stRace:null,stCur:null,
   qrInst:null,qrCurrentId:null,qrCurrentRace:null,
   srDate:null,
-  dashDebounce:null,recDebounce:null
+  dashDebounce:null,recDebounce:null,
+  // Social self-service state
+  ss:{dni:'',userData:null,glowLevel:null,registration:null,pdpaChecked:false}
 };
 
 // ── INIT ──────────────────────────────────────────────────────
@@ -585,7 +798,7 @@ function applyAccent(c){S.accent=c;document.documentElement.style.setProperty('-
 function setAcc(c){applyAccent(c);const el=document.getElementById('cfgColor');if(el)el.value=c;const lbl=document.getElementById('acLbl');if(lbl){lbl.textContent=c;lbl.style.color=c;}document.querySelectorAll('.sw2').forEach(s=>s.classList.toggle('on',s.getAttribute('onclick')?.includes(c)));}
 function applyBranding(){['wOrg','tOrg'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=S.orgName;});renderLogo('wLogo',S.logoUrl,44);renderLogo('tLogo',S.logoUrl,26);}
 function renderLogo(id,url,sz){const c=document.getElementById(id);if(!c)return;if(url){c.innerHTML=`<img src="${esc(url)}" style="height:${sz}px;width:auto;object-fit:contain" onerror="this.parentNode.innerHTML=fallLogo(${sz})">`;} else c.innerHTML=fallLogo(sz);}
-function fallLogo(sz){const i=(S.orgName||'R')[0].toUpperCase();return `<div style="height:${sz}px;width:${sz}px;background:var(--a);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:${Math.round(sz*.55)}px;font-weight:900;color:#fff;border-radius:4px;flex-shrink:0">${i}</div>`;}
+function fallLogo(sz){const i=(S.orgName||'R')[0].toUpperCase();return `<div style="height:${sz}px;width:${sz}px;background:var(--a);display:flex;align-items:center;justify-content:middle;font-family:var(--fd);font-size:${Math.round(sz*.55)}px;font-weight:900;color:#fff;border-radius:4px;flex-shrink:0;align-items:center;justify-content:center">${i}</div>`;}
 function prevLogo(){const url=document.getElementById('cfgLogo').value.trim();const img=document.getElementById('logoPrev');if(url){img.src=url;img.style.display='block';}else img.style.display='none';}
 
 // ── SCREENS ───────────────────────────────────────────────────
@@ -747,6 +960,7 @@ function renderDashTable(pd){
     <td style="color:var(--g6);font-size:12px">${esc(p.dni)}</td>
     <td style="color:var(--g6);font-size:12px;max-width:150px;overflow:hidden;text-overflow:ellipsis">${esc(p.email||'')}</td>
     <td><span class="badge ${p.estado}"><span class="bd"></span>${p.estado}</span></td>
+    ${p.glowLevel?`<td style="font-size:12px"><span style="background:var(--neon);color:#000;font-family:var(--fd);font-weight:900;font-size:11px;padding:2px 7px;border-radius:2px">GLOW ${p.glowLevel}</span></td>`:'<td style="color:var(--g4);font-size:12px">—</td>'}
     <td style="font-size:11px;color:var(--g6)">${esc(p._sheet||race==='_social'?'Social Running':(race||''))}</td>
     <td style="font-size:11px;color:var(--g4)">${fmtD(p.ultimaMod)}</td>
     <td>
@@ -768,7 +982,7 @@ function renderDashTable(pd){
         <button class="pb" onclick="loadDash(${pd.pages})" ${pd.page>=pd.pages?'disabled':''}>»</button>
       </div>
     </div>`:'';
-  wrap.innerHTML=`<div class="tw"><table><thead><tr><th>#</th><th>Nombre</th><th>DNI</th><th>Email</th><th>Estado</th><th>Carrera</th><th>Últ.Mod.</th><th>Acciones</th></tr></thead><tbody>${rows}</tbody></table>${pagesHtml}</div>`;
+  wrap.innerHTML=`<div class="tw"><table><thead><tr><th>#</th><th>Nombre</th><th>DNI</th><th>Email</th><th>Estado</th><th>Glow</th><th>Carrera</th><th>Últ.Mod.</th><th>Acciones</th></tr></thead><tbody>${rows}</tbody></table>${pagesHtml}</div>`;
 }
 
 // ── STATUS MODAL ──────────────────────────────────────────────
@@ -809,7 +1023,6 @@ function openQRModal(id,nombre,dorsal,race,email){
   const h=document.getElementById('qrhr');h.innerHTML='';
   if(S.qrInst){try{S.qrInst.clear();}catch(_){}}
   S.qrInst=new QRCode(h,{text:id,width:200,height:200,colorDark:'#0a0a0a',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});
-  // Show/hide resend button
   const resendBtn=document.getElementById('resendBtn');
   resendBtn.textContent=email?'✉️ Reenviar por email':'✉️ Sin email registrado';
   resendBtn.disabled=!email;
@@ -897,17 +1110,19 @@ async function loadRec(page){
       </div>`:'';
     document.getElementById('recContent').innerHTML=`
       <div class="tw"><table><thead><tr>
-        <th>#</th><th>Nombre</th><th>DNI</th>${isSocial?'<th>Fecha</th>':''}<th>Estado</th><th>Creado</th><th>Modificado</th><th>Fecha mod.</th><th>Acciones</th>
+        <th>#</th><th>Nombre</th><th>DNI</th>${isSocial?'<th>Fecha</th><th>Glow</th>':''}<th>Estado</th><th>Emergencia</th><th>Creado</th><th>Modificado</th><th>Fecha mod.</th><th>Acciones</th>
       </tr></thead><tbody>${list.map(p=>`<tr>
         <td><span class="dch">${p.dorsal||'—'}</span></td>
         <td class="tdb" style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.nombre)}</td>
         <td style="font-size:12px;color:var(--g6)">${esc(p.dni)}</td>
-        ${isSocial?`<td style="font-size:12px;color:var(--g6)">${fmtD(p.fechaEvento||'')}</td>`:''}
+        ${isSocial?`<td style="font-size:12px;color:var(--g6)">${fmtD(p.fechaEvento||'')}</td><td>${p.glowLevel?`<span style="background:var(--neon);color:#000;font-family:var(--fd);font-weight:900;font-size:11px;padding:2px 7px;border-radius:2px">G${p.glowLevel}</span>`:'—'}</td>`:''}
         <td><select class="sel" style="font-size:12px;padding:4px 24px 4px 7px" onchange="recUpdateStatus('${p.id}','${esc(race)}',this)">
           <option ${(p.estado==='Registrado'||p.estado==='Inscrito')?'selected':''} value="${isSocial?'Inscrito':'Registrado'}">${isSocial?'Inscrito':'Registrado'}</option>
           <option ${p.estado==='Asistió'?'selected':''} value="Asistió">Asistió</option>
+          <option ${p.estado==='Participó'?'selected':''} value="Participó">Participó</option>
           <option ${p.estado==='Cancelado'?'selected':''} value="Cancelado">Cancelado</option>
         </select></td>
+        <td style="font-size:11px;color:var(--g6);max-width:100px;overflow:hidden;text-overflow:ellipsis">${esc(p.emergencia||'—')}</td>
         <td style="font-size:11px;color:var(--g6)">${esc(p.creadoPor||'—')}</td>
         <td style="font-size:11px;color:var(--g6)">${esc(p.modificadoPor||'—')}</td>
         <td style="font-size:11px;color:var(--g4)">${fmtD(p.ultimaMod)}</td>
@@ -930,7 +1145,6 @@ function initScan(){
   if(S.scanOn)return;
   S.scanOn=true;
   S.qr=new Html5Qrcode('qr-reader');
-  // Higher fps and smaller qrbox for faster recognition
   S.qr.start({facingMode:'environment'},{fps:15,qrbox:{width:230,height:230},aspectRatio:1,disableFlip:false},onScan,()=>{})
     .catch(()=>{
       document.getElementById('qr-reader').innerHTML='<div class="empty" style="padding:28px"><div class="ei">📷</div><div class="et">Cámara no disponible</div><div class="em">Permite el acceso. Requiere HTTPS.</div></div>';
@@ -958,7 +1172,7 @@ function showScanMsg(type,emoji,title,note){
 }
 function showScanInfo(p,id,race,isSocial){
   const estado=p.estado;
-  const yaAsistio=estado==='Asistió'||estado==='Asistio';
+  const yaAsistio=estado==='Asistió'||estado==='Asistio'||estado==='Participó';
   const puedeReg=estado==='Registrado'||estado==='Inscrito';
   const rLabel=race==='_social'?'Social Running':race;
   const alertHtml=yaAsistio?`<div style="background:#fee2e2;border:1px solid #fecaca;border-radius:var(--r);padding:10px 12px;margin:8px 0;display:flex;align-items:flex-start;gap:8px"><span style="font-size:16px;flex-shrink:0">⛔</span><div><div style="font-size:13px;font-weight:700;color:#b91c1c">QR ya escaneado</div><div style="font-size:12px;color:#ef4444;margin-top:1px">Asistencia ya registrada para esta carrera.</div></div></div>`:(!puedeReg?`<div style="background:#fef9c3;border:1px solid #fde68a;border-radius:var(--r);padding:10px 12px;margin:8px 0"><div style="font-size:13px;font-weight:700;color:#92400e">Estado: "${estado}"</div><div style="font-size:12px;color:#a16207;margin-top:1px">Solo se puede registrar desde "Registrado" o "Inscrito".</div></div>`:'');
@@ -970,6 +1184,7 @@ function showScanInfo(p,id,race,isSocial){
         <div class="irow"><span class="ilbl">DNI</span><span class="ival">${esc(p.dni||'—')}</span></div>
         <div class="irow"><span class="ilbl">Email</span><span class="ival" style="font-size:12px">${esc(p.email||'—')}</span></div>
         ${p.fechaEvento?`<div class="irow"><span class="ilbl">Fecha</span><span class="ival">${fmtD(p.fechaEvento)}</span></div>`:''}
+        ${p.glowLevel?`<div class="irow"><span class="ilbl">Glow</span><span class="ival"><span style="background:var(--neon);color:#000;font-family:var(--fd);font-weight:900;font-size:12px;padding:2px 8px;border-radius:2px">GLOW ${p.glowLevel}</span></span></div>`:''}
         <div class="irow"><span class="ilbl">Estado</span><span class="ival"><span class="badge ${estado}"><span class="bd"></span>${estado}</span></span></div>
       </div>
       ${alertHtml}
@@ -995,6 +1210,7 @@ async function doAttend(id,race,isSocial){
           <div class="irow"><span class="ilbl">Nombre</span><span class="ival">${esc(p.nombre)}</span></div>
           <div class="irow"><span class="ilbl">Dorsal</span><span class="ival" style="font-family:var(--fd);font-size:20px;font-weight:900;color:var(--a)">#${p.dorsal||'—'}</span></div>
           <div class="irow"><span class="ilbl">DNI</span><span class="ival">${esc(p.dni||'')}</span></div>
+          ${p.glowLevel?`<div class="irow"><span class="ilbl">Glow</span><span class="ival"><span style="background:var(--neon);color:#000;font-family:var(--fd);font-weight:900;font-size:12px;padding:2px 8px;border-radius:2px">GLOW ${p.glowLevel}</span></span></div>`:''}
         </div>
         <div style="margin-top:10px"><button class="btn bk bfw" onclick="resetScan()">↩ Escanear siguiente</button></div>
       </div>`;
@@ -1078,6 +1294,7 @@ function renderHist(){
       <div class="rcr">
         <span class="badge ${h.estado}"><span class="bd"></span>${h.estado}</span>
         ${h.dorsal?`<span class="dch">${h.dorsal}</span>`:''}
+        ${h.glowLevel?`<span style="background:var(--neon);color:#000;font-family:var(--fd);font-weight:900;font-size:10px;padding:1px 6px;border-radius:2px">G${h.glowLevel}</span>`:''}
         <span style="font-size:11px;color:var(--g4)">QR →</span>
       </div>
     </div>`).join('');
@@ -1106,7 +1323,7 @@ function dlRunnerQR(){
   const a=document.createElement('a');a.download='mi_qr.png';a.href=cv.toDataURL();a.click();
 }
 
-// ── RUNNER: SOCIAL RUN ────────────────────────────────────────
+// ── RUNNER: SOCIAL RUN (existing flow) ───────────────────────
 async function loadSocialSlots(){
   const wrap=document.getElementById('sSlots');
   try{
@@ -1148,17 +1365,198 @@ async function submitSR(){
     const qd=document.getElementById('srOkQR');qd.innerHTML='';
     new QRCode(qd,{text:d.registration.id,width:160,height:160,colorDark:'#0a0a0a',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});
     toast('¡Inscrito!','ok');
-    // Refresh history and slots
     const h2=await api({action:'getRunnerHistory',dni:S.runnerDni});
     S.runnerData=h2;
     if(h2.corredor)document.getElementById('rName').textContent=h2.corredor.nombre;
     renderHist();
-    // Refresh slots to show updated counts and isMine flag
     loadSocialSlots();
   }catch(e){toast('Error: '+e.message,'err');}
   finally{btn.disabled=false;btn.innerHTML='Confirmar inscripción →';}
 }
 function resetSR(){document.getElementById('srForm').style.display='none';document.getElementById('srOk').style.display='none';loadSocialSlots();}
+
+// ═══════════════════════════════════════════════════════════════
+// ── SOCIAL SELF-SERVICE (nuevo flujo sin login) ────────────────
+// ═══════════════════════════════════════════════════════════════
+
+// Obtiene el próximo domingo
+function nextSunday(){
+  const d=new Date();const day=d.getDay();
+  d.setDate(d.getDate()+(day===0?0:7-day));
+  return d.toISOString().slice(0,10);
+}
+function fmtSunday(iso){
+  const d=new Date(iso+'T12:00:00');
+  return d.toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long'});
+}
+
+function goSocialSelf(){
+  // Reset state
+  S.ss={dni:'',userData:null,glowLevel:null,registration:null,pdpaChecked:false};
+  document.getElementById('ssDni').value='';
+  document.getElementById('ssNom').value='';
+  document.getElementById('ssEmail').value='';
+  document.getElementById('ssEmergencia').value='';
+  setPdpa(false);
+  document.getElementById('glow-1').classList.remove('on');
+  document.getElementById('glow-2').classList.remove('on');
+  document.getElementById('glow-3').classList.remove('on');
+  document.getElementById('ssConfirmBtn').disabled=true;
+  // Update header
+  const fecha=nextSunday();
+  document.getElementById('ssTitle').textContent='Social Run 🌞';
+  document.getElementById('ssSub').textContent=fmtSunday(fecha).charAt(0).toUpperCase()+fmtSunday(fecha).slice(1);
+  show('ss');
+  ssGoStep(1);
+  setTimeout(()=>document.getElementById('ssDni').focus(),300);
+}
+
+function ssGoStep(n){
+  document.querySelectorAll('.ss-step').forEach(s=>s.classList.remove('on'));
+  const el=document.getElementById('ss-step'+n);
+  if(el)el.classList.add('on');
+  // Scroll to top of body
+  const body=document.querySelector('.ss-body');
+  if(body)body.scrollTop=0;
+}
+
+async function ssCheckDni(){
+  const dni=document.getElementById('ssDni').value.trim();
+  if(!dni){toast('Ingresa tu DNI','err');return;}
+  S.ss.dni=dni;
+  const btn=document.getElementById('ssDniBtn');
+  btn.disabled=true;btn.innerHTML='<div class="spin spd"></div> Buscando...';
+  try{
+    // Look up in Social Runs history
+    const d=await api({action:'getRunnerHistory',dni});
+    const fecha=nextSunday();
+    // Check if already registered for THIS Sunday
+    const yaEsteD=d.history&&d.history.find(h=>h.type==='social'&&h.fechaEvento===fecha);
+    if(yaEsteD){
+      // Corredor ya registrado para este domingo → solo pide Glow
+      S.ss.registration=yaEsteD;
+      document.getElementById('ssGreetName').textContent=(d.corredor&&d.corredor.nombre&&d.corredor.nombre!=='Corredor')?d.corredor.nombre:('DNI '+dni);
+      document.getElementById('ssFechaEvento').textContent='Fecha: '+fmtSunday(fecha);
+      // Pre-select glow if already set
+      if(yaEsteD.glowLevel)selectGlow(parseInt(yaEsteD.glowLevel));
+      ssGoStep(3);
+      toast('¡Ya estás inscrito! Solo elige tu nivel Glow.','ok');
+    } else if(d.corredor&&d.corredor.nombre&&d.corredor.nombre!=='Corredor'){
+      // Corredor existe pero no inscrito para este domingo
+      S.ss.userData=d.corredor;
+      document.getElementById('ssNom').value=d.corredor.nombre||'';
+      document.getElementById('ssDni2').value=dni;
+      // Try to prefill from existing history
+      const prevReg=d.history&&d.history[0];
+      if(prevReg&&prevReg.email)document.getElementById('ssEmail').value=prevReg.email;
+      if(prevReg&&prevReg.emergencia)document.getElementById('ssEmergencia').value=prevReg.emergencia;
+      ssGoStep(2);
+    } else {
+      // Corredor nuevo
+      S.ss.userData=null;
+      document.getElementById('ssNom').value='';
+      document.getElementById('ssDni2').value=dni;
+      document.getElementById('ssEmail').value='';
+      document.getElementById('ssEmergencia').value='';
+      ssGoStep(2);
+    }
+  }catch(e){
+    // If error, assume new runner
+    S.ss.userData=null;
+    document.getElementById('ssNom').value='';
+    document.getElementById('ssDni2').value=dni;
+    document.getElementById('ssEmail').value='';
+    document.getElementById('ssEmergencia').value='';
+    ssGoStep(2);
+  }finally{
+    btn.disabled=false;btn.innerHTML='Buscar →';
+  }
+}
+
+function togglePdpa(){setPdpa(!S.ss.pdpaChecked);}
+function setPdpa(v){
+  S.ss.pdpaChecked=v;
+  const el=document.getElementById('pdpaCheck');
+  if(v)el.classList.add('on');else el.classList.remove('on');
+}
+
+async function ssRegister(){
+  const nom=document.getElementById('ssNom').value.trim();
+  const dni=S.ss.dni;
+  const email=document.getElementById('ssEmail').value.trim();
+  const emergencia=document.getElementById('ssEmergencia').value.trim();
+  if(!nom){toast('Ingresa tu nombre completo','err');return;}
+  if(!emergencia){toast('Ingresa un contacto de emergencia','err');return;}
+  if(!S.ss.pdpaChecked){toast('Debes aceptar el tratamiento de datos','err');return;}
+  const fecha=nextSunday();
+  const btn=document.getElementById('ssRegBtn');
+  btn.disabled=true;btn.innerHTML='<div class="spin spd"></div> Registrando...';
+  try{
+    const d=await api({action:'registerSocialRun',nombre:nom,dni,email,fechaEvento:fecha,emergencia},'POST');
+    S.ss.registration=d.registration;
+    document.getElementById('ssGreetName').textContent=nom.split(' ')[0];
+    document.getElementById('ssFechaEvento').textContent='Fecha: '+fmtSunday(fecha);
+    ssGoStep(3);
+  }catch(e){
+    if(e.message&&e.message.toLowerCase().includes('ya inscrito')){
+      // Race condition: already registered while filling form
+      toast('Ya estás inscrito para este domingo. Elige tu nivel Glow.','ok');
+      // Fetch the registration
+      try{
+        const d2=await api({action:'getRunnerHistory',dni});
+        const fecha2=nextSunday();
+        const reg=d2.history&&d2.history.find(h=>h.type==='social'&&h.fechaEvento===fecha2);
+        if(reg)S.ss.registration=reg;
+        document.getElementById('ssGreetName').textContent=nom.split(' ')[0];
+        document.getElementById('ssFechaEvento').textContent='Fecha: '+fmtSunday(fecha2);
+        ssGoStep(3);
+      }catch(_){}
+    } else {
+      toast('Error: '+e.message,'err');
+    }
+  }finally{
+    btn.disabled=false;btn.innerHTML='Registrarme y continuar →';
+  }
+}
+
+function selectGlow(n){
+  S.ss.glowLevel=n;
+  [1,2,3].forEach(i=>document.getElementById('glow-'+i).classList.toggle('on',i===n));
+  document.getElementById('ssConfirmBtn').disabled=false;
+}
+
+async function ssConfirm(){
+  if(!S.ss.glowLevel){toast('Elige tu nivel Glow','err');return;}
+  const reg=S.ss.registration;
+  if(!reg||!reg.id){toast('Error: registro no encontrado','err');return;}
+  const btn=document.getElementById('ssConfirmBtn');
+  btn.disabled=true;btn.innerHTML='<div class="spin spd"></div> Confirmando...';
+  try{
+    // Save glow level + mark as Participó
+    const d=await api({action:'confirmSocialParticipation',id:reg.id,glowLevel:S.ss.glowLevel},'POST');
+    const finalReg=d.registration||reg;
+    // Build step 4
+    document.getElementById('ssConfirmName').textContent=finalReg.nombre||reg.nombre||'';
+    document.getElementById('ssConfirmDorsal').textContent='#'+(finalReg.dorsal||reg.dorsal||'?');
+    const glowLabels={1:'Glow 1 — Principiante',2:'Glow 2 — Intermedio',3:'Glow 3 — Avanzado'};
+    document.getElementById('ssConfirmGlow').textContent=glowLabels[S.ss.glowLevel];
+    document.getElementById('ssConfirmMsg').textContent='¡Todo listo para el Social Run del '+fmtSunday(nextSunday())+'! Muestra este QR en el punto de partida.';
+    document.getElementById('ssQrId').textContent=finalReg.id||reg.id;
+    const qholder=document.getElementById('ssQrHolder');
+    qholder.innerHTML='';
+    new QRCode(qholder,{text:finalReg.id||reg.id,width:180,height:180,colorDark:'#0a0a0a',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});
+    ssGoStep(4);
+  }catch(e){toast('Error: '+e.message,'err');}
+  finally{btn.disabled=false;btn.innerHTML='Confirmar participación →';}
+}
+
+function dlSsQR(){
+  const cv=document.querySelector('#ssQrHolder canvas');
+  if(!cv){toast('QR no disponible','err');return;}
+  const a=document.createElement('a');
+  a.download='social_run_qr.png';
+  a.href=cv.toDataURL();a.click();
+}
 
 // ── MODALS ────────────────────────────────────────────────────
 function om(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';}
@@ -1175,7 +1573,6 @@ function toast(msg,type='ok'){
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmtD(iso){
   if(!iso||iso==='—')return'—';
-  // Handle date-only strings like 2026-04-13
   const s=String(iso);
   if(/^\d{4}-\d{2}-\d{2}$/.test(s)){
     const [y,m,d]=s.split('-');
